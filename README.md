@@ -35,7 +35,7 @@ npm create sanity@latest -- --template sanity-io/sanity-template-nextjs-clean
 
 #### 2. Run Studio and Next.js app locally
 
-Navigate to the template directory using `cd <your app name>`, and start the development servers by running the following command
+Navigate to the template directory using `cd  nextjs-app`, and start the development servers by running the following command
 
 ```shell
 npm run dev
@@ -102,3 +102,5 @@ They will be able to access the deployed Studio, where you can collaborate toget
 - [Next.js documentation](https://nextjs.org/docs)
 - [Join the Sanity Community](https://slack.sanity.io)
 - [Learn Sanity](https://www.sanity.io/learn)
+
+
