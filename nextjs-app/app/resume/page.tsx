@@ -37,7 +37,7 @@ export default function ResumePage() {
     contact: {
       email: "max.example@email.com",
       github: "github.com/maxchen",
-      linkedin: "linkedin.com/in/maxchen",
+      linkedin: "linkedin.com/in/sih-han-chen-max",
       website: "maxchen.dev"
     },
     education: [
@@ -169,7 +169,7 @@ export default function ResumePage() {
           
           body.printing-resume {
             margin: 0;
-            padding: 0 2rem;
+            padding: 0;
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
