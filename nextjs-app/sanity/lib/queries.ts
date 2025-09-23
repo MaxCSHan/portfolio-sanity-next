@@ -95,3 +95,13 @@ export const pagesSlugs = defineQuery(`
   *[_type == "page" && defined(slug.current)]
   {"slug": slug.current}
 `);
+
+export const paginatedPostsQuery = defineQuery(`
+  *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [$offset...$limit] {
+    ${postFields}
+  }
+`);
+
+export const totalPostsCountQuery = defineQuery(`
+  count(*[_type == "post" && defined(slug.current)])
+`);

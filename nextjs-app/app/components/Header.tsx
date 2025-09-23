@@ -40,10 +40,10 @@ export default function Header() {
               </li>
               <li>
                 <Link 
-                  href="/blog" 
+                  href="/posts" 
                   className="text-gray-700 hover:text-indigo-600 transition-colors"
                 >
-                  Blog
+                  Post
                 </Link>
               </li>
               <li>

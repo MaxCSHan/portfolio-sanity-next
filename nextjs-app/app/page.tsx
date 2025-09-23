@@ -133,8 +133,8 @@ export default async function Page() {
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold tracking-tight text-gray-900">Latest Posts</h2>
-                  <Link 
-                    href="/blog" 
+                  <Link
+                    href="/posts"
                     className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"
                   >
                     All posts
