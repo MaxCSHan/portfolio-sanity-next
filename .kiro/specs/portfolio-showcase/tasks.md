@@ -7,7 +7,7 @@
   - Generate TypeScript types by running the typegen command
   - _Requirements: 1.1, 1.2, 6.1, 6.2, 6.4_
 
-- [ ] 2. Implement core GROQ queries for portfolio data fetching
+- [x] 2. Implement core GROQ queries for portfolio data fetching
   - Create portfolio project field fragments and base queries in sanity/lib/queries.ts
   - Implement filtered portfolio projects query with category, technology, and search parameters
   - Create featured projects query for homepage integration
