@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masonry Grid Test</title>
+    <style>
+        .masonry-container {
+            column-count: 3;
+            column-gap: 24px;
+            column-fill: balance;
+            width: 100%;
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 24px;
+            background: #f3f4f6;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .item-1 { height: 200px; background: #dbeafe; }
+        .item-2 { height: 350px; background: #dcfce7; }
+        .item-3 { height: 250px; background: #fce7f3; }
+        .item-4 { height: 180px; background: #fef3c7; }
+        .item-5 { height: 400px; background: #fee2e2; }
+        .item-6 { height: 220px; background: #e0e7ff; }
+        
+        @media (max-width: 768px) {
+            .masonry-container {
+                column-count: 2;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .masonry-container {
+                column-count: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div style="max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <h1>Masonry Grid Test</h1>
+        <div class="masonry-container">
+            <div class="masonry-item item-1">Item 1 (200px)</div>
+            <div class="masonry-item item-2">Item 2 (350px)</div>
+            <div class="masonry-item item-3">Item 3 (250px)</div>
+            <div class="masonry-item item-4">Item 4 (180px)</div>
+            <div class="masonry-item item-5">Item 5 (400px)</div>
+            <div class="masonry-item item-6">Item 6 (220px)</div>
+        </div>
+    </div>
+</body>
+</html>

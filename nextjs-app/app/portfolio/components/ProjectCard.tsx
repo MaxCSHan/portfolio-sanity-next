@@ -6,9 +6,10 @@ import DateComponent from "@/app/components/Date";
 
 interface ProjectCardProps {
   project: PortfolioProject;
+  layoutMode?: 'grid' | 'masonry';
 }
 
-export default function ProjectCard({ project }: ProjectCardProps) {
+export default function ProjectCard({ project, layoutMode = 'masonry' }: ProjectCardProps) {
   console.log(project)
   const {
     _id,
@@ -26,7 +27,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
   } = project;
 
   return (
-    <article className="group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200">
+    <article className={`group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 ${
+      layoutMode === 'grid' ? 'flex flex-col h-full' : ''
+    }`}>
       {/* Hero Media */}
       <div className="aspect-video relative overflow-hidden">
         <Link href={`/portfolio/${slug}`}>
@@ -93,7 +96,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       </div>
 
       {/* Card Content */}
-      <div className="p-6">
+      <div className={`p-6 ${layoutMode === 'grid' ? 'flex-1 flex flex-col' : ''}`}>
         {/* Category and Date */}
         <div className="flex items-center justify-between mb-3">
           <span className={`px-3 py-1 text-sm font-medium rounded-full ${getCategoryStyles(category)}`}>
@@ -170,7 +173,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         )}
 
         {/* Read more link */}
-        <div className="mt-4 pt-4 border-t border-gray-100">
+        <div className={`pt-4 border-t border-gray-100 ${layoutMode === 'grid' ? 'mt-auto' : 'mt-4'}`}>
           <Link
             href={`/portfolio/${slug}`}
             className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors"

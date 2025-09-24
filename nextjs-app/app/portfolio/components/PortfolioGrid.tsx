@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Grid3X3, LayoutGrid } from "lucide-react";
 import { PortfolioProject } from "@/sanity.types";
 import ProjectCard from "./ProjectCard";
+import MasonryGrid from "./MasonryGrid";
 
 interface PortfolioGridProps {
   projects: PortfolioProject[];
@@ -19,6 +20,7 @@ export default function PortfolioGrid({
   totalPages, 
   totalCount 
 }: PortfolioGridProps) {
+  const [layoutMode, setLayoutMode] = useState<'grid' | 'masonry'>('masonry');
   if (!projects || projects.length === 0) {
     return (
       <div className="text-center py-16">
@@ -38,19 +40,71 @@ export default function PortfolioGrid({
 
   return (
     <div className="space-y-8">
-      {/* Results Summary */}
+      {/* Results Summary and Layout Toggle */}
       <div className="flex items-center justify-between">
         <p className="text-sm text-gray-600">
           Showing {((currentPage - 1) * 12) + 1}-{Math.min(currentPage * 12, totalCount)} of {totalCount} projects
         </p>
+        
+        {/* Layout Toggle */}
+        <div className="flex items-center gap-2">
+          <span className="text-sm text-gray-500 mr-2">Layout:</span>
+          <div className="flex bg-gray-100 rounded-lg p-1">
+            <button
+              onClick={() => setLayoutMode('grid')}
+              className={`flex items-center gap-1 px-3 py-1 rounded text-sm font-medium transition-colors ${
+                layoutMode === 'grid'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <Grid3X3 className="h-4 w-4" />
+              Grid
+            </button>
+            <button
+              onClick={() => setLayoutMode('masonry')}
+              className={`flex items-center gap-1 px-3 py-1 rounded text-sm font-medium transition-colors ${
+                layoutMode === 'masonry'
+                  ? 'bg-white text-gray-900 shadow-sm'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              <LayoutGrid className="h-4 w-4" />
+              Masonry
+            </button>
+          </div>
+        </div>
       </div>
 
       {/* Projects Grid */}
-      <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-        {projects.map((project) => (
-          <ProjectCard key={project._id} project={project} />
-        ))}
-      </div>
+      {layoutMode === 'masonry' ? (
+        <MasonryGrid
+          columns={{ sm: 1, md: 2, lg: 3, xl: 3 }}
+          gap={24}
+          enableLazyLoading={true}
+          animationDelay={50}
+          className="mb-8"
+        >
+          {projects.map((project) => (
+            <ProjectCard key={project._id} project={project} layoutMode="masonry" />
+          ))}
+        </MasonryGrid>
+      ) : (
+        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 mb-8 portfolio-grid-uniform">
+          {projects.map((project, index) => (
+            <div
+              key={project._id}
+              className="opacity-0 animate-fade-in h-full"
+              style={{
+                animationDelay: `${index * 50}ms`,
+                animationFillMode: 'forwards'
+              }}
+            >
+              <ProjectCard project={project} layoutMode="grid" />
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Pagination */}
       {totalPages > 1 && (

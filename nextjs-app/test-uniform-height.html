@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uniform Height Grid Test</title>
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: stretch;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        .card-image {
+            aspect-ratio: 16/9;
+            background: #f3f4f6;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280;
+        }
+        
+        .card-content {
+            padding: 24px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #111827;
+        }
+        
+        .card-description {
+            color: #6b7280;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .card-footer {
+            margin-top: auto;
+            padding-top: 16px;
+            border-top: 1px solid #f3f4f6;
+        }
+        
+        .card-link {
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .short { background: #dbeafe; }
+        .medium { background: #dcfce7; }
+        .long { background: #fce7f3; }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center; margin-bottom: 40px;">Uniform Height Grid Test</h1>
+    
+    <div class="grid-container">
+        <div class="card">
+            <div class="card-image short">Image 1</div>
+            <div class="card-content">
+                <h3 class="card-title">Short Content Card</h3>
+                <p class="card-description">This card has minimal content.</p>
+                <div class="card-footer">
+                    <a href="#" class="card-link">View Project →</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-image medium">Image 2</div>
+            <div class="card-content">
+                <h3 class="card-title">Medium Content Card</h3>
+                <p class="card-description">This card has a moderate amount of content. It includes a longer description that spans multiple lines to test how the layout handles varying content lengths.</p>
+                <div class="card-footer">
+                    <a href="#" class="card-link">View Project →</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-image long">Image 3</div>
+            <div class="card-content">
+                <h3 class="card-title">Long Content Card</h3>
+                <p class="card-description">This card has the most content of all three cards. It includes a very long description that spans multiple lines and demonstrates how the flexbox layout ensures all cards have the same height regardless of content length. The footer should align at the bottom of all cards.</p>
+                <div class="card-footer">
+                    <a href="#" class="card-link">View Project →</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 40px; color: #6b7280;">
+        <p>All cards should have the same height with footers aligned at the bottom.</p>
+    </div>
+</body>
+</html>

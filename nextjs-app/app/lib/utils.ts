@@ -76,3 +76,10 @@ export function formatDate(dateString: string): string {
     
     return `${str.slice(0, maxLength)}...`
   }
+
+  /**
+   * Combine class names conditionally
+   */
+  export function cn(...classes: (string | undefined | null | false)[]): string {
+    return classes.filter(Boolean).join(' ')
+  }
