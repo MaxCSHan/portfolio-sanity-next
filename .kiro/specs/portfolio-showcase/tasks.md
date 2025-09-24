@@ -1,6 +1,6 @@
 # Portfolio Showcase - Implementation Plan
 
-- [ ] 1. Create Sanity schema foundation for portfolio projects
+- [x] 1. Create Sanity schema foundation for portfolio projects
   - Create the portfolioProject document schema with all category-specific fields and validation rules
   - Create supporting schemas for technology and projectCategory reference types
   - Add schemas to the main schema index and configure Sanity Studio structure
