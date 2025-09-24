@@ -791,6 +791,379 @@ export type PaginatedPostsQueryResult = Array<{
 // Variable: totalPostsCountQuery
 // Query: count(*[_type == "post" && defined(slug.current)])
 export type TotalPostsCountQueryResult = number;
+// Variable: portfolioProjectsQuery
+// Query: *[_type == "portfolioProject"     && ($category == null || category == $category)    && ($featured == null || featured == $featured)    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)    && ($search == null || title match $search + "*" || shortDescription match $search + "*" || tags[] match $search + "*")  ] | order(featured desc, completionDate desc, _createdAt desc) [$offset...$limit] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt  }
+export type PortfolioProjectsQueryResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
+  shortDescription: string;
+  heroImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  heroVideo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  } | null;
+  heroGallery: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  mediaType: "gallery" | "image" | "video" | null;
+  featured: boolean | null;
+  tags: Array<string> | null;
+  completionDate: string | null;
+  client: string | null;
+  status: "archived" | "completed" | "in-progress" | "on-hold" | null;
+  technicalDetails: {
+    technologies?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "technology";
+    }>;
+    githubUrl?: string;
+    liveUrl?: string;
+    codeSnippet?: string;
+    cameraInfo?: {
+      camera?: string;
+      lens?: string;
+      settings?: string;
+      location?: string;
+      shootDate?: string;
+    };
+    photoCategory?: "architecture" | "event" | "landscape" | "nature" | "portrait" | "street" | "studio";
+    dataTools?: Array<string>;
+    datasetInfo?: string;
+    methodology?: string;
+    creativeTools?: Array<string>;
+    duration?: string;
+  } | null;
+  technologies: Array<{
+    name: string;
+    color: string | null;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    } | null;
+  }> | null;
+  _createdAt: string;
+  _updatedAt: string;
+}>;
+// Variable: featuredPortfolioProjectsQuery
+// Query: *[_type == "portfolioProject" && featured == true]   | order(completionDate desc, _createdAt desc) [0...6] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt  }
+export type FeaturedPortfolioProjectsQueryResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
+  shortDescription: string;
+  heroImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  heroVideo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  } | null;
+  heroGallery: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  mediaType: "gallery" | "image" | "video" | null;
+  featured: boolean | null;
+  tags: Array<string> | null;
+  completionDate: string | null;
+  client: string | null;
+  status: "archived" | "completed" | "in-progress" | "on-hold" | null;
+  technicalDetails: {
+    technologies?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "technology";
+    }>;
+    githubUrl?: string;
+    liveUrl?: string;
+    codeSnippet?: string;
+    cameraInfo?: {
+      camera?: string;
+      lens?: string;
+      settings?: string;
+      location?: string;
+      shootDate?: string;
+    };
+    photoCategory?: "architecture" | "event" | "landscape" | "nature" | "portrait" | "street" | "studio";
+    dataTools?: Array<string>;
+    datasetInfo?: string;
+    methodology?: string;
+    creativeTools?: Array<string>;
+    duration?: string;
+  } | null;
+  technologies: Array<{
+    name: string;
+    color: string | null;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    } | null;
+  }> | null;
+  _createdAt: string;
+  _updatedAt: string;
+}>;
+// Variable: portfolioProjectQuery
+// Query: *[_type == "portfolioProject" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt,    description,    "heroMedia": heroMedia {      type,      image,      video,      gallery[] {        asset,        alt,        caption      }    },    "relatedProjects": *[_type == "portfolioProject"       && category == ^.category       && _id != ^._id       && featured == true]     | order(completionDate desc) [0...3] {      _id,      title,      "slug": slug.current,      "heroImage": heroMedia.image,      shortDescription,      category    }  }
+export type PortfolioProjectQueryResult = {
+  _id: string;
+  title: string;
+  slug: string;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
+  shortDescription: string;
+  heroImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  heroVideo: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+    };
+    media?: unknown;
+    _type: "file";
+  } | null;
+  heroGallery: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+    _key: string;
+  }> | null;
+  mediaType: "gallery" | "image" | "video" | null;
+  featured: boolean | null;
+  tags: Array<string> | null;
+  completionDate: string | null;
+  client: string | null;
+  status: "archived" | "completed" | "in-progress" | "on-hold" | null;
+  technicalDetails: {
+    technologies?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "technology";
+    }>;
+    githubUrl?: string;
+    liveUrl?: string;
+    codeSnippet?: string;
+    cameraInfo?: {
+      camera?: string;
+      lens?: string;
+      settings?: string;
+      location?: string;
+      shootDate?: string;
+    };
+    photoCategory?: "architecture" | "event" | "landscape" | "nature" | "portrait" | "street" | "studio";
+    dataTools?: Array<string>;
+    datasetInfo?: string;
+    methodology?: string;
+    creativeTools?: Array<string>;
+    duration?: string;
+  } | null;
+  technologies: Array<{
+    name: string;
+    color: string | null;
+    icon: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt: string;
+      _type: "image";
+    } | null;
+  }> | null;
+  _createdAt: string;
+  _updatedAt: string;
+  description: BlockContent | null;
+  heroMedia: {
+    type: "gallery" | "image" | "video" | null;
+    image: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    video: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.fileAsset";
+      };
+      media?: unknown;
+      _type: "file";
+    } | null;
+    gallery: Array<{
+      asset: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      } | null;
+      alt: string | null;
+      caption: null;
+    }> | null;
+  };
+  relatedProjects: Array<{
+    _id: string;
+    title: string;
+    slug: string;
+    heroImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    } | null;
+    shortDescription: string;
+    category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
+  }>;
+} | null;
+// Variable: portfolioCategoryCountsQuery
+// Query: {    "coding": count(*[_type == "portfolioProject" && category == "coding"]),    "photography": count(*[_type == "portfolioProject" && category == "photography"]),    "creative": count(*[_type == "portfolioProject" && category == "creative"]),    "data": count(*[_type == "portfolioProject" && category == "data"]),    "animation": count(*[_type == "portfolioProject" && category == "animation"]),    "design": count(*[_type == "portfolioProject" && category == "design"]),    "total": count(*[_type == "portfolioProject"])  }
+export type PortfolioCategoryCountsQueryResult = {
+  coding: number;
+  photography: number;
+  creative: number;
+  data: number;
+  animation: number;
+  design: number;
+  total: number;
+};
+// Variable: portfolioTechnologiesQuery
+// Query: *[_type == "technology"] | order(name asc) {    _id,    name,    category,    color,    "projectCount": count(*[_type == "portfolioProject" && references(^._id)])  }
+export type PortfolioTechnologiesQueryResult = Array<{
+  _id: string;
+  name: string;
+  category: "analytics" | "backend" | "creative" | "database" | "design" | "devops" | "frontend" | "language" | "mobile" | "other";
+  color: string | null;
+  projectCount: number;
+}>;
+// Variable: totalPortfolioProjectsCountQuery
+// Query: count(*[_type == "portfolioProject"     && ($category == null || category == $category)    && ($featured == null || featured == $featured)    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)    && ($search == null || title match $search + "*" || shortDescription match $search + "*" || tags[] match $search + "*")  ])
+export type TotalPortfolioProjectsCountQueryResult = number;
+// Variable: portfolioProjectSlugs
+// Query: *[_type == "portfolioProject" && defined(slug.current)]  {"slug": slug.current}
+export type PortfolioProjectSlugsResult = Array<{
+  slug: string;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -806,5 +1179,12 @@ declare module "@sanity/client" {
     "\n  *[_type == \"page\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PagesSlugsResult;
     "\n  *[_type == \"post\" && defined(slug.current)] | order(date desc, _updatedAt desc) [$offset...$limit] {\n    \n  _id,\n  \"status\": select(_originalId in path(\"drafts.**\") => \"draft\", \"published\"),\n  \"title\": coalesce(title, \"Untitled\"),\n  \"slug\": slug.current,\n  excerpt,\n  coverImage,\n  \"date\": coalesce(date, _updatedAt),\n  \"author\": author->{firstName, lastName, picture},\n\n  }\n": PaginatedPostsQueryResult;
     "\n  count(*[_type == \"post\" && defined(slug.current)])\n": TotalPostsCountQueryResult;
+    "\n  *[_type == \"portfolioProject\" \n    && ($category == null || category == $category)\n    && ($featured == null || featured == $featured)\n    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)\n    && ($search == null || title match $search + \"*\" || shortDescription match $search + \"*\" || tags[] match $search + \"*\")\n  ] | order(featured desc, completionDate desc, _createdAt desc) [$offset...$limit] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  category,\n  shortDescription,\n  \"heroImage\": heroMedia.image,\n  \"heroVideo\": heroMedia.video,\n  \"heroGallery\": heroMedia.gallery,\n  \"mediaType\": heroMedia.type,\n  featured,\n  tags,\n  completionDate,\n  client,\n  status,\n  technicalDetails,\n  \"technologies\": technicalDetails.technologies[]->{ name, color, icon },\n  _createdAt,\n  _updatedAt\n\n  }\n": PortfolioProjectsQueryResult;
+    "\n  *[_type == \"portfolioProject\" && featured == true] \n  | order(completionDate desc, _createdAt desc) [0...6] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  category,\n  shortDescription,\n  \"heroImage\": heroMedia.image,\n  \"heroVideo\": heroMedia.video,\n  \"heroGallery\": heroMedia.gallery,\n  \"mediaType\": heroMedia.type,\n  featured,\n  tags,\n  completionDate,\n  client,\n  status,\n  technicalDetails,\n  \"technologies\": technicalDetails.technologies[]->{ name, color, icon },\n  _createdAt,\n  _updatedAt\n\n  }\n": FeaturedPortfolioProjectsQueryResult;
+    "\n  *[_type == \"portfolioProject\" && slug.current == $slug][0] {\n    \n  _id,\n  title,\n  \"slug\": slug.current,\n  category,\n  shortDescription,\n  \"heroImage\": heroMedia.image,\n  \"heroVideo\": heroMedia.video,\n  \"heroGallery\": heroMedia.gallery,\n  \"mediaType\": heroMedia.type,\n  featured,\n  tags,\n  completionDate,\n  client,\n  status,\n  technicalDetails,\n  \"technologies\": technicalDetails.technologies[]->{ name, color, icon },\n  _createdAt,\n  _updatedAt\n,\n    description,\n    \"heroMedia\": heroMedia {\n      type,\n      image,\n      video,\n      gallery[] {\n        asset,\n        alt,\n        caption\n      }\n    },\n    \"relatedProjects\": *[_type == \"portfolioProject\" \n      && category == ^.category \n      && _id != ^._id \n      && featured == true] \n    | order(completionDate desc) [0...3] {\n      _id,\n      title,\n      \"slug\": slug.current,\n      \"heroImage\": heroMedia.image,\n      shortDescription,\n      category\n    }\n  }\n": PortfolioProjectQueryResult;
+    "\n  {\n    \"coding\": count(*[_type == \"portfolioProject\" && category == \"coding\"]),\n    \"photography\": count(*[_type == \"portfolioProject\" && category == \"photography\"]),\n    \"creative\": count(*[_type == \"portfolioProject\" && category == \"creative\"]),\n    \"data\": count(*[_type == \"portfolioProject\" && category == \"data\"]),\n    \"animation\": count(*[_type == \"portfolioProject\" && category == \"animation\"]),\n    \"design\": count(*[_type == \"portfolioProject\" && category == \"design\"]),\n    \"total\": count(*[_type == \"portfolioProject\"])\n  }\n": PortfolioCategoryCountsQueryResult;
+    "\n  *[_type == \"technology\"] | order(name asc) {\n    _id,\n    name,\n    category,\n    color,\n    \"projectCount\": count(*[_type == \"portfolioProject\" && references(^._id)])\n  }\n": PortfolioTechnologiesQueryResult;
+    "\n  count(*[_type == \"portfolioProject\" \n    && ($category == null || category == $category)\n    && ($featured == null || featured == $featured)\n    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)\n    && ($search == null || title match $search + \"*\" || shortDescription match $search + \"*\" || tags[] match $search + \"*\")\n  ])\n": TotalPortfolioProjectsCountQueryResult;
+    "\n  *[_type == \"portfolioProject\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PortfolioProjectSlugsResult;
   }
 }
