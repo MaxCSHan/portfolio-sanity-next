@@ -933,7 +933,7 @@ export type FeaturedPortfolioProjectsQueryResult = Array<{
     _key: string;
   }> | null;
   mediaType: "gallery" | "image" | "video" | null;
-  featured: boolean | null;
+  featured: true;
   tags: Array<string> | null;
   completionDate: string | null;
   client: string | null;
