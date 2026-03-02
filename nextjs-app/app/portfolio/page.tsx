@@ -7,7 +7,8 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { 
   portfolioProjectsQuery, 
   portfolioCategoryCountsQuery,
-  totalPortfolioProjectsCountQuery 
+  totalPortfolioProjectsCountQuery,
+  portfolioTechnologiesQuery
 } from "@/sanity/lib/queries";
 import { PortfolioProject } from "@/sanity.types";
 import PortfolioGrid from "./components/PortfolioGrid";
@@ -21,6 +22,7 @@ type Props = {
     category?: string;
     search?: string;
     featured?: string;
+    technologies?: string;
   }>;
 };
 
@@ -35,6 +37,7 @@ export default async function PortfolioPage(props: Props) {
   const category = searchParams.category || null;
   const search = searchParams.search || null;
   const featured = searchParams.featured === 'true' ? true : null;
+  const technologies = searchParams.technologies ? searchParams.technologies.split(',').filter(Boolean) : null;
   
   const offset = (page - 1) * PROJECTS_PER_PAGE;
   const limit = offset + PROJECTS_PER_PAGE;
@@ -43,7 +46,8 @@ export default async function PortfolioPage(props: Props) {
     const [
       { data: projects },
       { data: categoryCounts },
-      { data: totalCount }
+      { data: totalCount },
+      { data: availableTechnologies }
     ] = await Promise.all([
       sanityFetch({
         query: portfolioProjectsQuery,
@@ -51,9 +55,9 @@ export default async function PortfolioPage(props: Props) {
           offset, 
           limit, 
           category, 
-          search: search ? `${search}*` : null,
+          search: search,
           featured,
-          technologies: null // Will be implemented in filtering task
+          technologies
         },
       }),
       sanityFetch({
@@ -63,14 +67,18 @@ export default async function PortfolioPage(props: Props) {
         query: totalPortfolioProjectsCountQuery,
         params: { 
           category, 
-          search: search ? `${search}*` : null,
+          search: search,
           featured,
-          technologies: null
+          technologies
         },
+      }),
+      sanityFetch({
+        query: portfolioTechnologiesQuery,
       }),
     ]);
 
     const totalPages = Math.ceil((totalCount || 0) / PROJECTS_PER_PAGE);
+    const hasActiveFilters = !!(category || search || featured || (technologies && technologies.length > 0));
 
     return (
       <div className="bg-white">
@@ -93,10 +101,12 @@ export default async function PortfolioPage(props: Props) {
                 <Suspense fallback={<div className="animate-pulse bg-gray-100 h-64 rounded-lg" />}>
                   <FilterSidebar 
                     categoryCounts={categoryCounts}
+                    technologies={availableTechnologies || []}
                     currentFilters={{
                       category,
                       search,
-                      featured
+                      featured,
+                      technologies
                     }}
                   />
                 </Suspense>
@@ -110,6 +120,7 @@ export default async function PortfolioPage(props: Props) {
                     currentPage={page}
                     totalPages={totalPages}
                     totalCount={totalCount || 0}
+                    hasActiveFilters={hasActiveFilters}
                   />
                 </Suspense>
               </main>
