@@ -25,9 +25,7 @@
     "next-sanity": "^9.8.42",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "sanity": "^3.74.0",
-    "sonner": "^1.7.0",
-    "styled-components": "^6.1.13"
+    "sonner": "^1.7.0"
   },
   "devDependencies": {
     "@types/node": "^20.17.17",
