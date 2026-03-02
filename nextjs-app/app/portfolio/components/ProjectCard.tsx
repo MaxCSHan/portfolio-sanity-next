@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { Calendar, ExternalLink, Github, Tag } from "lucide-react";
-import { PortfolioProject } from "@/sanity.types";
+import { PortfolioProjectsQueryResult } from "@/sanity.types";
+
+type ProjectCardItem = PortfolioProjectsQueryResult[number];
 import CoverImage from "@/app/components/CoverImage";
 import DateComponent from "@/app/components/Date";
 
 interface ProjectCardProps {
-  project: PortfolioProject;
+  project: ProjectCardItem;
   layoutMode?: 'grid' | 'masonry';
 }
 
@@ -16,7 +18,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
     slug,
     category,
     shortDescription,
-    heroMedia,
+    heroImage,
     featured,
     completionDate,
     client,
@@ -33,8 +35,8 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
       {/* Hero Media */}
       <div className="aspect-video relative overflow-hidden">
         <Link href={`/portfolio/${slug}`}>
-          {heroMedia?.image ? (
-            <CoverImage image={heroMedia.image} />
+          {heroImage ? (
+            <CoverImage image={heroImage} />
           ) : (
             <div className="w-full h-full bg-gray-100 flex items-center justify-center">
               <span className="text-gray-400">No image</span>

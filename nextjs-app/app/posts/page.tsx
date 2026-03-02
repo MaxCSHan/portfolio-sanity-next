@@ -5,7 +5,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { paginatedPostsQuery, totalPostsCountQuery } from "@/sanity/lib/queries";
-import { Post as PostType } from "@/sanity.types";
+import { PaginatedPostsQueryResult } from "@/sanity.types";
+
+type PostType = PaginatedPostsQueryResult[number];
 import DateComponent from "@/app/components/Date";
 import CoverImage from "@/app/components/CoverImage";
 
@@ -158,7 +160,7 @@ export default async function PostsPage(props: Props) {
           {posts && posts.length > 0 ? (
             <>
               <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 mb-12">
-                {posts.map((post) => (
+                {posts.map((post: PostType) => (
                   <PostCard key={post._id} post={post} />
                 ))}
               </div>

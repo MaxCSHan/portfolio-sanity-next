@@ -11,7 +11,6 @@ import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import CoverImage from "@/app/components/CoverImage";
 import PortableText from "@/app/components/PortableText";
 import DateComponent from "@/app/components/Date";
-import { data } from "autoprefixer";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -164,9 +163,9 @@ export default async function PortfolioProjectPage(props: Props) {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag, index) => (
+                        {project.tags.map((tag: string, index: number) => (
                           <span 
-                            key={index}
+                            key={`project_${project.title}_${tag}`}
                             className="inline-flex items-center px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
                           >
                             <Tag className="mr-1 h-3 w-3" />
@@ -185,7 +184,7 @@ export default async function PortfolioProjectPage(props: Props) {
               <div className="mt-16 pt-16 border-t border-gray-200">
                 <h2 className="text-2xl font-bold text-gray-900 mb-8">Related Projects</h2>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {project.relatedProjects.map((relatedProject) => (
+                  {project.relatedProjects.map((relatedProject: any) => (
                     <RelatedProjectCard key={relatedProject._id} project={relatedProject} />
                   ))}
                 </div>

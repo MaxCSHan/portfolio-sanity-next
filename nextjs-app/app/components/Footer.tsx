@@ -1,3 +1,4 @@
+import React from "react";
 import Link from "next/link";
 import { Github, Linkedin, Instagram, Globe } from "lucide-react";
 
@@ -92,7 +93,7 @@ export default function Footer() {
 }
 
 // Helper component for footer navigation links
-function FooterLink({ href, children }) {
+function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
       <Link 
@@ -106,7 +107,7 @@ function FooterLink({ href, children }) {
 }
 
 // Helper component for social media links
-function SocialLink({ href, icon, label }) {
+function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
     <a 
       href={href}

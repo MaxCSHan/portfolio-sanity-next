@@ -1,7 +1,6 @@
 import { Suspense } from "react";
+import type { ReactNode } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { FeaturedProjects } from "@/app/components/Projects";
 import { ArrowRight, Code, Database, Cloud, Camera, Globe } from "lucide-react";
 
 export default async function Page() {
@@ -201,7 +200,7 @@ export default async function Page() {
 }
 
 // Component for skill badges
-function SkillBadge({ icon, text }) {
+function SkillBadge({ icon, text }: { icon: ReactNode; text: string }) {
   return (
     <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
       <span className="mr-1.5">{icon}</span>
@@ -211,7 +210,7 @@ function SkillBadge({ icon, text }) {
 }
 
 // Component for language cards
-function LanguageCard({ language, proficiency, flag }) {
+function LanguageCard({ language, proficiency, flag }: { language: string; proficiency: string; flag: string }) {
   return (
     <div className="bg-gray-50 p-4 rounded-lg">
       <span className="text-2xl">{flag}</span>
@@ -222,7 +221,7 @@ function LanguageCard({ language, proficiency, flag }) {
 }
 
 // Component for project cards
-function ProjectCard({ title, description, tags }) {
+function ProjectCard({ title, description, tags }: { title: string; description: string; tags: string[] }) {
   return (
     <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
       <div className="h-48 bg-gray-100 rounded-lg mb-5"></div>
@@ -240,7 +239,7 @@ function ProjectCard({ title, description, tags }) {
 }
 
 // Component for blog post cards
-function BlogPostCard({ title, date, excerpt }) {
+function BlogPostCard({ title, date, excerpt }: { title: string; date: string; excerpt: string }) {
   return (
     <div className="border-b border-gray-100 pb-6">
       <span className="text-sm text-gray-500">{date}</span>
