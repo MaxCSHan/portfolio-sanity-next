@@ -514,13 +514,28 @@ export async function generateStaticParams() {
 
 ### Next.js App → Vercel
 
-1. Push to GitHub
-2. Create a new Vercel project → import from GitHub
-3. Set **Root Directory** to `nextjs-app`
-4. Add all environment variables (same as `.env.local`)
-5. Deploy
+The project is already linked to a Vercel project. To redeploy:
 
-The `nextjs-app/vercel.json` is already configured. Vercel will run `npm run build` (which also runs `typegen` via the `prebuild` script).
+```bash
+# From repo root or nextjs-app/
+vercel --prod --yes
+```
+
+The `vercel.json` overrides the build command to `next build` (skipping `typegen`, which needs the studio files and can't run on Vercel's build machines). Types are committed to the repo via `sanity.types.ts`.
+
+#### First-time setup (new machine or new Vercel project)
+
+1. Install the Vercel CLI: `npm i -g vercel`
+2. Log in: `vercel login`
+3. Link the project: `cd nextjs-app && vercel link --yes --project maxcsh`
+4. Add all environment variables:
+   ```bash
+   vercel env add NEXT_PUBLIC_SANITY_PROJECT_ID production
+   vercel env add NEXT_PUBLIC_SANITY_DATASET production
+   vercel env add NEXT_PUBLIC_SANITY_API_VERSION production
+   vercel env add SANITY_API_READ_TOKEN production
+   ```
+5. Deploy: `vercel --prod --yes`
 
 ### Sanity Studio → Sanity Hosting
 
@@ -539,7 +554,17 @@ In [Sanity Manage](https://www.sanity.io/manage) → your project → API → CO
 
 ### Current Deployment
 
-> **Note**: Deployment URLs should be added here once the site goes live.
+| | URL |
+|---|---|
+| **Production** | https://maxcsh.vercel.app |
+| **Vercel Project** | `maxcsh` (`prj_Y1v4UNzK4XBVHO5dfbmLyALC23RX`) |
+| **Vercel Team** | `maxcshans-projects` |
+
+Inspect deployments and logs:
+
+```bash
+vercel inspect maxcsh.vercel.app --logs
+```
 
 ---
 
