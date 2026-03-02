@@ -12,10 +12,10 @@ export default function Header() {
               <span className="font-bold text-lg">M</span>
             </div>
             <span className="hidden sm:block text-lg font-bold tracking-tight text-gray-900">
-              Max
+              MaxCSH
             </span>
             <span className="hidden lg:block text-lg text-gray-500">
-              | Software Engineer
+              | Chen Sih Han
             </span>
           </Link>
 

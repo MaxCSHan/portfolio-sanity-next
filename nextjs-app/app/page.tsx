@@ -20,7 +20,7 @@ export default async function Page() {
                 Hi there <span className="inline-block animate-wave">👋</span> I'm Max
               </h1>
               <p className="text-xl text-gray-600 max-w-2xl mb-8">
-                A software engineer with over 4 years of experience in web development, 
+                A software engineer with over 5 years of experience in web development, 
                 data engineering, and cloud solutions. I'm passionate about delivering 
                 modern and advanced web features.
               </p>
