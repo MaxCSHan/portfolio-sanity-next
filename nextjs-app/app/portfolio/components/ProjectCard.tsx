@@ -10,7 +10,6 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({ project, layoutMode = 'masonry' }: ProjectCardProps) {
-  console.log(project)
   const {
     _id,
     title,
@@ -23,6 +22,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
     client,
     status,
     technicalDetails,
+    technologies,
     tags
   } = project;
 
@@ -132,10 +132,10 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         )}
 
         {/* Technologies for coding projects */}
-        {category === 'coding' && technicalDetails?.technologies && technicalDetails.technologies.length > 0 && (
+        {category === 'coding' && technologies && technologies.length > 0 && (
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
-              {technicalDetails.technologies.slice(0, 3).map((tech: any, index: number) => (
+              {technologies.slice(0, 3).map((tech: any, index: number) => (
                 <span 
                   key={index}
                   className="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded"
@@ -143,9 +143,9 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
                   {tech.name}
                 </span>
               ))}
-              {technicalDetails.technologies.length > 3 && (
+              {technologies.length > 3 && (
                 <span className="px-2 py-1 text-xs font-medium bg-gray-50 text-gray-600 rounded">
-                  +{technicalDetails.technologies.length - 3} more
+                  +{technologies.length - 3} more
                 </span>
               )}
             </div>

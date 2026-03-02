@@ -3,37 +3,74 @@
 import { useState } from "react";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Grid3X3, LayoutGrid } from "lucide-react";
-import { PortfolioProject } from "@/sanity.types";
+import { PortfolioProject, PortfolioProjectsQueryResult } from "@/sanity.types";
 import ProjectCard from "./ProjectCard";
 import MasonryGrid from "./MasonryGrid";
 
 interface PortfolioGridProps {
-  projects: PortfolioProject[];
+  projects: PortfolioProjectsQueryResult;
   currentPage: number;
   totalPages: number;
   totalCount: number;
+  hasActiveFilters?: boolean;
 }
 
 export default function PortfolioGrid({ 
   projects, 
   currentPage, 
   totalPages, 
-  totalCount 
+  totalCount,
+  hasActiveFilters = false
 }: PortfolioGridProps) {
   const [layoutMode, setLayoutMode] = useState<'grid' | 'masonry'>('masonry');
+  
   if (!projects || projects.length === 0) {
     return (
       <div className="text-center py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">No projects found</h2>
-        <p className="text-gray-600 mb-8">
-          No projects match your current filters. Try adjusting your search criteria.
-        </p>
-        <Link
-          href="/portfolio"
-          className="inline-flex items-center px-5 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
-        >
-          View All Projects
-        </Link>
+        <div className="max-w-md mx-auto">
+          <div className="mb-6">
+            <div className="w-16 h-16 mx-auto mb-4 bg-gray-100 rounded-full flex items-center justify-center">
+              <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 16.172a4 4 0 015.656 0M9 12h6m-6-4h6m2 5.291A7.962 7.962 0 0112 15c-2.34 0-4.47-.881-6.08-2.33" />
+              </svg>
+            </div>
+            <h2 className="text-2xl font-bold text-gray-900 mb-2">
+              {hasActiveFilters ? 'No matching projects' : 'No projects found'}
+            </h2>
+            <p className="text-gray-600">
+              {hasActiveFilters 
+                ? 'No projects match your current filters. Try adjusting your search criteria or clearing some filters.'
+                : 'There are no portfolio projects available at the moment.'
+              }
+            </p>
+          </div>
+          
+          <div className="space-y-3">
+            {hasActiveFilters && (
+              <Link
+                href="/portfolio"
+                className="inline-flex items-center px-5 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+              >
+                Clear All Filters
+              </Link>
+            )}
+            
+            <div className="text-sm text-gray-500">
+              <p>Try searching for:</p>
+              <div className="flex flex-wrap gap-2 mt-2 justify-center">
+                <Link href="/portfolio?category=coding" className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+                  Coding Projects
+                </Link>
+                <Link href="/portfolio?category=photography" className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+                  Photography
+                </Link>
+                <Link href="/portfolio?featured=true" className="px-3 py-1 bg-gray-100 text-gray-700 rounded-full hover:bg-gray-200 transition-colors">
+                  Featured Work
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -48,7 +85,6 @@ export default function PortfolioGrid({
         
         {/* Layout Toggle */}
         <div className="flex items-center gap-2">
-          <span className="text-sm text-gray-500 mr-2">Layout:</span>
           <div className="flex bg-gray-100 rounded-lg p-1">
             <button
               onClick={() => setLayoutMode('grid')}
