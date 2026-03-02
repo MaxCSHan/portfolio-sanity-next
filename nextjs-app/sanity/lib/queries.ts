@@ -134,7 +134,7 @@ export const portfolioProjectsQuery = defineQuery(`
   *[_type == "portfolioProject" 
     && ($category == null || category == $category)
     && ($featured == null || featured == $featured)
-    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)
+    && ($technologies == null || count(technicalDetails.technologies[references(*[_type == "technology" && name in $technologies]._id)]) > 0)
     && ($search == null || title match $search + "*" || shortDescription match $search + "*" || tags[] match $search + "*")
   ] | order(featured desc, completionDate desc, _createdAt desc) [$offset...$limit] {
     ${portfolioProjectFields}
@@ -208,7 +208,7 @@ export const totalPortfolioProjectsCountQuery = defineQuery(`
   count(*[_type == "portfolioProject" 
     && ($category == null || category == $category)
     && ($featured == null || featured == $featured)
-    && ($technologies == null || count(technicalDetails.technologies[]->name[@ in $technologies]) > 0)
+    && ($technologies == null || count(technicalDetails.technologies[references(*[_type == "technology" && name in $technologies]._id)]) > 0)
     && ($search == null || title match $search + "*" || shortDescription match $search + "*" || tags[] match $search + "*")
   ])
 `);
