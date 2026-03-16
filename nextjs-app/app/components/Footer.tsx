@@ -48,8 +48,7 @@ export default function Footer() {
               <div>
                 <h3 className="font-medium text-gray-900 mb-4">About</h3>
                 <ul className="space-y-3">
-                  <FooterLink href="/about">About Me</FooterLink>
-                  <FooterLink href="/blog">Blog</FooterLink>
+                  <FooterLink href="/posts">Post</FooterLink>
                   <FooterLink href="/contact">Contact</FooterLink>
                 </ul>
               </div>

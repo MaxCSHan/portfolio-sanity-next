@@ -54,14 +54,6 @@ export default function Header() {
                   Photography
                 </Link>
               </li>
-              <li>
-                <Link 
-                  href="/contact" 
-                  className="text-gray-700 hover:text-indigo-600 transition-colors"
-                >
-                  Contact
-                </Link>
-              </li>
             </ul>
           </nav>
 

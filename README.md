@@ -549,7 +549,7 @@ This deploys the Studio to `https://your-project-name.sanity.studio`. After depl
 ### After Deployment — Update CORS
 
 In [Sanity Manage](https://www.sanity.io/manage) → your project → API → CORS origins:
-- Add your production Next.js URL (e.g. `https://maxchen.dev`)
+- Add your production Next.js URL (e.g. `https://maxcsh.vercel.app`)
 - Add your deployed Studio URL
 
 ### Current Deployment

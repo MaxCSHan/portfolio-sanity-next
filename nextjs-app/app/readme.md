@@ -57,8 +57,8 @@ The system will use Next.js with static generation for SEO optimization and cost
   - Project Detail (`/portfolio/[slug]`) - Individual project pages
 - **Photography** (`/photography`) - Photo galleries
   - Gallery Detail (`/photography/[slug]`) - Individual galleries
-- **Blog** (`/blog`) - Blog post listing with filters
-  - Blog Post (`/blog/[slug]`) - Individual blog posts
+- **Blog** (`/posts`) - Blog post listing with filters
+  - Blog Post (`/post/[slug]`) - Individual blog posts
 - **About** (`/about`) - Personal information and contact details
 
 ### Components

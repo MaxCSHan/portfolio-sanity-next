@@ -246,7 +246,7 @@ function BlogPostCard({ title, date, excerpt }: { title: string; date: string; e
       <h3 className="text-lg font-bold text-gray-900 mt-1 mb-2">{title}</h3>
       <p className="text-gray-600">{excerpt}</p>
       <Link 
-        href={`/blog/${title.toLowerCase().replace(/\s+/g, '-')}`}
+        href={`/posts/${title.toLowerCase().replace(/\s+/g, '-')}`}
         className="inline-flex items-center mt-3 text-sm text-indigo-600 font-medium hover:text-indigo-800"
       >
         Read more

@@ -38,7 +38,7 @@ export default function ResumePage() {
       email: "max.example@email.com",
       github: "github.com/maxchen",
       linkedin: "linkedin.com/in/sih-han-chen-max",
-      website: "maxchen.dev"
+      website: "https://maxcsh.vercel.app"
     },
     education: [
       {
