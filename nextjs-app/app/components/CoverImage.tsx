@@ -12,7 +12,7 @@ export default function CoverImage(props: CoverImageProps) {
   const { image: source, priority } = props;
   const image = source?.asset?._ref ? (
     <Image
-      className="rounded-2xl shadow-md transition-shadow object-cover"
+      className="shadow-md transition-shadow object-cover"
       fill={true}
       alt={stegaClean(source?.alt) || ""}
       src={
