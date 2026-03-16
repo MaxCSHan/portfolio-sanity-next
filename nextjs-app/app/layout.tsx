@@ -3,6 +3,7 @@ import "./globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata } from "next";
 import { Inter, Bricolage_Grotesque } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { draftMode } from "next/headers";
 import { VisualEditing, toPlainText } from "next-sanity";
 import { Toaster } from "sonner";
@@ -72,6 +73,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${inter.variable} ${bricolage.variable} bg-[#F2EFE9] text-black`}>
+      <GoogleTagManager gtmId="GTM-PLN2GGPW" />
       <body>
         <section className="min-h-screen pt-24">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}

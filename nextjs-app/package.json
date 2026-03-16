@@ -10,9 +10,12 @@
     "lint": "next lint",
     "typegen": "sanity typegen generate",
     "seed-portfolio": "node scripts/seed-portfolio.js",
+    "seed-self-showcase": "node scripts/seed-self-showcase.js",
+    "seed-post-genai-leader": "node scripts/seed-post-genai-leader.js",
     "test-sanity": "node scripts/test-connection.js"
   },
   "dependencies": {
+    "@next/third-parties": "^16.1.6",
     "@sanity/client": "^6.27.2",
     "@sanity/image-url": "^1.1.0",
     "@sanity/uuid": "^3.0.2",
