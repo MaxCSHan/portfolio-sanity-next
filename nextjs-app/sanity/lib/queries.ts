@@ -164,10 +164,15 @@ export const portfolioProjectQuery = defineQuery(`
         caption
       }
     },
-    "relatedProjects": *[_type == "portfolioProject" 
-      && category == ^.category 
-      && _id != ^._id 
-      && featured == true] 
+    gallery[] {
+      asset,
+      caption,
+      alt
+    },
+    "relatedProjects": *[_type == "portfolioProject"
+      && category == ^.category
+      && _id != ^._id
+      && featured == true]
     | order(completionDate desc) [0...3] {
       _id,
       title,

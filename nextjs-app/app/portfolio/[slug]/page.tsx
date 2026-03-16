@@ -1,16 +1,16 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft, ExternalLink, Github, Calendar, User, Tag } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { portfolioProjectQuery, portfolioProjectSlugs } from "@/sanity/lib/queries";
-import { PortfolioProject } from "@/sanity.types";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import CoverImage from "@/app/components/CoverImage";
 import PortableText from "@/app/components/PortableText";
 import DateComponent from "@/app/components/Date";
+import GalleryGrid from "@/app/portfolio/components/GalleryGrid";
+import ShareButtons from "@/app/portfolio/components/ShareButtons";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -25,7 +25,7 @@ export async function generateStaticParams() {
     perspective: "published",
     stega: false,
   });
-  
+
   return data || [];
 }
 
@@ -42,8 +42,8 @@ export async function generateMetadata(
     params,
     stega: false,
   });
-  
-  
+
+
   const previousImages = (await parent).openGraph?.images || [];
   const ogImage = resolveOpenGraphImage(project?.heroMedia?.image);
 
@@ -58,9 +58,9 @@ export async function generateMetadata(
 
 export default async function PortfolioProjectPage(props: Props) {
   const params = await props.params;
-  const { data: project } = await sanityFetch({ 
-    query: portfolioProjectQuery, 
-    params 
+  const { data: project } = await sanityFetch({
+    query: portfolioProjectQuery,
+    params
   });
 
   if (!project?._id) {
@@ -74,7 +74,7 @@ export default async function PortfolioProjectPage(props: Props) {
           <div className="mx-auto max-w-4xl">
             {/* Back Navigation */}
             <div className="mb-8">
-              <Link 
+              <Link
                 href="/portfolio"
                 className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium"
               >
@@ -96,11 +96,11 @@ export default async function PortfolioProjectPage(props: Props) {
                     </span>
                   )}
                 </div>
-                
+
                 <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-4">
                   {project.title}
                 </h1>
-                
+
                 <p className="text-xl text-gray-600 max-w-3xl">
                   {project.shortDescription}
                 </p>
@@ -114,7 +114,7 @@ export default async function PortfolioProjectPage(props: Props) {
                     <DateComponent dateString={project.completionDate} />
                   </div>
                 )}
-                
+
                 {project.client && (
                   <div className="flex items-center gap-2">
                     <User className="h-4 w-4" />
@@ -134,7 +134,7 @@ export default async function PortfolioProjectPage(props: Props) {
             {/* Hero Media */}
             {project.heroMedia && (
               <div className="mb-12">
-                <ProjectHeroMedia heroMedia={project.heroMedia} title={project.title} />
+                <ProjectHeroMedia heroMedia={project.heroMedia} title={project.title ?? ""} />
               </div>
             )}
 
@@ -147,13 +147,21 @@ export default async function PortfolioProjectPage(props: Props) {
                     <PortableText value={project.description} />
                   </div>
                 )}
+
+                {/* Project Gallery */}
+                {project.gallery && project.gallery.length > 0 && (
+                  <section className="mt-12">
+                    <h2 className="text-2xl font-bold text-gray-900 mb-6">Project Gallery</h2>
+                    <GalleryGrid images={project.gallery} />
+                  </section>
+                )}
               </div>
 
               {/* Sidebar */}
               <aside className="lg:col-span-1">
                 <div className="space-y-8">
                   {/* Technical Details */}
-                  <ProjectTechnicalDetails 
+                  <ProjectTechnicalDetails
                     category={project.category}
                     technicalDetails={project.technicalDetails}
                   />
@@ -163,9 +171,9 @@ export default async function PortfolioProjectPage(props: Props) {
                     <div>
                       <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
                       <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag: string, index: number) => (
-                          <span 
-                            key={`project_${project.title}_${tag}`}
+                        {project.tags.map((tag: string) => (
+                          <span
+                            key={`tag-${tag}`}
                             className="inline-flex items-center px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
                           >
                             <Tag className="mr-1 h-3 w-3" />
@@ -175,6 +183,9 @@ export default async function PortfolioProjectPage(props: Props) {
                       </div>
                     </div>
                   )}
+
+                  {/* Share Buttons */}
+                  <ShareButtons title={project.title ?? ""} />
                 </div>
               </aside>
             </div>
@@ -244,16 +255,8 @@ function ProjectHeroMedia({ heroMedia, title }: { heroMedia: any; title: string 
     );
   }
 
-  if (heroMedia.type === 'gallery' && heroMedia.gallery) {
-    return (
-      <div className="grid grid-cols-2 gap-4">
-        {heroMedia.gallery.slice(0, 4).map((image: any, index: number) => (
-          <div key={index} className="aspect-square relative overflow-hidden rounded-lg">
-            <CoverImage image={image} />
-          </div>
-        ))}
-      </div>
-    );
+  if (heroMedia.type === 'gallery' && heroMedia.gallery && heroMedia.gallery.length > 0) {
+    return <GalleryGrid images={heroMedia.gallery} heroLayout />;
   }
 
   // Placeholder for video or other media types
@@ -280,7 +283,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 <h4 className="font-medium text-gray-900 mb-2">Technologies</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.technologies.map((tech: any, index: number) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded"
                     >
@@ -290,10 +293,10 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 </div>
               </div>
             )}
-            
+
             <div className="space-y-3">
               {technicalDetails.githubUrl && (
-                <a 
+                <a
                   href={technicalDetails.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -304,9 +307,9 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                   <ExternalLink className="h-3 w-3" />
                 </a>
               )}
-              
+
               {technicalDetails.liveUrl && (
-                <a 
+                <a
                   href={technicalDetails.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -349,7 +352,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 <h4 className="font-medium text-gray-900 mb-2">Tools Used</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.dataTools.map((tool: string, index: number) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-2 py-1 text-xs font-medium bg-green-50 text-green-700 rounded"
                     >
@@ -359,7 +362,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 </div>
               </div>
             )}
-            
+
             {technicalDetails.methodology && (
               <div>
                 <h4 className="font-medium text-gray-900 mb-2">Methodology</h4>
@@ -377,7 +380,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 <h4 className="font-medium text-gray-900 mb-2">Creative Tools</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.creativeTools.map((tool: string, index: number) => (
-                    <span 
+                    <span
                       key={index}
                       className="px-2 py-1 text-xs font-medium bg-pink-50 text-pink-700 rounded"
                     >
@@ -387,7 +390,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                 </div>
               </div>
             )}
-            
+
             {technicalDetails.duration && (
               <div>
                 <h4 className="font-medium text-gray-900 mb-2">Duration</h4>
@@ -404,7 +407,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
 // Component for related project cards
 function RelatedProjectCard({ project }: { project: any }) {
   return (
-    <Link 
+    <Link
       href={`/portfolio/${project.slug}`}
       className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
     >
@@ -417,18 +420,18 @@ function RelatedProjectCard({ project }: { project: any }) {
           </div>
         )}
       </div>
-      
+
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
           <span className={`px-2 py-1 text-xs font-medium rounded ${getCategoryStyles(project.category)}`}>
             {getCategoryLabel(project.category)}
           </span>
         </div>
-        
+
         <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
           {project.title}
         </h3>
-        
+
         {project.shortDescription && (
           <p className="text-sm text-gray-600 line-clamp-2">
             {project.shortDescription}
