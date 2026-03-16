@@ -1,9 +1,22 @@
-import { Suspense } from "react";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowRight, Code, Database, Cloud, Camera, Globe } from "lucide-react";
+import Image from "next/image";
+import { sanityFetch } from "@/sanity/lib/live";
+import { featuredPortfolioProjectsQuery, paginatedPostsQuery, photographyProjectsQuery } from "@/sanity/lib/queries";
+import { FeaturedPortfolioProjectsQueryResult, PaginatedPostsQueryResult, PhotographyProjectsQueryResult } from "@/sanity.types";
+import PortfolioProjectCard from "@/app/portfolio/components/ProjectCard";
+import DateComponent from "@/app/components/Date";
+import CoverImage from "@/app/components/CoverImage";
+import { urlForImage } from "@/sanity/lib/utils";
 
 export default async function Page() {
+  const [{ data: featuredProjects }, { data: recentPosts }, { data: photoProjects }] = await Promise.all([
+    sanityFetch({ query: featuredPortfolioProjectsQuery }),
+    sanityFetch({ query: paginatedPostsQuery, params: { offset: 0, limit: 2 } }),
+    sanityFetch({ query: photographyProjectsQuery }),
+  ]);
+
   return (
     <>
       {/* Hero Section */}
@@ -20,8 +33,8 @@ export default async function Page() {
                 Hi there <span className="inline-block animate-wave">👋</span> I'm Max
               </h1>
               <p className="text-xl text-gray-600 max-w-2xl mb-8">
-                A software engineer with over 5 years of experience in web development, 
-                data engineering, and cloud solutions. I'm passionate about delivering 
+                A software engineer with over 5 years of experience in web development,
+                data engineering, and cloud solutions. I'm passionate about delivering
                 modern and advanced web features.
               </p>
               <div className="flex flex-wrap gap-4 mt-2 mb-10">
@@ -32,15 +45,15 @@ export default async function Page() {
                 <SkillBadge icon={<Globe size={14} />} text="Languages" />
               </div>
               <div className="flex flex-wrap gap-4">
-                <Link 
-                  href="/portfolio" 
+                <Link
+                  href="/portfolio"
                   className="inline-flex items-center px-5 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
                 >
                   View My Work
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Link>
-                <Link 
-                  href="/resume" 
+                <Link
+                  href="/resume"
                   className="inline-flex items-center px-5 py-3 bg-white border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
                 >
                   Resume
@@ -59,18 +72,18 @@ export default async function Page() {
             <div className="grid md:grid-cols-2 gap-12">
               <div className="space-y-6 text-gray-600">
                 <p>
-                  As an economics graduate, I came from a data analytics background combined 
-                  with visual design experiences. This unique blend allows me to approach 
+                  As an economics graduate, I came from a data analytics background combined
+                  with visual design experiences. This unique blend allows me to approach
                   technical challenges with both analytical rigor and aesthetic sensibility.
                 </p>
                 <p>
-                  Beyond coding, I'm enthusiastic about photography and learning languages. 
-                  I speak Mandarin, English, conversational Japanese, and I'm currently 
+                  Beyond coding, I'm enthusiastic about photography and learning languages.
+                  I speak Mandarin, English, conversational Japanese, and I'm currently
                   learning French.
                 </p>
                 <div className="pt-4">
-                  <Link 
-                    href="/about" 
+                  <Link
+                    href="/about"
                     className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"
                   >
                     Learn more about me
@@ -89,36 +102,35 @@ export default async function Page() {
         </div>
       </div>
 
-      {/* Projects Section */}
+      {/* Featured Projects Section */}
       <div className="border-t border-gray-100 bg-gray-50">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-3xl font-bold tracking-tight text-gray-900">Featured Projects</h2>
-              <Link 
-                href="/portfolio" 
+              <Link
+                href="/portfolio"
                 className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"
               >
                 View all projects
                 <ArrowRight className="ml-1 h-4 w-4" />
               </Link>
             </div>
-            <Suspense fallback={<div>Loading projects...</div>}>
-              {/* Replace with your actual projects component */}
-              {/* await FeaturedProjects() */}
+            {featuredProjects && featuredProjects.length > 0 ? (
               <div className="grid md:grid-cols-2 gap-8">
-                <ProjectCard 
-                  title="Data Pipeline Automation"
-                  description="Built a serverless ETL pipeline processing 10TB+ data monthly"
-                  tags={["AWS Lambda", "Python", "Airflow"]}
-                />
-                <ProjectCard 
-                  title="E-commerce Platform"
-                  description="Full-stack web application with real-time inventory management"
-                  tags={["React", "Node.js", "MongoDB"]}
-                />
+                {featuredProjects.slice(0, 4).map((project: FeaturedPortfolioProjectsQueryResult[number]) => (
+                  <PortfolioProjectCard
+                    key={project._id}
+                    project={project as FeaturedPortfolioProjectsQueryResult[number]}
+                    layoutMode="grid"
+                  />
+                ))}
               </div>
-            </Suspense>
+            ) : (
+              <div className="text-center py-12 text-gray-500">
+                No featured projects yet. Check back soon!
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -140,37 +152,47 @@ export default async function Page() {
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
-                <div className="space-y-6">
-                  <BlogPostCard 
-                    title="Building Efficient Data Pipelines"
-                    date="April 22, 2025"
-                    excerpt="Strategies for designing scalable and maintainable data infrastructures."
-                  />
-                  <BlogPostCard 
-                    title="Modern Web Development Patterns"
-                    date="March 15, 2025"
-                    excerpt="Exploring the latest frontend architecture approaches for better UX."
-                  />
-                </div>
+                {recentPosts && recentPosts.length > 0 ? (
+                  <div className="space-y-6">
+                    {recentPosts.map((post: PaginatedPostsQueryResult[number]) => (
+                      <HomeBlogPostCard key={post._id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-gray-500">No posts yet. Check back soon!</p>
+                )}
               </div>
-              
+
               {/* Photography Section */}
               <div>
                 <div className="flex justify-between items-center mb-6">
                   <h2 className="text-2xl font-bold tracking-tight text-gray-900">Photography</h2>
-                  <Link 
-                    href="/photography" 
+                  <Link
+                    href="/photography"
                     className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800"
                   >
                     View gallery
                     <ArrowRight className="ml-1 h-4 w-4" />
                   </Link>
                 </div>
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="aspect-square bg-gray-100 rounded-lg"></div>
-                  <div className="aspect-square bg-gray-100 rounded-lg"></div>
-                  <div className="aspect-square bg-gray-100 rounded-lg"></div>
-                  <div className="aspect-square bg-gray-100 rounded-lg"></div>
+                <div className="grid grid-cols-2 gap-3">
+                  {photoProjects && photoProjects.length > 0
+                    ? (photoProjects as PhotographyProjectsQueryResult).slice(0, 4).map((p) => {
+                        const src = urlForImage(p.heroImage)?.width(400).height(400).fit("crop").url();
+                        return (
+                          <Link key={p._id} href={`/portfolio/${p.slug}`} className="group block aspect-square relative overflow-hidden rounded-lg bg-gray-100">
+                            {src ? (
+                              <Image src={src} alt={p.title ?? ""} fill className="object-cover transition-transform duration-300 group-hover:scale-105" sizes="200px" />
+                            ) : (
+                              <div className="w-full h-full bg-gray-200" />
+                            )}
+                          </Link>
+                        );
+                      })
+                    : Array.from({ length: 4 }).map((_, i) => (
+                        <div key={i} className="aspect-square bg-gray-100 rounded-lg" />
+                      ))
+                  }
                 </div>
               </div>
             </div>
@@ -186,8 +208,8 @@ export default async function Page() {
             <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
               Interested in collaborating or have a project in mind? Feel free to reach out!
             </p>
-            <Link 
-              href="/contact" 
+            <Link
+              href="/contact"
               className="inline-flex items-center px-5 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
             >
               Contact Me
@@ -199,7 +221,6 @@ export default async function Page() {
   );
 }
 
-// Component for skill badges
 function SkillBadge({ icon, text }: { icon: ReactNode; text: string }) {
   return (
     <div className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-gray-100 text-gray-800">
@@ -209,7 +230,6 @@ function SkillBadge({ icon, text }: { icon: ReactNode; text: string }) {
   );
 }
 
-// Component for language cards
 function LanguageCard({ language, proficiency, flag }: { language: string; proficiency: string; flag: string }) {
   return (
     <div className="bg-gray-50 p-4 rounded-lg">
@@ -220,33 +240,24 @@ function LanguageCard({ language, proficiency, flag }: { language: string; profi
   );
 }
 
-// Component for project cards
-function ProjectCard({ title, description, tags }: { title: string; description: string; tags: string[] }) {
-  return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-      <div className="h-48 bg-gray-100 rounded-lg mb-5"></div>
-      <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-      <p className="text-gray-600 mb-4">{description}</p>
-      <div className="flex flex-wrap gap-2">
-        {tags.map((tag, i) => (
-          <span key={i} className="px-2 py-1 text-xs font-medium bg-indigo-50 text-indigo-700 rounded">
-            {tag}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-// Component for blog post cards
-function BlogPostCard({ title, date, excerpt }: { title: string; date: string; excerpt: string }) {
+function HomeBlogPostCard({ post }: { post: PaginatedPostsQueryResult[number] }) {
+  const { title, slug, excerpt, date, coverImage } = post;
   return (
     <div className="border-b border-gray-100 pb-6">
-      <span className="text-sm text-gray-500">{date}</span>
+      {coverImage && (
+        <div className="aspect-video relative overflow-hidden rounded-lg mb-3">
+          <CoverImage image={coverImage} />
+        </div>
+      )}
+      {date && (
+        <span className="text-sm text-gray-500">
+          <DateComponent dateString={date} />
+        </span>
+      )}
       <h3 className="text-lg font-bold text-gray-900 mt-1 mb-2">{title}</h3>
-      <p className="text-gray-600">{excerpt}</p>
-      <Link 
-        href={`/posts/${title.toLowerCase().replace(/\s+/g, '-')}`}
+      {excerpt && <p className="text-gray-600 line-clamp-2">{excerpt}</p>}
+      <Link
+        href={`/posts/${slug}`}
         className="inline-flex items-center mt-3 text-sm text-indigo-600 font-medium hover:text-indigo-800"
       >
         Read more

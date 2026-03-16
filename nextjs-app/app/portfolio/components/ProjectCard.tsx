@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Calendar, ExternalLink, Github, Tag } from "lucide-react";
 import { PortfolioProjectsQueryResult } from "@/sanity.types";
@@ -174,16 +176,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
           </div>
         )}
 
-        {/* Read more link */}
-        <div className={`pt-4 border-t border-gray-100 ${layoutMode === 'grid' ? 'mt-auto' : 'mt-4'}`}>
-          <Link
-            href={`/portfolio/${slug}`}
-            className="inline-flex items-center text-indigo-600 font-medium hover:text-indigo-800 transition-colors"
-          >
-            View Project
-            <ExternalLink className="ml-1 h-4 w-4" />
-          </Link>
-        </div>
+        
       </div>
     </article>
   );

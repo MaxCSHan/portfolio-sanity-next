@@ -102,9 +102,12 @@ import { PortfolioProject, PortfolioProjectsQueryResult } from "@/sanity.types";
 
 | Route | File | Description |
 |---|---|---|
-| `/` | `app/page.tsx` | Homepage — hero, about, featured projects (placeholder), blog preview, contact CTA |
+| `/` | `app/page.tsx` | Homepage — hero, about, featured projects (live from Sanity), blog preview, contact CTA |
 | `/portfolio` | `app/portfolio/page.tsx` | Portfolio grid with filtering, search, pagination |
 | `/portfolio/[slug]` | `app/portfolio/[slug]/page.tsx` | Individual project detail page |
+| `/photography` | `app/photography/page.tsx` | Two-section gallery: photo series cards + IG-style 3-col photo feed |
+| `/photography/[slug]` | `app/photography/[slug]/page.tsx` | Single photo post — Instagram-style viewer (image + meta sidebar, carousel, lightbox) |
+| `/photography/album/[tag]` | `app/photography/album/[tag]/page.tsx` | Auto-album: all photo posts tagged with a given tag |
 | `/posts` | `app/posts/page.tsx` | Blog post listing |
 | `/posts/[slug]` | `app/posts/[slug]/page.tsx` | Individual blog post |
 | `/resume` | `app/resume/page.tsx` | Interactive resume (static data, print/PDF capable) |
@@ -119,7 +122,6 @@ These routes are referenced in the header and homepage but have no route handler
 | Route | Where Referenced |
 |---|---|
 | `/about` | Header nav, homepage "Learn more" |
-| `/photography` | Header nav, homepage photography section |
 | `/contact` | Header nav, homepage CTA |
 
 ---
@@ -199,6 +201,8 @@ Website Content
 │   ├── Portfolio Projects   ← portfolioProject documents
 │   ├── Technologies         ← technology reference documents
 │   └── Project Categories   ← projectCategory documents
+├── Photography
+│   └── Photo Posts          ← photoPost documents (IG-style feed)
 ├── Content
 │   ├── Pages               ← page documents (page builder)
 │   ├── Blog Posts          ← post documents
@@ -245,6 +249,14 @@ Fields: name, slug, description, accent color, icon name
 
 Fields: title, slug, excerpt, coverImage, content (blockContent), date, author (→ person)
 
+#### `photoPost` — Instagram-style photo posts (feed + albums)
+
+Fields: images array (1–20, each with alt + caption), slug (auto from date), caption (≤500 chars), date, location, tags (used for auto-albums), optional `relatedWork` reference to a `portfolioProject`
+
+**Studio preview:** Shows first image as thumbnail, caption as title, location as subtitle
+
+**Albums:** Tags auto-generate album pages at `/photography/album/[tag]` — no separate album document needed.
+
 #### `page` — CMS-managed pages (page builder)
 
 Fields: name, slug, heading, subheading, pageBuilder array (callToAction, infoSection blocks)
@@ -268,6 +280,17 @@ All queries live in `nextjs-app/sanity/lib/queries.ts`.
 | `portfolioTechnologiesQuery` | All technology docs with `projectCount` (for filter sidebar) |
 | `totalPortfolioProjectsCountQuery` | Count matching current filters (for pagination) |
 | `portfolioProjectSlugs` | All slugs (for `generateStaticParams`) |
+
+**Photography queries:**
+
+| Export | Purpose |
+|---|---|
+| `photographyProjectsQuery` | All `portfolioProject` docs with `category == "photography"` (for series section) |
+| `photoPostsQuery` | All `photoPost` docs ordered by date desc (for IG feed grid) |
+| `photoPostQuery` | Single post by slug — includes images, tags, relatedWork, and related posts (same tag) |
+| `photoAlbumPostsQuery` | All posts with `$tag in tags` (for album page) |
+| `photoAlbumTagsQuery` | All distinct tags across all photoPosts (for `generateStaticParams` on album page) |
+| `photographySlugs` | All photoPost slugs (for `generateStaticParams` on post page) |
 
 ### Important Rules When Creating New CMS Features
 
@@ -299,42 +322,35 @@ All queries live in `nextjs-app/sanity/lib/queries.ts`.
 - **Resume page** — Static resume with print/save-as-PDF capability via `window.print()`
 - **Blog posts** — Listing and detail pages reading from Sanity
 - **Draft mode & Visual Editing** — Full Sanity draft mode pipeline with `<SanityLive>` and `<VisualEditing>`
-- **Sanity Studio structure** — Custom sidebar organizing portfolio, content, and settings
-- **Homepage** — Layout, hero section, about section, skill badges, language cards — built out but project cards are still placeholder data (not connected to Sanity)
-- **Header** — Fixed top nav with all primary nav links
+- **Sanity Studio structure** — Custom sidebar organizing portfolio, photography, content, and settings
+- **Homepage** — Layout, hero section, about section, skill badges, language cards, featured projects (live from Sanity), and latest blog posts (live from Sanity) — fully wired up
+- **Header** — Fixed top nav with all primary nav links; suppressed on photo post pages for immersive viewing
+- **Photography section** — Full `/photography` page with series cards + IG-style photo feed grid; `/photography/[slug]` post viewer with carousel, lightbox, tag pills, related posts, and sidebar meta; `/photography/album/[tag]` auto-album pages
+- **`photoPost` Sanity schema** — New document type for IG-style photo posts with multi-image support (1–20), captions, locations, and tag-based albums
 - **Seed script** — `npm run seed-portfolio` in `nextjs-app/` for adding demo data
 
 ### In Progress / Partially Done 🚧
 
-- **Project detail page** — Basic structure exists; missing lightbox gallery, video player, full-screen modal system, social sharing
-- **Homepage featured projects** — Section exists with placeholder cards; `FeaturedProjects` async component imported but commented out (needs `featuredPortfolioProjectsQuery` integration)
-- **Presentation tool** — Studio configured but `resolveHref` only handles `post` and `page` types, not `portfolioProject`
+- **Presentation tool** — Studio configured but `resolveHref` only handles `post` and `page` types, not `portfolioProject` or `photoPost`
 
 ### To-Do 📋
 
-From the implementation roadmap (`.kiro/specs/portfolio-showcase/tasks.md`):
-
 | # | Feature | Notes |
 |---|---|---|
-| 7 | Full project detail modal/lightbox | Lightbox for galleries, video player, social sharing |
-| 8 | Media optimization | `OptimizedProjectImage` with blur-to-sharp, video autoplay |
-| 9 | Hover effects & animations | Category-specific overlays, staggered animations |
-| 10 | Homepage portfolio integration | Replace placeholder cards with live Sanity data |
-| 11 | SEO — structured data & sitemap | Portfolio projects in sitemap, JSON-LD markup |
-| 12 | Analytics tracking | GA events for project views, filter usage, external links |
-| 13 | Error handling | Error boundaries, retry mechanisms, offline states |
-| 14 | Performance & caching | ISR strategies, code splitting, prefetching |
-| 15 | Mobile interactions | Touch targets, swipe gestures, collapsible mobile filters |
-| 16 | Test suite | Unit tests for components/hooks, integration + E2E tests |
+| 8 | Media optimization | Progressive images, video autoplay |
+| 11 | SEO — structured data & sitemap | Portfolio + photography in sitemap, JSON-LD markup |
+| 12 | Analytics tracking | GA events for project/photo views |
+| 13 | Error handling | Error boundaries, retry mechanisms |
+| 14 | Performance & caching | ISR strategies, code splitting |
+| 15 | Mobile interactions | Touch swipe on photo carousel, collapsible filters |
+| 16 | Test suite | Unit tests for components/hooks, integration + E2E |
 
 ### Missing Pages (Linked but Not Built)
 
 | Page | Status |
 |---|---|
 | `/about` | Not created |
-| `/photography` | Not created |
 | `/contact` | Not created |
-| `/blog/[slug]` (homepage links) | Route exists at `/posts/[slug]`, homepage links point to wrong path |
 
 ---
 
