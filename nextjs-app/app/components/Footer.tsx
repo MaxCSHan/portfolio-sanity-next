@@ -14,11 +14,12 @@ export default function Footer() {
             {/* Brand column */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center justify-center h-10 w-10 bg-[#FFE500] border-2 border-[#FFE500]">
-                  <span className="font-bold text-lg text-[#0D0D0D]">M</span>
+                <div className="flex items-center justify-center h-12 w-12 bg-[#FFE500] border-[#FFE500]">
+                  {/* <span className="font-bold text-lg text-[#0D0D0D]">M</span> */}
+                  <img src="/profile.jpg" alt="Logo" className="h-12 w-12 object-cover" />
                 </div>
                 <span className="text-lg font-bold tracking-tight text-white">
-                  Max
+                  Max, Chen Sih Han
                 </span>
               </div>
               <p className="text-gray-400 mb-6">
