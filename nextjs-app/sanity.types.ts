@@ -1180,6 +1180,49 @@ export type TotalPortfolioProjectsCountQueryResult = number;
 export type PortfolioProjectSlugsResult = Array<{
   slug: string;
 }>;
+// Variable: photographyProjectsQuery
+// Query: *[_type == "portfolioProject" && category == "photography"]  | order(completionDate desc, _createdAt desc) {    _id,    title,    "slug": slug.current,    shortDescription,    "heroImage": heroMedia.image,    "mediaType": heroMedia.type,    featured,    completionDate,    tags,    "location": technicalDetails.cameraInfo.location,    "shootDate": technicalDetails.cameraInfo.shootDate,    "photoCategory": technicalDetails.photoCategory,  }
+export type PhotographyProjectsQueryResult = Array<{
+  _id: string;
+  title: string;
+  slug: string;
+  shortDescription: string;
+  heroImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  } | null;
+  mediaType: "gallery" | "image" | "video" | null;
+  featured: boolean | null;
+  completionDate: string | null;
+  tags: Array<string> | null;
+  location: string | null;
+  shootDate: string | null;
+  photoCategory: "architecture" | "event" | "landscape" | "nature" | "portrait" | "street" | "studio" | null;
+}>;
+// Variable: photoPostsQuery
+// Query: *[_type == "photoPost"] | order(date desc, _createdAt desc) {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "coverImage": images[0]  }
+export type PhotoPostsQueryResult = Array<never>;
+// Variable: photoPostQuery
+// Query: *[_type == "photoPost" && slug.current == $slug][0] {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "relatedWork": relatedWork->{ title, "slug": slug.current, shortDescription },    "relatedPosts": *[_type == "photoPost" && ^.tags[0] in tags && slug.current != $slug]      | order(date desc) [0...6] {        _id,        "slug": slug.current,        "coverImage": images[0],        caption,        "imageCount": count(images)      }  }
+export type PhotoPostQueryResult = null;
+// Variable: photoAlbumPostsQuery
+// Query: *[_type == "photoPost" && $tag in tags] | order(date desc, _createdAt desc) {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "coverImage": images[0]  }
+export type PhotoAlbumPostsQueryResult = Array<never>;
+// Variable: photoAlbumTagsQuery
+// Query: array::unique(*[_type == "photoPost"][].tags[])
+export type PhotoAlbumTagsQueryResult = Array<never>;
+// Variable: photographySlugs
+// Query: *[_type == "photoPost" && defined(slug.current)] {"slug": slug.current}
+export type PhotographySlugsResult = Array<never>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -1202,5 +1245,11 @@ declare module "@sanity/client" {
     "\n  *[_type == \"technology\"] | order(name asc) {\n    _id,\n    name,\n    category,\n    color,\n    \"projectCount\": count(*[_type == \"portfolioProject\" && references(^._id)])\n  }\n": PortfolioTechnologiesQueryResult;
     "\n  count(*[_type == \"portfolioProject\" \n    && ($category == null || category == $category)\n    && ($featured == null || featured == $featured)\n    && ($technologies == null || count(technicalDetails.technologies[references(*[_type == \"technology\" && name in $technologies]._id)]) > 0)\n    && ($search == null || title match $search + \"*\" || shortDescription match $search + \"*\" || tags[] match $search + \"*\")\n  ])\n": TotalPortfolioProjectsCountQueryResult;
     "\n  *[_type == \"portfolioProject\" && defined(slug.current)]\n  {\"slug\": slug.current}\n": PortfolioProjectSlugsResult;
+    "\n  *[_type == \"portfolioProject\" && category == \"photography\"]\n  | order(completionDate desc, _createdAt desc) {\n    _id,\n    title,\n    \"slug\": slug.current,\n    shortDescription,\n    \"heroImage\": heroMedia.image,\n    \"mediaType\": heroMedia.type,\n    featured,\n    completionDate,\n    tags,\n    \"location\": technicalDetails.cameraInfo.location,\n    \"shootDate\": technicalDetails.cameraInfo.shootDate,\n    \"photoCategory\": technicalDetails.photoCategory,\n  }\n": PhotographyProjectsQueryResult;
+    "\n  *[_type == \"photoPost\"] | order(date desc, _createdAt desc) {\n    _id,\n    \"slug\": slug.current,\n    caption,\n    date,\n    location,\n    tags,\n    images[] { asset, alt, caption },\n    \"imageCount\": count(images),\n    \"coverImage\": images[0]\n  }\n": PhotoPostsQueryResult;
+    "\n  *[_type == \"photoPost\" && slug.current == $slug][0] {\n    _id,\n    \"slug\": slug.current,\n    caption,\n    date,\n    location,\n    tags,\n    images[] { asset, alt, caption },\n    \"imageCount\": count(images),\n    \"relatedWork\": relatedWork->{ title, \"slug\": slug.current, shortDescription },\n    \"relatedPosts\": *[_type == \"photoPost\" && ^.tags[0] in tags && slug.current != $slug]\n      | order(date desc) [0...6] {\n        _id,\n        \"slug\": slug.current,\n        \"coverImage\": images[0],\n        caption,\n        \"imageCount\": count(images)\n      }\n  }\n": PhotoPostQueryResult;
+    "\n  *[_type == \"photoPost\" && $tag in tags] | order(date desc, _createdAt desc) {\n    _id,\n    \"slug\": slug.current,\n    caption,\n    date,\n    location,\n    tags,\n    images[] { asset, alt, caption },\n    \"imageCount\": count(images),\n    \"coverImage\": images[0]\n  }\n": PhotoAlbumPostsQueryResult;
+    "\n  array::unique(*[_type == \"photoPost\"][].tags[])\n": PhotoAlbumTagsQueryResult;
+    "\n  *[_type == \"photoPost\" && defined(slug.current)] {\"slug\": slug.current}\n": PhotographySlugsResult;
   }
 }

@@ -223,3 +223,85 @@ export const portfolioProjectSlugs = defineQuery(`
   *[_type == "portfolioProject" && defined(slug.current)]
   {"slug": slug.current}
 `);
+
+// Photography page — all photography projects with photo-specific metadata
+export const photographyProjectsQuery = defineQuery(`
+  *[_type == "portfolioProject" && category == "photography"]
+  | order(completionDate desc, _createdAt desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    shortDescription,
+    "heroImage": heroMedia.image,
+    "mediaType": heroMedia.type,
+    featured,
+    completionDate,
+    tags,
+    "location": technicalDetails.cameraInfo.location,
+    "shootDate": technicalDetails.cameraInfo.shootDate,
+    "photoCategory": technicalDetails.photoCategory,
+  }
+`);
+
+// All photo posts ordered by date desc (for the IG-style feed)
+export const photoPostsQuery = defineQuery(`
+  *[_type == "photoPost"] | order(date desc, _createdAt desc) {
+    _id,
+    "slug": slug.current,
+    caption,
+    date,
+    location,
+    tags,
+    images[] { asset, alt, caption },
+    "imageCount": count(images),
+    "coverImage": images[0]
+  }
+`);
+
+// Single photo post by slug
+export const photoPostQuery = defineQuery(`
+  *[_type == "photoPost" && slug.current == $slug][0] {
+    _id,
+    "slug": slug.current,
+    caption,
+    date,
+    location,
+    tags,
+    images[] { asset, alt, caption },
+    "imageCount": count(images),
+    "relatedWork": relatedWork->{ title, "slug": slug.current, shortDescription },
+    "relatedPosts": *[_type == "photoPost" && ^.tags[0] in tags && slug.current != $slug]
+      | order(date desc) [0...6] {
+        _id,
+        "slug": slug.current,
+        "coverImage": images[0],
+        caption,
+        "imageCount": count(images)
+      }
+  }
+`);
+
+// All photo posts with a specific tag (album page)
+export const photoAlbumPostsQuery = defineQuery(`
+  *[_type == "photoPost" && $tag in tags] | order(date desc, _createdAt desc) {
+    _id,
+    "slug": slug.current,
+    caption,
+    date,
+    location,
+    tags,
+    images[] { asset, alt, caption },
+    "imageCount": count(images),
+    "coverImage": images[0]
+  }
+`);
+
+// All distinct tags across all photo posts (for album listing / static params)
+export const photoAlbumTagsQuery = defineQuery(`
+  array::unique(*[_type == "photoPost"][].tags[])
+`);
+
+// Photo post slugs for generateStaticParams
+export const photographySlugs = defineQuery(`
+  *[_type == "photoPost" && defined(slug.current)] {"slug": slug.current}
+`);
