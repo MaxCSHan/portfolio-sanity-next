@@ -69,14 +69,14 @@ export default async function PortfolioProjectPage(props: Props) {
 
   return (
     <>
-      <div className="bg-white">
+      <div className="bg-[#F2EFE9]">
         <div className="container py-12 lg:py-24">
           <div className="mx-auto max-w-4xl">
             {/* Back Navigation */}
             <div className="mb-8">
               <Link
                 href="/portfolio"
-                className="inline-flex items-center text-indigo-600 hover:text-indigo-800 font-medium"
+                className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
               >
                 <ArrowLeft className="mr-2 h-4 w-4" />
                 Back to Portfolio
@@ -87,17 +87,17 @@ export default async function PortfolioProjectPage(props: Props) {
             <header className="mb-12">
               <div className="mb-6">
                 <div className="flex items-center gap-3 mb-4">
-                  <span className={`px-3 py-1 text-sm font-medium rounded-full ${getCategoryStyles(project.category)}`}>
+                  <span className={`px-3 py-1 text-xs font-mono font-medium rounded-none border border-[#0D0D0D] uppercase ${getCategoryStyles(project.category)}`}>
                     {getCategoryLabel(project.category)}
                   </span>
                   {project.featured && (
-                    <span className="px-3 py-1 text-sm font-medium bg-yellow-100 text-yellow-800 rounded-full">
+                    <span className="px-3 py-1 text-xs font-mono font-medium bg-[#FFE500] text-[#0D0D0D] border border-[#0D0D0D] rounded-none uppercase">
                       Featured
                     </span>
                   )}
                 </div>
 
-                <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl mb-4">
+                <h1 className="font-bricolage font-black text-5xl lg:text-7xl text-[#0D0D0D] tracking-tight mb-4">
                   {project.title}
                 </h1>
 
@@ -107,7 +107,7 @@ export default async function PortfolioProjectPage(props: Props) {
               </div>
 
               {/* Project Meta */}
-              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 border-b border-gray-200 pb-6">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-gray-500 border-b-2 border-[#0D0D0D] pb-6">
                 {project.completionDate && (
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
@@ -133,7 +133,7 @@ export default async function PortfolioProjectPage(props: Props) {
 
             {/* Hero Media */}
             {project.heroMedia && (
-              <div className="mb-12">
+              <div className="mb-12 border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D]">
                 <ProjectHeroMedia heroMedia={project.heroMedia} title={project.title ?? ""} />
               </div>
             )}
@@ -159,22 +159,24 @@ export default async function PortfolioProjectPage(props: Props) {
 
               {/* Sidebar */}
               <aside className="lg:col-span-1">
-                <div className="space-y-8">
+                <div className="space-y-6">
                   {/* Technical Details */}
-                  <ProjectTechnicalDetails
-                    category={project.category}
-                    technicalDetails={project.technicalDetails}
-                  />
+                  <div className="border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white p-5">
+                    <ProjectTechnicalDetails
+                      category={project.category}
+                      technicalDetails={project.technicalDetails}
+                    />
+                  </div>
 
                   {/* Tags */}
                   {project.tags && project.tags.length > 0 && (
-                    <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-4">Tags</h3>
+                    <div className="border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white p-5">
+                      <h3 className="font-mono text-xs uppercase tracking-widest text-[#0D0D0D] mb-4">Tags</h3>
                       <div className="flex flex-wrap gap-2">
                         {project.tags.map((tag: string) => (
                           <span
                             key={`tag-${tag}`}
-                            className="inline-flex items-center px-3 py-1 text-sm bg-gray-100 text-gray-700 rounded-full"
+                            className="inline-flex items-center px-3 py-1 text-xs font-mono border border-[#0D0D0D] rounded-none text-[#0D0D0D]"
                           >
                             <Tag className="mr-1 h-3 w-3" />
                             {tag}
@@ -185,7 +187,9 @@ export default async function PortfolioProjectPage(props: Props) {
                   )}
 
                   {/* Share Buttons */}
-                  <ShareButtons title={project.title ?? ""} />
+                  <div className="border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white p-5">
+                    <ShareButtons title={project.title ?? ""} />
+                  </div>
                 </div>
               </aside>
             </div>
@@ -208,17 +212,17 @@ export default async function PortfolioProjectPage(props: Props) {
   );
 }
 
-// Helper function to get category styles
+// Helper function to get category styles (nb flat colors)
 function getCategoryStyles(category: string) {
-  const styles = {
-    coding: 'bg-blue-100 text-blue-800',
-    photography: 'bg-purple-100 text-purple-800',
-    creative: 'bg-pink-100 text-pink-800',
-    data: 'bg-green-100 text-green-800',
-    animation: 'bg-orange-100 text-orange-800',
-    design: 'bg-indigo-100 text-indigo-800',
+  const styles: Record<string, string> = {
+    coding: 'bg-[#00E87A] text-[#0D0D0D]',
+    photography: 'bg-[#FFE500] text-[#0D0D0D]',
+    data: 'bg-[#0062FF] text-white',
+    creative: 'bg-[#FF3B00] text-white',
+    animation: 'bg-[#0D0D0D] text-white',
+    design: 'bg-[#F2EFE9] text-[#0D0D0D]',
   };
-  return styles[category as keyof typeof styles] || 'bg-gray-100 text-gray-800';
+  return styles[category] || 'bg-[#F2EFE9] text-[#0D0D0D]';
 }
 
 // Helper function to get category label
@@ -249,7 +253,7 @@ function getStatusColor(status: string) {
 function ProjectHeroMedia({ heroMedia, title }: { heroMedia: any; title: string }) {
   if (heroMedia.type === 'image' && heroMedia.image) {
     return (
-      <div className="aspect-video relative overflow-hidden rounded-xl">
+      <div className="aspect-video relative overflow-hidden">
         <CoverImage image={heroMedia.image} priority />
       </div>
     );
@@ -261,7 +265,7 @@ function ProjectHeroMedia({ heroMedia, title }: { heroMedia: any; title: string 
 
   // Placeholder for video or other media types
   return (
-    <div className="aspect-video bg-gray-100 rounded-xl flex items-center justify-center">
+    <div className="aspect-video bg-gray-100 flex items-center justify-center">
       <span className="text-gray-500">Media content</span>
     </div>
   );
@@ -273,19 +277,19 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
 
   return (
     <div>
-      <h3 className="text-lg font-semibold text-gray-900 mb-4">Technical Details</h3>
+      <h3 className="font-mono text-xs uppercase tracking-widest text-[#0D0D0D] mb-4">Technical Details</h3>
       <div className="space-y-4">
         {/* Coding Project Details */}
         {category === 'coding' && (
           <>
             {technicalDetails.technologies && technicalDetails.technologies.length > 0 && (
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Technologies</h4>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Technologies</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.technologies.map((tech: any, index: number) => (
                     <span
                       key={index}
-                      className="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded"
+                      className="px-2 py-0.5 text-xs font-mono border border-[#0D0D0D] rounded-none text-[#0D0D0D]"
                     >
                       {tech.name}
                     </span>
@@ -300,7 +304,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                   href={technicalDetails.githubUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-gray-700 hover:text-gray-900"
+                  className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
                 >
                   <Github className="h-4 w-4" />
                   View Source Code
@@ -313,7 +317,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
                   href={technicalDetails.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-indigo-600 hover:text-indigo-800"
+                  className="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
                 >
                   <ExternalLink className="h-4 w-4" />
                   View Live Demo
@@ -326,8 +330,8 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
         {/* Photography Details */}
         {category === 'photography' && technicalDetails.cameraInfo && (
           <div>
-            <h4 className="font-medium text-gray-900 mb-2">Camera Info</h4>
-            <div className="text-sm text-gray-600 space-y-1">
+            <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Camera Info</h4>
+            <div className="text-sm text-gray-600 space-y-1 font-mono">
               {technicalDetails.cameraInfo.camera && (
                 <div>Camera: {technicalDetails.cameraInfo.camera}</div>
               )}
@@ -349,12 +353,12 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
           <>
             {technicalDetails.dataTools && technicalDetails.dataTools.length > 0 && (
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Tools Used</h4>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Tools Used</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.dataTools.map((tool: string, index: number) => (
                     <span
                       key={index}
-                      className="px-2 py-1 text-xs font-medium bg-green-50 text-green-700 rounded"
+                      className="px-2 py-0.5 text-xs font-mono border border-[#0D0D0D] rounded-none bg-[#0062FF] text-white"
                     >
                       {tool}
                     </span>
@@ -365,7 +369,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
 
             {technicalDetails.methodology && (
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Methodology</h4>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Methodology</h4>
                 <p className="text-sm text-gray-600">{technicalDetails.methodology}</p>
               </div>
             )}
@@ -377,12 +381,12 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
           <>
             {technicalDetails.creativeTools && technicalDetails.creativeTools.length > 0 && (
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Creative Tools</h4>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Creative Tools</h4>
                 <div className="flex flex-wrap gap-2">
                   {technicalDetails.creativeTools.map((tool: string, index: number) => (
                     <span
                       key={index}
-                      className="px-2 py-1 text-xs font-medium bg-pink-50 text-pink-700 rounded"
+                      className="px-2 py-0.5 text-xs font-mono border border-[#0D0D0D] rounded-none bg-[#FF3B00] text-white"
                     >
                       {tool}
                     </span>
@@ -393,7 +397,7 @@ function ProjectTechnicalDetails({ category, technicalDetails }: { category: str
 
             {technicalDetails.duration && (
               <div>
-                <h4 className="font-medium text-gray-900 mb-2">Duration</h4>
+                <h4 className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-2">Duration</h4>
                 <p className="text-sm text-gray-600">{technicalDetails.duration}</p>
               </div>
             )}
@@ -409,7 +413,7 @@ function RelatedProjectCard({ project }: { project: any }) {
   return (
     <Link
       href={`/portfolio/${project.slug}`}
-      className="group block bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+      className="group block bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#0D0D0D] transition-all duration-100 overflow-hidden"
     >
       <div className="aspect-video relative overflow-hidden">
         {project.heroImage ? (
@@ -423,12 +427,12 @@ function RelatedProjectCard({ project }: { project: any }) {
 
       <div className="p-4">
         <div className="flex items-center gap-2 mb-2">
-          <span className={`px-2 py-1 text-xs font-medium rounded ${getCategoryStyles(project.category)}`}>
+          <span className={`px-2 py-1 text-xs font-mono font-medium border border-[#0D0D0D] rounded-none uppercase ${getCategoryStyles(project.category)}`}>
             {getCategoryLabel(project.category)}
           </span>
         </div>
 
-        <h3 className="font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors mb-2">
+        <h3 className="font-semibold text-[#0D0D0D] group-hover:underline decoration-[#FFE500] underline-offset-2 mb-2">
           {project.title}
         </h3>
 

@@ -10,11 +10,22 @@ export default {
     },
     extend: {
       boxShadow: {
-        layer: "0 35px 60px -15px rgba(0, 0, 0, 0.3)",
+        "nb-shadow": "4px 4px 0px #0D0D0D",
+        "nb-shadow-sm": "2px 2px 0px #0D0D0D",
+        "nb-shadow-y": "4px 4px 0px #FFE500",
       },
       colors: {
         black: "#0d0e12",
         white: "#fff",
+        // NB palette
+        "nb-black": "#0D0D0D",
+        "nb-bg": "#F2EFE9",
+        "nb-white": "#FFFFFF",
+        "nb-yellow": "#FFE500",
+        "nb-red": "#FF3B00",
+        "nb-green": "#00E87A",
+        "nb-blue": "#0062FF",
+        // gray scale
         cyan: {
           50: "#e7fefe",
           100: "#c5fcfc",
@@ -96,6 +107,8 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-inter)"],
+        bricolage: ["var(--font-bricolage)"],
+        mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "monospace"],
       },
     },
   },

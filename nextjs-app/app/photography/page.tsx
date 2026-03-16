@@ -52,7 +52,7 @@ export default async function PhotographyPage() {
       <div className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl lg:max-w-4xl">
           <h1
-            className="font-[family-name:var(--font-cormorant)] text-7xl sm:text-8xl font-light tracking-tight text-gray-900 mb-5"
+            className="font-bricolage font-black text-7xl sm:text-8xl tracking-tight text-gray-900 mb-5"
             style={{ lineHeight: 1 }}
           >
             Photography
@@ -68,10 +68,10 @@ export default async function PhotographyPage() {
         <section className="container pb-20">
           <div className="mx-auto max-w-7xl">
             <div className="flex items-baseline justify-between mb-8">
-              <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light text-gray-900">
+              <h2 className="font-mono text-xs uppercase tracking-widest text-gray-500">
                 Series
               </h2>
-              <span className="text-sm text-gray-400">
+              <span className="font-mono text-xs text-gray-400">
                 {typedSeries.length} {typedSeries.length === 1 ? "series" : "series"}
               </span>
             </div>
@@ -88,11 +88,11 @@ export default async function PhotographyPage() {
       <section className="container pb-24">
         <div className="mx-auto max-w-7xl">
           <div className="flex items-baseline justify-between mb-8">
-            <h2 className="font-[family-name:var(--font-cormorant)] text-3xl font-light text-gray-900">
+            <h2 className="font-mono text-xs uppercase tracking-widest text-gray-500">
               Photos
             </h2>
             {typedPosts.length > 0 && (
-              <span className="text-sm text-gray-400">{typedPosts.length} posts</span>
+              <span className="font-mono text-xs text-gray-400">{typedPosts.length} posts</span>
             )}
           </div>
 
@@ -125,7 +125,7 @@ function SeriesCard({ project, index }: { project: PhotoSeries; index: number })
   return (
     <Link
       href={`/portfolio/${slug}`}
-      className="group relative block overflow-hidden rounded-lg bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+      className="group relative block overflow-hidden rounded-lg bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0D0D0D]"
       style={{
         opacity: 0,
         animation: `fadeInUp 0.5s ease forwards`,
@@ -156,7 +156,7 @@ function SeriesCard({ project, index }: { project: PhotoSeries; index: number })
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <div className="p-4">
-        <p className="font-[family-name:var(--font-cormorant)] text-xl font-medium text-gray-900 leading-tight group-hover:text-indigo-600 transition-colors">
+        <p className="font-bricolage font-bold text-xl text-gray-900 leading-tight group-hover:text-gray-600 transition-colors">
           {title}
         </p>
         {location && (
@@ -184,7 +184,7 @@ function PhotoGridCell({ post, index }: { post: PhotoPost; index: number }) {
   return (
     <Link
       href={`/photography/${slug}`}
-      className="group relative block aspect-square overflow-hidden bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500"
+      className="group relative block aspect-square overflow-hidden bg-gray-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0D0D0D]"
       style={{
         opacity: 0,
         animation: `fadeIn 0.4s ease forwards`,

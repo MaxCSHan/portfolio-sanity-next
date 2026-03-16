@@ -289,74 +289,67 @@ export default function ResumePage() {
         }
       `}</style>
       
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#F2EFE9]">
       {/* Standard web view */}
       <div className="standard-view print-hide">
-        {/* Hero section with gradients */}
-        <div className="bg-gradient-to-br from-indigo-600 to-indigo-800 text-white">
+        {/* Hero section */}
+        <div className="bg-[#0D0D0D] text-white border-b-2 border-[#0D0D0D]">
           <div className="container mx-auto px-4 py-16 md:py-24">
             <div className="max-w-5xl mx-auto">
               <div className="flex flex-col md:flex-row md:items-center md:justify-between">
                 <div className="mb-6 md:mb-0">
-                  <h1 className="text-4xl md:text-5xl font-bold mb-3 tracking-tight">{resumeData.name}</h1>
-                  <h2 className="text-xl md:text-2xl font-light text-indigo-100 mb-4">{resumeData.title}</h2>
-                  <div className="flex items-center text-indigo-200 mb-2">
-                    <MapPin size={18} className="mr-2"/> 
+                  <h1 className="font-bricolage font-black text-4xl md:text-6xl mb-3 tracking-tight">{resumeData.name}</h1>
+                  <h2 className="font-mono text-sm text-gray-400 uppercase tracking-widest mb-4">{resumeData.title}</h2>
+                  <div className="flex items-center text-gray-400 mb-2 font-mono text-sm">
+                    <MapPin size={18} className="mr-2"/>
                     <span>{resumeData.location}</span>
                   </div>
                 </div>
-                
+
                 {/* Contact icons */}
-                <div className="flex flex-wrap gap-4">
-                  <a href={`mailto:${resumeData.contact.email}`} className="flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                <div className="flex flex-wrap gap-3">
+                  <a href={`mailto:${resumeData.contact.email}`} className="flex items-center px-3 py-2 border border-gray-700 hover:border-[#FFE500] hover:text-[#FFE500] transition-colors font-mono text-sm">
                     <Mail size={18} className="mr-2"/>
-                    <span className="text-sm">Email</span>
+                    <span>Email</span>
                   </a>
-                  <a href={`https://${resumeData.contact.github}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                  <a href={`https://${resumeData.contact.github}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 border border-gray-700 hover:border-[#FFE500] hover:text-[#FFE500] transition-colors font-mono text-sm">
                     <Github size={18} className="mr-2"/>
-                    <span className="text-sm">GitHub</span>
+                    <span>GitHub</span>
                   </a>
-                  <a href={`https://${resumeData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                  <a href={`https://${resumeData.contact.linkedin}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 border border-gray-700 hover:border-[#FFE500] hover:text-[#FFE500] transition-colors font-mono text-sm">
                     <Linkedin size={18} className="mr-2"/>
-                    <span className="text-sm">LinkedIn</span>
+                    <span>LinkedIn</span>
                   </a>
-                  <a href={`https://${resumeData.contact.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                  <a href={`https://${resumeData.contact.website}`} target="_blank" rel="noopener noreferrer" className="flex items-center px-3 py-2 border border-gray-700 hover:border-[#FFE500] hover:text-[#FFE500] transition-colors font-mono text-sm">
                     <Globe size={18} className="mr-2"/>
-                    <span className="text-sm">Website</span>
+                    <span>Website</span>
                   </a>
                 </div>
               </div>
             </div>
           </div>
-          
-          {/* Wave divider */}
-          <div className="relative h-16 md:h-24">
-            <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 74" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              <path d="M0,0 C240,60 480,80 720,60 C960,40 1200,10 1440,30 L1440,74 L0,74 Z" fill="#f9fafb"/>
-            </svg>
-          </div>
         </div>
 
-        <div className="container mx-auto px-4 pb-16 -mt-6">
+        <div className="container mx-auto px-4 pb-16 pt-8">
           <div className="max-w-5xl mx-auto">
           {/* Main content */}
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
             {/* Left column */}
             <div className="lg:col-span-1">
               {/* About Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+              <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-6 mb-6">
                 <div className="flex items-center mb-4">
-                  <User size={20} className="text-indigo-600 mr-2" />
-                  <h2 className="text-xl font-bold text-gray-900">About Me</h2>
+                  <User size={20} className="text-[#0D0D0D] mr-2" />
+                  <h2 className="font-bricolage font-bold text-xl text-[#0D0D0D]">About Me</h2>
                 </div>
                 <p className="text-gray-600 leading-relaxed">{resumeData.about}</p>
               </div>
-              
+
               {/* Technical Proficiency */}
-              <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-6">
                 <div className="flex items-center mb-4">
-                  <Code size={20} className="text-indigo-600 mr-2" />
-                  <h2 className="text-xl font-bold text-gray-900">Technical Proficiency</h2>
+                  <Code size={20} className="text-[#0D0D0D] mr-2" />
+                  <h2 className="font-bricolage font-bold text-xl text-[#0D0D0D]">Technical Proficiency</h2>
                 </div>
                 
                 <div className="space-y-6">
@@ -420,10 +413,10 @@ export default function ResumePage() {
             {/* Right column - Experience and Education */}
             <div className="lg:col-span-2">
               {/* Experience Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 mb-6">
+              <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-6 mb-6">
                 <div className="flex items-center mb-6">
-                  <Briefcase size={20} className="text-indigo-600 mr-2" />
-                  <h2 className="text-xl font-bold text-gray-900">Experience</h2>
+                  <Briefcase size={20} className="text-[#0D0D0D] mr-2" />
+                  <h2 className="font-bricolage font-bold text-xl text-[#0D0D0D]">Experience</h2>
                 </div>
                 
                 <div className="space-y-8">
@@ -480,10 +473,10 @@ export default function ResumePage() {
               </div>
 
               {/* Education Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6">
+              <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-6">
                 <div className="flex items-center mb-6">
-                  <GraduationCap size={20} className="text-indigo-600 mr-2" />
-                  <h2 className="text-xl font-bold text-gray-900">Education</h2>
+                  <GraduationCap size={20} className="text-[#0D0D0D] mr-2" />
+                  <h2 className="font-bricolage font-bold text-xl text-[#0D0D0D]">Education</h2>
                 </div>
                 
                 <div className="space-y-8">
@@ -527,17 +520,17 @@ export default function ResumePage() {
 
                       {/* Action buttons */}
           <div className="mt-12 flex justify-center gap-4 flex-wrap">
-            <Link 
-              href="/" 
-              className="inline-flex items-center px-4 py-2 text-indigo-600 bg-indigo-50 rounded-lg hover:bg-indigo-100 transition-colors"
+            <Link
+              href="/"
+              className="inline-flex items-center px-4 py-2 bg-white text-[#0D0D0D] border-2 border-[#0D0D0D] font-mono text-sm rounded-none shadow-[4px_4px_0px_#0D0D0D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#0D0D0D] transition-all duration-100"
             >
               <ChevronLeft size={20} className="mr-2" />
               Back to Home
             </Link>
-            
+
             <button
               onClick={() => window.print()}
-              className="inline-flex items-center px-4 py-2 text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors"
+              className="inline-flex items-center px-4 py-2 bg-[#FFE500] text-[#0D0D0D] border-2 border-[#0D0D0D] font-mono text-sm rounded-none shadow-[4px_4px_0px_#0D0D0D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#0D0D0D] transition-all duration-100"
             >
               <Printer size={20} className="mr-2" />
               Print / Save as PDF

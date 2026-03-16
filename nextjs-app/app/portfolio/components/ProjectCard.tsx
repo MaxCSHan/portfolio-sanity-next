@@ -31,7 +31,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
   } = project;
 
   return (
-    <article className={`group bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-200 ${
+    <article className={`group bg-white border-2 border-[#0D0D0D] rounded-none overflow-hidden shadow-[4px_4px_0px_#0D0D0D] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_#0D0D0D] transition-all duration-100 ${
       layoutMode === 'grid' ? 'flex flex-col h-full' : ''
     }`}>
       {/* Hero Media */}
@@ -50,7 +50,6 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         {/* Category-specific hover overlay */}
         <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
           <div className="flex gap-3">
-            {/* Coding project links */}
             {category === 'coding' && (
               <>
                 {technicalDetails?.githubUrl && (
@@ -58,7 +57,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
                     href={technicalDetails.githubUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-white hover:bg-white/30 transition-colors"
+                    className="p-2 bg-[#FFE500] border border-[#0D0D0D] rounded-none text-[#0D0D0D] hover:bg-white transition-colors"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <Github className="h-5 w-5" />
@@ -69,7 +68,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
                     href={technicalDetails.liveUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="p-2 bg-white/20 backdrop-blur-sm rounded-lg text-white hover:bg-white/30 transition-colors"
+                    className="p-2 bg-[#FFE500] border border-[#0D0D0D] rounded-none text-[#0D0D0D] hover:bg-white transition-colors"
                     onClick={(e) => e.stopPropagation()}
                   >
                     <ExternalLink className="h-5 w-5" />
@@ -83,7 +82,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         {/* Featured badge */}
         {featured && (
           <div className="absolute top-3 left-3">
-            <span className="px-2 py-1 text-xs font-medium bg-yellow-100 text-yellow-800 rounded-full">
+            <span className="px-2 py-1 text-xs font-mono font-medium bg-[#FFE500] text-[#0D0D0D] border border-[#0D0D0D] rounded-none uppercase">
               Featured
             </span>
           </div>
@@ -92,7 +91,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         {/* Status indicator */}
         {status && status !== 'completed' && (
           <div className="absolute top-3 right-3">
-            <span className={`px-2 py-1 text-xs font-medium rounded-full ${getStatusStyles(status)}`}>
+            <span className={`px-2 py-1 text-xs font-mono font-medium rounded-none border border-[#0D0D0D] uppercase ${getStatusStyles(status)}`}>
               {status.replace('-', ' ')}
             </span>
           </div>
@@ -103,11 +102,11 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
       <div className={`p-6 ${layoutMode === 'grid' ? 'flex-1 flex flex-col' : ''}`}>
         {/* Category and Date */}
         <div className="flex items-center justify-between mb-3">
-          <span className={`px-3 py-1 text-sm font-medium rounded-full ${getCategoryStyles(category)}`}>
+          <span className={`px-3 py-1 text-xs font-mono font-medium rounded-none border border-[#0D0D0D] uppercase ${getCategoryStyles(category)}`}>
             {getCategoryLabel(category)}
           </span>
           {completionDate && (
-            <div className="flex items-center gap-1 text-xs text-gray-500">
+            <div className="flex items-center gap-1 text-xs text-gray-500 font-mono">
               <Calendar className="h-3 w-3" />
               <DateComponent dateString={completionDate} />
             </div>
@@ -115,7 +114,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         </div>
 
         {/* Title */}
-        <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-indigo-600 transition-colors">
+        <h3 className="text-xl font-bold text-[#0D0D0D] mb-3 group-hover:underline decoration-[#FFE500] underline-offset-2 transition-none">
           <Link href={`/portfolio/${slug}`} className="block">
             {title}
           </Link>
@@ -130,7 +129,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
 
         {/* Client */}
         {client && (
-          <p className="text-sm text-gray-500 mb-4">
+          <p className="text-sm text-gray-500 mb-4 font-mono">
             Client: {client}
           </p>
         )}
@@ -140,15 +139,15 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
           <div className="mb-4">
             <div className="flex flex-wrap gap-2">
               {technologies.slice(0, 3).map((tech: any, index: number) => (
-                <span 
+                <span
                   key={index}
-                  className="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded"
+                  className="px-2 py-0.5 text-xs font-mono font-medium border border-[#0D0D0D] rounded-none text-[#0D0D0D] bg-transparent"
                 >
                   {tech.name}
                 </span>
               ))}
               {technologies.length > 3 && (
-                <span className="px-2 py-1 text-xs font-medium bg-gray-50 text-gray-600 rounded">
+                <span className="px-2 py-0.5 text-xs font-mono font-medium border border-[#0D0D0D] rounded-none text-gray-600 bg-transparent">
                   +{technologies.length - 3} more
                 </span>
               )}
@@ -160,44 +159,42 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
         {tags && tags.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {tags.slice(0, 2).map((tag, index) => (
-              <span 
+              <span
                 key={index}
-                className="inline-flex items-center px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded"
+                className="inline-flex items-center px-2 py-0.5 text-xs font-mono border border-[#0D0D0D] rounded-none text-[#0D0D0D]"
               >
                 <Tag className="mr-1 h-3 w-3" />
                 {tag}
               </span>
             ))}
             {tags.length > 2 && (
-              <span className="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">
+              <span className="px-2 py-0.5 text-xs font-mono border border-[#0D0D0D] rounded-none text-gray-600">
                 +{tags.length - 2} more
               </span>
             )}
           </div>
         )}
-
-        
       </div>
     </article>
   );
 }
 
-// Helper function to get category styles
+// Helper function to get category styles (nb flat colors)
 function getCategoryStyles(category: string) {
-  const styles = {
-    coding: 'bg-blue-100 text-blue-800',
-    photography: 'bg-purple-100 text-purple-800',
-    creative: 'bg-pink-100 text-pink-800',
-    data: 'bg-green-100 text-green-800',
-    animation: 'bg-orange-100 text-orange-800',
-    design: 'bg-indigo-100 text-indigo-800',
+  const styles: Record<string, string> = {
+    coding: 'bg-[#00E87A] text-[#0D0D0D]',
+    photography: 'bg-[#FFE500] text-[#0D0D0D]',
+    data: 'bg-[#0062FF] text-white',
+    creative: 'bg-[#FF3B00] text-white',
+    animation: 'bg-[#0D0D0D] text-white',
+    design: 'bg-[#F2EFE9] text-[#0D0D0D]',
   };
-  return styles[category as keyof typeof styles] || 'bg-gray-100 text-gray-800';
+  return styles[category] || 'bg-[#F2EFE9] text-[#0D0D0D]';
 }
 
 // Helper function to get category label
 function getCategoryLabel(category: string) {
-  const labels = {
+  const labels: Record<string, string> = {
     coding: 'Coding',
     photography: 'Photography',
     creative: 'Creative',
@@ -205,15 +202,15 @@ function getCategoryLabel(category: string) {
     animation: 'Animation',
     design: 'Design',
   };
-  return labels[category as keyof typeof labels] || category;
+  return labels[category] || category;
 }
 
 // Helper function to get status styles
 function getStatusStyles(status: string) {
-  const styles = {
-    'in-progress': 'bg-yellow-100 text-yellow-800',
-    'on-hold': 'bg-red-100 text-red-800',
-    'archived': 'bg-gray-100 text-gray-800',
+  const styles: Record<string, string> = {
+    'in-progress': 'bg-[#FFE500] text-[#0D0D0D]',
+    'on-hold': 'bg-[#FF3B00] text-white',
+    'archived': 'bg-gray-200 text-gray-700',
   };
-  return styles[status as keyof typeof styles] || 'bg-gray-100 text-gray-800';
+  return styles[status] || 'bg-gray-200 text-gray-700';
 }

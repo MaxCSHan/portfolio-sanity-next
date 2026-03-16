@@ -24,18 +24,16 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <div className="bg-gradient-to-r from-indigo-50 via-white to-amber-50 relative">
-        <div className="bg-gradient-to-b from-white w-full h-40 absolute top-0" />
-        <div className="bg-gradient-to-t from-white w-full h-40 absolute bottom-0" />
-        <div className="container relative">
+      <div className="bg-[#F2EFE9]">
+        <div className="container">
           <div className="mx-auto max-w-3xl py-24 lg:py-32 lg:max-w-4xl lg:px-12">
-            <span className="px-3 py-1 text-xs font-medium bg-indigo-100 text-indigo-800 rounded-full">
+            <span className="px-3 py-1 text-xs font-mono font-medium bg-[#FFE500] text-[#0D0D0D] border-2 border-[#0D0D0D] uppercase tracking-widest">
               About Me
             </span>
-            <h1 className="font-display text-5xl sm:text-6xl font-bold tracking-tight text-gray-900 mt-6 mb-4">
-              Hey, I'm Max
+            <h1 className="font-bricolage font-black text-6xl lg:text-8xl text-[#0D0D0D] tracking-tight mt-6 mb-4 leading-none">
+              Hey, I&apos;m Max
             </h1>
-            <div className="flex items-center gap-2 text-gray-500 mb-6">
+            <div className="flex items-center gap-2 text-gray-500 mb-6 font-mono text-sm">
               <MapPin size={16} />
               <span>Taipei–Keelung Metropolitan Area, Taiwan</span>
             </div>
@@ -50,10 +48,10 @@ export default function AboutPage() {
       </div>
 
       {/* My Story */}
-      <div className="border-t border-gray-100 bg-white">
+      <div className="border-t-2 border-[#0D0D0D] bg-white">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-10">
+            <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D] mb-10">
               My Story
             </h2>
             <div className="grid md:grid-cols-2 gap-12 text-gray-600 leading-relaxed">
@@ -61,8 +59,8 @@ export default function AboutPage() {
                 <p>
                   My path into tech started with economics. At National Taiwan
                   University I studied econometrics and data analytics, which
-                  gave me a habit of asking <em>"what does the data actually
-                  say?"</em> before jumping to conclusions — a reflex that still
+                  gave me a habit of asking <em>&ldquo;what does the data actually
+                  say?&rdquo;</em> before jumping to conclusions — a reflex that still
                   shapes how I approach engineering problems today.
                 </p>
                 <p>
@@ -79,8 +77,8 @@ export default function AboutPage() {
                   After university I went full-stack at TPI Software, then moved
                   to Rakuten where I shipped user-facing features for a major
                   e-commerce platform at scale using Ruby on Rails and React.
-                  That taught me what "high traffic" really means — and why
-                  clean architecture matters even when deadlines don't care.
+                  That taught me what &ldquo;high traffic&rdquo; really means — and why
+                  clean architecture matters even when deadlines don&apos;t care.
                 </p>
                 <p>
                   Today at Vpon I architect AI agent products using LangGraph
@@ -96,41 +94,40 @@ export default function AboutPage() {
       </div>
 
       {/* What I Do */}
-      <div className="border-t border-gray-100 bg-gray-50">
+      <div className="border-t-2 border-[#0D0D0D] bg-[#F2EFE9]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">
+            <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D] mb-4">
               What I Do
             </h2>
-            <p className="text-gray-500 mb-12 max-w-xl">
-              Five-plus years across frontend, backend, data, and AI means I can
-              own an entire vertical — or slot into any layer of it.
+            <p className="font-mono text-sm text-gray-500 uppercase tracking-widest mb-12 max-w-xl">
+              Five-plus years across frontend, backend, data, and AI
             </p>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
+            <div className="grid sm:grid-cols-2 gap-6">
               <FocusCard
                 icon={<Brain size={22} />}
-                accent="indigo"
+                accent="yellow"
                 title="AI Agent Architecture"
                 description="Designing stateful, multi-agent workflows with LangGraph that go beyond simple RAG — autonomous systems capable of complex reasoning and internal automation."
                 tags={["LangGraph", "LangChain", "LLM Agents", "BQML"]}
               />
               <FocusCard
                 icon={<Database size={22} />}
-                accent="amber"
+                accent="blue"
                 title="Data Engineering"
                 description="Building robust ELT pipelines on GCP with dbt and BigQuery. I treat data infrastructure with the same engineering discipline as production code."
                 tags={["Python", "dbt", "Airflow", "BigQuery", "Pub/Sub"]}
               />
               <FocusCard
                 icon={<Cloud size={22} />}
-                accent="indigo"
+                accent="green"
                 title="Backend & Cloud"
                 description="Deploying reliable services on GCP — Cloud Run, Cloud Functions, FastAPI. GCP Professional Data Engineering certified."
                 tags={["GCP", "FastAPI", "Cloud Run", "Ruby on Rails", "PostgreSQL"]}
               />
               <FocusCard
                 icon={<Code2 size={22} />}
-                accent="amber"
+                accent="red"
                 title="Frontend Engineering"
                 description="Building fast, accessible interfaces with React and Next.js. This portfolio is a living example — Next.js 15 App Router backed by Sanity CMS."
                 tags={["TypeScript", "React", "Next.js", "Tailwind"]}
@@ -141,10 +138,10 @@ export default function AboutPage() {
       </div>
 
       {/* Certifications */}
-      <div className="border-t border-gray-100 bg-white">
+      <div className="border-t-2 border-[#0D0D0D] bg-white">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-10">
+            <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D] mb-10">
               Certifications
             </h2>
             <div className="grid sm:grid-cols-2 gap-6">
@@ -152,13 +149,13 @@ export default function AboutPage() {
                 icon={<Award size={20} />}
                 title="Professional Data Engineer"
                 issuer="Google Cloud Certified"
-                color="indigo"
+                accentColor="#0062FF"
               />
               <CertCard
                 icon={<Layers size={20} />}
                 title="Generative AI Leader"
                 issuer="Google Cloud Certified"
-                color="amber"
+                accentColor="#00E87A"
               />
             </div>
           </div>
@@ -166,24 +163,23 @@ export default function AboutPage() {
       </div>
 
       {/* Beyond the Code */}
-      <div className="border-t border-gray-100 bg-gray-50">
+      <div className="border-t-2 border-[#0D0D0D] bg-[#F2EFE9]">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">
+            <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D] mb-4">
               Beyond the Code
             </h2>
-            <p className="text-gray-500 mb-12 max-w-xl">
-              The things I care about when the laptop is closed — though they
-              tend to bleed back into how I think about work.
+            <p className="font-mono text-sm text-gray-500 uppercase tracking-widest mb-12 max-w-xl">
+              Things I care about when the laptop is closed
             </p>
             <div className="grid md:grid-cols-2 gap-12">
               {/* Photography */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-700">
+                  <div className="h-10 w-10 border-2 border-[#0D0D0D] bg-[#FFE500] flex items-center justify-center text-[#0D0D0D]">
                     <Camera size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">
+                  <h3 className="font-bricolage font-bold text-xl text-[#0D0D0D]">
                     Photography
                   </h3>
                 </div>
@@ -195,7 +191,7 @@ export default function AboutPage() {
                 </p>
                 <Link
                   href="/photography"
-                  className="inline-flex items-center text-amber-700 font-medium hover:text-amber-900"
+                  className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
                 >
                   Browse the gallery
                   <ArrowRight className="ml-1 h-4 w-4" />
@@ -205,15 +201,15 @@ export default function AboutPage() {
               {/* Languages */}
               <div className="space-y-4">
                 <div className="flex items-center gap-3 mb-4">
-                  <div className="h-10 w-10 rounded-lg bg-indigo-100 flex items-center justify-center text-indigo-700">
+                  <div className="h-10 w-10 border-2 border-[#0D0D0D] bg-[#00E87A] flex items-center justify-center text-[#0D0D0D]">
                     <Globe size={20} />
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Languages</h3>
+                  <h3 className="font-bricolage font-bold text-xl text-[#0D0D0D]">Languages</h3>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Learning a language is learning a way of thinking. I'm always
+                  Learning a language is learning a way of thinking. I&apos;m always
                   in at least one language and at least one programming language
-                  I didn't know last year.
+                  I didn&apos;t know last year.
                 </p>
                 <div className="grid grid-cols-2 gap-3 mt-4">
                   <LangCard language="Mandarin" level="Native" flag="🇹🇼" />
@@ -228,37 +224,37 @@ export default function AboutPage() {
       </div>
 
       {/* CTA */}
-      <div className="border-t border-gray-100 bg-indigo-50">
+      <div className="border-t-2 border-[#0D0D0D] bg-[#0D0D0D]">
         <div className="container py-16">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
             <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-8">
               <div>
-                <h2 className="text-3xl font-bold tracking-tight text-gray-900 mb-3">
-                  Let's connect
+                <h2 className="font-bricolage font-black text-4xl text-white mb-3">
+                  Let&apos;s connect
                 </h2>
-                <p className="text-gray-600 max-w-md">
-                  Whether you're hiring, collaborating, or just curious about
-                  AI agent architecture — I'm always happy to talk.
+                <p className="text-gray-400 max-w-md">
+                  Whether you&apos;re hiring, collaborating, or just curious about
+                  AI agent architecture — I&apos;m always happy to talk.
                 </p>
               </div>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/portfolio"
-                  className="inline-flex items-center px-5 py-3 bg-white border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center px-5 py-3 bg-transparent text-white border-2 border-white font-medium rounded-none hover:bg-white hover:text-[#0D0D0D] transition-colors"
                 >
                   View Work
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
                 <Link
                   href="/resume"
-                  className="inline-flex items-center px-5 py-3 bg-white border border-gray-300 rounded-lg font-medium text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center px-5 py-3 bg-transparent text-white border-2 border-white font-medium rounded-none hover:bg-white hover:text-[#0D0D0D] transition-colors"
                 >
                   Resume
                   <ChevronRight className="ml-1 h-4 w-4" />
                 </Link>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center px-5 py-3 bg-indigo-600 text-white rounded-lg font-medium hover:bg-indigo-700 transition-colors"
+                  className="inline-flex items-center px-5 py-3 bg-[#FFE500] text-[#0D0D0D] border-2 border-[#FFE500] font-medium rounded-none shadow-[4px_4px_0px_rgba(255,255,255,0.3)] hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-[2px_2px_0_rgba(255,255,255,0.3)] transition-all duration-100"
                 >
                   Contact Me
                   <ArrowRight className="ml-2 h-4 w-4" />
@@ -282,35 +278,39 @@ function FocusCard({
   tags,
 }: {
   icon: React.ReactNode;
-  accent: "indigo" | "amber";
+  accent: "yellow" | "blue" | "green" | "red";
   title: string;
   description: string;
   tags: string[];
 }) {
-  const accentClasses = {
-    indigo: {
-      icon: "bg-indigo-100 text-indigo-700",
-      tag: "bg-indigo-50 text-indigo-700",
-    },
-    amber: {
-      icon: "bg-amber-100 text-amber-700",
-      tag: "bg-amber-50 text-amber-700",
-    },
+  const accentBg: Record<string, string> = {
+    yellow: "#FFE500",
+    blue: "#0062FF",
+    green: "#00E87A",
+    red: "#FF3B00",
   };
-  const c = accentClasses[accent];
+  const accentText: Record<string, string> = {
+    yellow: "#0D0D0D",
+    blue: "#FFFFFF",
+    green: "#0D0D0D",
+    red: "#FFFFFF",
+  };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm flex flex-col gap-4">
-      <div className={`h-11 w-11 rounded-lg flex items-center justify-center ${c.icon}`}>
+    <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-6 flex flex-col gap-4">
+      <div
+        className="h-11 w-11 border-2 border-[#0D0D0D] flex items-center justify-center"
+        style={{ backgroundColor: accentBg[accent], color: accentText[accent] }}
+      >
         {icon}
       </div>
       <div>
-        <h3 className="font-bold text-gray-900 text-lg mb-2">{title}</h3>
+        <h3 className="font-bricolage font-bold text-[#0D0D0D] text-lg mb-2">{title}</h3>
         <p className="text-gray-600 text-sm leading-relaxed">{description}</p>
       </div>
       <div className="flex flex-wrap gap-2 mt-auto pt-2">
         {tags.map((t) => (
-          <span key={t} className={`px-2 py-0.5 rounded text-xs font-medium ${c.tag}`}>
+          <span key={t} className="px-2 py-0.5 border border-[#0D0D0D] rounded-none text-xs font-mono text-[#0D0D0D]">
             {t}
           </span>
         ))}
@@ -323,23 +323,24 @@ function CertCard({
   icon,
   title,
   issuer,
-  color,
+  accentColor,
 }: {
   icon: React.ReactNode;
   title: string;
   issuer: string;
-  color: "indigo" | "amber";
+  accentColor: string;
 }) {
-  const colors = {
-    indigo: "border-indigo-200 bg-indigo-50 text-indigo-700",
-    amber: "border-amber-200 bg-amber-50 text-amber-700",
-  };
   return (
-    <div className={`flex items-start gap-4 p-5 rounded-xl border ${colors[color]}`}>
-      <div className="mt-0.5 flex-shrink-0">{icon}</div>
+    <div className="flex items-start gap-4 p-5 border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white">
+      <div
+        className="mt-0.5 flex-shrink-0 p-2 border border-[#0D0D0D]"
+        style={{ backgroundColor: accentColor, color: accentColor === "#0062FF" ? "#fff" : "#0D0D0D" }}
+      >
+        {icon}
+      </div>
       <div>
-        <p className="font-bold text-gray-900">{title}</p>
-        <p className="text-sm mt-0.5">{issuer}</p>
+        <p className="font-bold text-[#0D0D0D]">{title}</p>
+        <p className="text-sm mt-0.5 font-mono text-gray-500">{issuer}</p>
       </div>
     </div>
   );
@@ -357,11 +358,11 @@ function LangCard({
   note?: string;
 }) {
   return (
-    <div className="bg-white p-4 rounded-lg border border-gray-100 shadow-sm">
+    <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-4">
       <span className="text-2xl">{flag}</span>
-      <h4 className="font-medium text-gray-900 mt-2">{language}</h4>
-      <p className="text-sm text-gray-500">{level}</p>
-      {note && <p className="text-xs text-indigo-600 mt-0.5 font-medium">{note}</p>}
+      <h4 className="font-bold text-[#0D0D0D] mt-2">{language}</h4>
+      <p className="text-sm text-gray-500 font-mono">{level}</p>
+      {note && <p className="text-xs text-[#FF3B00] mt-0.5 font-mono font-medium">{note}</p>}
     </div>
   );
 }

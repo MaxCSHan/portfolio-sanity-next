@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# MaxCSH Portfolio — Next.js App
 
-## Getting Started
+Personal portfolio for **SIH-HAN (Max) CHEN**, built with Next.js 15 App Router and Sanity CMS.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 15** (App Router, React Server Components)
+- **Sanity CMS** (live content, GROQ queries)
+- **Tailwind CSS** — extended with Neo Brutalism design tokens
+- **Fonts:** Bricolage Grotesque (display), Inter (body), JetBrains Mono (labels/code)
+
+## Design System — Neo Brutalism
+
+The site uses a Neo Brutalism visual language: bold flat colors, hard offset drop shadows, thick black borders, near-zero border radius, and Bricolage Grotesque for display type.
+
+### Color Tokens
+
+| Token | Value | Use |
+|---|---|---|
+| `--nb-black` | `#0D0D0D` | Borders, hard shadows, body text |
+| `--nb-bg` | `#F2EFE9` | Warm off-white page background |
+| `--nb-white` | `#FFFFFF` | Card surfaces, reading columns |
+| `--nb-yellow` | `#FFE500` | Primary CTA, active states, hover accents |
+| `--nb-red` | `#FF3B00` | Secondary accent, tags, destructive actions |
+| `--nb-green` | `#00E87A` | Coding/tech category accent |
+| `--nb-blue` | `#0062FF` | Data category accent |
+
+### Shadow & Border
+
+```css
+.nb-shadow    { box-shadow: 4px 4px 0px #0D0D0D; }
+.nb-shadow-sm { box-shadow: 2px 2px 0px #0D0D0D; }
+.nb-shadow-y  { box-shadow: 4px 4px 0px #FFE500; }
+.nb-border    { border: 2px solid #0D0D0D; }
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Hover press effect: `translate(2px, 2px)` + reduce shadow to `nb-shadow-sm`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Reading Exception
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Blog post bodies (`/posts/[slug]`) use a white reading column (`bg-white`) with clean `prose-lg` typography — no thick borders inside the prose. The page "furniture" (masthead, more-posts section) returns to the NB frame.
 
-## Learn More
+### Photography Exception
 
-To learn more about Next.js, take a look at the following resources:
+`/photography` and its sub-routes stay clean and gallery-like (white backgrounds, no yellow/black accents on photo cells). Only structural elements (page title, section labels, back links) adopt the NB typography system.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+# Root — starts Next.js (:3000) + Sanity Studio (:3333) concurrently
+npm run dev
 
-## Deploy on Vercel
+# Regenerate TypeScript types after schema changes
+cd nextjs-app && npm run typegen
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# Seed demo portfolio data
+cd nextjs-app && npm run seed-portfolio
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Routes
+
+| Route | Description |
+|---|---|
+| `/` | Homepage — hero, featured projects, blog teaser, photography grid |
+| `/portfolio` | Filterable project grid (category, tech, search, featured) |
+| `/portfolio/[slug]` | Project detail — hero, description, sidebar info boxes |
+| `/posts` | Blog post listing with pagination |
+| `/posts/[slug]` | Article — NB masthead + white reading column |
+| `/photography` | Photo gallery — series + post grid |
+| `/photography/[slug]` | Photo post viewer with sidebar meta |
+| `/photography/album/[tag]` | Tag-filtered photo album |
+| `/about` | Personal narrative, focus areas, certifications, languages |
+| `/resume` | Resume — dark NB hero + content cards (print-safe) |

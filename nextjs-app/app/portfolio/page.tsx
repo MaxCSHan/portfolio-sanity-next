@@ -81,17 +81,17 @@ export default async function PortfolioPage(props: Props) {
     const hasActiveFilters = !!(category || search || featured || (technologies && technologies.length > 0));
 
     return (
-      <div className="bg-white">
+      <div className="bg-[#F2EFE9]">
         <div className="container py-12 lg:py-24">
           <div className="mx-auto max-w-7xl">
             {/* Header */}
             <div className="mb-12">
-              <h1 className="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl lg:text-6xl">
+              <h1 className="font-bricolage font-black text-6xl lg:text-8xl text-[#0D0D0D] tracking-tight">
                 Portfolio
               </h1>
-              <p className="mt-4 text-xl text-gray-600 max-w-3xl">
-                A showcase of my work across coding, photography, creative content, data analysis, animations, and design.
-                {totalCount && ` ${totalCount} ${totalCount === 1 ? 'project' : 'projects'} total.`}
+              <p className="mt-4 font-mono text-sm text-gray-500 uppercase tracking-widest max-w-3xl">
+                Coding · Photography · Data · Creative · Animation · Design
+                {totalCount && ` — ${totalCount} ${totalCount === 1 ? 'project' : 'projects'}`}
               </p>
             </div>
 

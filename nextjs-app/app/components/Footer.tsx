@@ -4,9 +4,9 @@ import { Github, Linkedin, Instagram, Globe } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
-  
+
   return (
-    <footer className="bg-gray-50 border-t border-gray-100">
+    <footer className="bg-[#0D0D0D] border-t-2 border-[#0D0D0D]">
       <div className="container py-16">
         <div className="mx-auto max-w-5xl">
           {/* Top section with logo and links */}
@@ -14,48 +14,47 @@ export default function Footer() {
             {/* Brand column */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
-                <div className="flex items-center justify-center h-10 w-10 bg-indigo-600 text-white rounded-lg">
-                  <span className="font-bold text-lg">M</span>
+                <div className="flex items-center justify-center h-10 w-10 bg-[#FFE500] border-2 border-[#FFE500]">
+                  <span className="font-bold text-lg text-[#0D0D0D]">M</span>
                 </div>
-                <span className="text-lg font-bold tracking-tight text-gray-900">
+                <span className="text-lg font-bold tracking-tight text-white">
                   Max
                 </span>
               </div>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-400 mb-6">
                 Software engineer with a passion for data engineering and creative solutions.
               </p>
-              <div className="flex space-x-4">
+              <div className="flex space-x-3">
                 <SocialLink href="https://github.com/MaxCSHan" icon={<Github size={20} />} label="GitHub" />
                 <SocialLink href="https://www.linkedin.com/in/sih-han-chen-max/" icon={<Linkedin size={20} />} label="LinkedIn" />
                 <SocialLink href="https://www.instagram.com/maxchen.sh/" icon={<Instagram size={20} />} label="Instagram" />
                 <SocialLink href="https://www.behance.net/maxchen31" icon={<Globe size={20} />} label="Behance" />
               </div>
             </div>
-            
+
             {/* Navigation Columns */}
             <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-8">
               {/* Work & Skills */}
               <div>
-                <h3 className="font-medium text-gray-900 mb-4">Work</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Work</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/portfolio">Portfolio</FooterLink>
                   <FooterLink href="/photography">Photography</FooterLink>
                   <FooterLink href="/resume">Resume</FooterLink>
                 </ul>
               </div>
-              
+
               {/* About & Contact */}
               <div>
-                <h3 className="font-medium text-gray-900 mb-4">About</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">About</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/posts">Post</FooterLink>
-                  {/* <FooterLink href="/contact">Contact</FooterLink> */}
                 </ul>
               </div>
-              
+
               {/* Skills */}
               <div>
-                <h3 className="font-medium text-gray-900 mb-4">Skills</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Skills</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/skills/webdev">Web Development</FooterLink>
                   <FooterLink href="/skills/dataeng">Data Engineering</FooterLink>
@@ -64,22 +63,22 @@ export default function Footer() {
               </div>
             </div>
           </div>
-          
+
           {/* Bottom section with copyright */}
-          <div className="pt-8 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-center">
+          <div className="pt-8 border-t border-gray-700 flex flex-col sm:flex-row justify-between items-center">
             <p className="text-gray-500 text-sm mb-4 sm:mb-0">
               © {currentYear} Max Chen. All rights reserved.
             </p>
             <div className="flex space-x-6">
-              <Link 
-                href="/privacy" 
-                className="text-sm text-gray-500 hover:text-indigo-600 transition-colors"
+              <Link
+                href="/privacy"
+                className="text-sm text-gray-500 hover:text-[#FFE500] transition-colors"
               >
                 Privacy Policy
               </Link>
-              <Link 
-                href="/terms" 
-                className="text-sm text-gray-500 hover:text-indigo-600 transition-colors"
+              <Link
+                href="/terms"
+                className="text-sm text-gray-500 hover:text-[#FFE500] transition-colors"
               >
                 Terms of Service
               </Link>
@@ -95,9 +94,9 @@ export default function Footer() {
 function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
   return (
     <li>
-      <Link 
-        href={href} 
-        className="text-gray-600 hover:text-indigo-600 transition-colors"
+      <Link
+        href={href}
+        className="text-gray-400 hover:text-[#FFE500] transition-colors"
       >
         {children}
       </Link>
@@ -108,11 +107,11 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 // Helper component for social media links
 function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
   return (
-    <a 
+    <a
       href={href}
-      target="_blank" 
+      target="_blank"
       rel="noopener noreferrer"
-      className="text-gray-600 hover:text-indigo-600 transition-colors" 
+      className="p-2 border border-gray-700 text-gray-400 hover:border-[#FFE500] hover:text-[#FFE500] transition-colors"
       aria-label={label}
     >
       {icon}

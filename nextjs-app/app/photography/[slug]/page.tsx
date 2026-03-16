@@ -120,7 +120,7 @@ export default async function PhotoPostPage(props: Props) {
             {/* Back */}
             <Link
               href="/photography"
-              className="inline-flex items-center gap-1.5 text-sm text-gray-400 hover:text-gray-900 transition-colors"
+              className="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-widest text-gray-400 hover:text-gray-900 transition-colors"
             >
               <ArrowLeft className="h-4 w-4" />
               Photography
@@ -158,7 +158,7 @@ export default async function PhotoPostPage(props: Props) {
                   <Link
                     key={tag}
                     href={`/photography/album/${encodeURIComponent(tag)}`}
-                    className="px-3 py-1 text-xs rounded-full border border-gray-200 text-gray-500 hover:border-indigo-300 hover:text-indigo-600 transition-colors"
+                    className="px-3 py-1 text-xs font-mono rounded-none border border-gray-300 text-gray-500 hover:border-gray-600 hover:text-gray-900 transition-colors"
                   >
                     {tag}
                   </Link>
@@ -168,13 +168,13 @@ export default async function PhotoPostPage(props: Props) {
 
             {/* Related work */}
             {post.relatedWork && (
-              <div className="p-4 rounded-lg border border-gray-100 bg-gray-50">
-                <p className="text-xs text-gray-400 uppercase tracking-wider mb-1.5">
+              <div className="p-4 border border-gray-200 bg-gray-50">
+                <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-1.5">
                   Part of a series
                 </p>
                 <Link
                   href={`/portfolio/${post.relatedWork.slug}`}
-                  className="text-sm font-medium text-gray-900 hover:text-indigo-600 transition-colors"
+                  className="text-sm font-medium text-gray-900 hover:text-gray-600 transition-colors"
                 >
                   {post.relatedWork.title} →
                 </Link>

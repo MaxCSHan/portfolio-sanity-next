@@ -147,202 +147,161 @@ Portfolio
 
 ### UI/UX Design Specifications
 
-#### Visual Design Language
+#### Visual Design Language — Neo Brutalism
 
-##### Color Palette Extensions
+The portfolio uses a **Neo Brutalism** design system, replacing the original indigo/amber gradient SaaS aesthetic. The goal: a "tech hipster" identity that signals both engineering depth and visual design sensibility.
+
+##### Design Principles
+- **Bold flat colors** — no gradients, no frosted glass
+- **Hard offset drop shadows** — `box-shadow: 4px 4px 0px #0D0D0D` (no blur radius)
+- **Thick black borders** — `border: 2px solid #0D0D0D`
+- **Near-zero border radius** — `rounded-none` everywhere except photography
+- **Display typeface** — Bricolage Grotesque for all headings (variable weight, strong at heavy weights)
+- **Press hover effect** — `translate(2px, 2px)` + shadow reduction instead of float/lift
+
+##### Color Tokens
+
 ```css
-/* Project-specific accents */
---coding-accent: #10b981;      /* Emerald-500 */
---photo-accent: #f59e0b;       /* Amber-500 */
---creative-accent: #8b5cf6;    /* Violet-500 */
---data-accent: #3b82f6;        /* Blue-500 */
---animation-accent: #ec4899;   /* Pink-500 */
+--nb-black:  #0D0D0D;  /* Borders, hard shadows, body text */
+--nb-bg:     #F2EFE9;  /* Warm off-white page background */
+--nb-white:  #FFFFFF;  /* Card surfaces, reading columns */
+--nb-yellow: #FFE500;  /* Primary CTA, active states, hover accents */
+--nb-red:    #FF3B00;  /* Secondary accent, error/destructive states */
+--nb-green:  #00E87A;  /* Coding/tech category accent */
+--nb-blue:   #0062FF;  /* Data category accent */
+```
 
-/* Interactive states */
---hover-lift: translateY(-8px);
---hover-scale: scale(1.02);
---transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+##### Category Badge Colors
+
+| Category | Background | Text |
+|---|---|---|
+| coding | `#00E87A` | `#0D0D0D` |
+| photography | `#FFE500` | `#0D0D0D` |
+| data | `#0062FF` | white |
+| creative | `#FF3B00` | white |
+| animation | `#0D0D0D` | white |
+| design | `#F2EFE9` | `#0D0D0D` (+ border) |
+
+##### Typography
+
+- **Display:** Bricolage Grotesque (`font-bricolage font-black`) — h1/h2/section headings
+- **Body:** Inter — prose, descriptions
+- **Mono:** JetBrains Mono — labels, badges, slugs, dates, filter UI
+
+##### Shadow & Border Utilities
+
+```css
+.nb-shadow    { box-shadow: 4px 4px 0px #0D0D0D; }
+.nb-shadow-sm { box-shadow: 2px 2px 0px #0D0D0D; }
+.nb-shadow-y  { box-shadow: 4px 4px 0px #FFE500; }
+.nb-border    { border: 2px solid #0D0D0D; }
+.nb-press:hover { transform: translate(2px, 2px); box-shadow: 2px 2px 0px #0D0D0D; }
 ```
 
 ##### Component Specifications
 
-###### 1. **Project Card Variants**
+###### 1. **Project Card**
 
-**Base Card Structure:**
 ```html
-<article class="group relative bg-white border border-gray-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.02]">
-  <!-- Category indicator -->
-  <div class="absolute top-4 left-4 z-10">
-    <span class="px-3 py-1 text-xs font-medium bg-white/90 backdrop-blur-sm rounded-full">
-      Category
-    </span>
-  </div>
+<article class="group bg-white border-2 border-[#0D0D0D] rounded-none
+                shadow-[4px_4px_0px_#0D0D0D]
+                hover:translate-x-[2px] hover:translate-y-[2px]
+                hover:shadow-[2px_2px_0_#0D0D0D] transition-all duration-100">
 
   <!-- Media section -->
-  <div class="aspect-video relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-    <!-- Dynamic content based on project type -->
+  <div class="aspect-video relative overflow-hidden">
+    <!-- image/video -->
+    <!-- Hover overlay: GitHub + Live Demo buttons in #FFE500 -->
   </div>
 
   <!-- Content section -->
   <div class="p-6">
-    <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-indigo-600 transition-colors">
+    <!-- Category badge: rounded-none font-mono text-xs uppercase border border-[#0D0D0D] -->
+    <span class="px-3 py-1 font-mono text-xs uppercase border border-[#0D0D0D] bg-[#00E87A]">
+      Coding
+    </span>
+
+    <!-- Title hover: yellow underline decoration -->
+    <h3 class="font-bold text-[#0D0D0D] group-hover:underline decoration-[#FFE500] underline-offset-2">
       Project Title
     </h3>
-    <p class="text-gray-600 text-sm mb-4 line-clamp-2">
-      Project description...
-    </p>
 
-    <!-- Tech stack or meta info -->
-    <div class="flex flex-wrap gap-2 mb-4">
-      <!-- Dynamic badges -->
-    </div>
-
-    <!-- Action buttons -->
-    <div class="flex gap-2">
-      <!-- Context-specific actions -->
-    </div>
+    <!-- Tech tags: rounded-none font-mono border border-[#0D0D0D] -->
+    <span class="px-2 py-0.5 font-mono text-xs border border-[#0D0D0D] rounded-none">React</span>
   </div>
 </article>
 ```
 
-**Coding Project Card:**
-```html
-<!-- Media section with code preview -->
-<div class="aspect-video relative overflow-hidden bg-gray-900">
-  <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-    <div class="absolute bottom-4 left-4 right-4">
-      <div class="flex gap-2">
-        <button class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-xs rounded-md hover:bg-white/30 transition-colors">
-          Live Demo
-        </button>
-        <button class="px-3 py-1 bg-white/20 backdrop-blur-sm text-white text-xs rounded-md hover:bg-white/30 transition-colors">
-          GitHub
-        </button>
-      </div>
-    </div>
-  </div>
-  <!-- Code screenshot or live preview iframe -->
-</div>
-
-<!-- Tech stack badges -->
-<div class="flex flex-wrap gap-1">
-  <span class="px-2 py-1 text-xs font-medium bg-emerald-50 text-emerald-700 rounded-md">React</span>
-  <span class="px-2 py-1 text-xs font-medium bg-blue-50 text-blue-700 rounded-md">TypeScript</span>
-</div>
-```
-
-**Photography Card:**
-```html
-<!-- High-quality image with overlay -->
-<div class="aspect-square relative overflow-hidden">
-  <img src="optimized-image.jpg" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
-  <div class="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-    <div class="absolute bottom-4 left-4 text-white">
-      <p class="text-sm font-medium">Camera: Sony A7R IV</p>
-      <p class="text-xs opacity-80">f/2.8 • 1/200s • ISO 100</p>
-    </div>
-  </div>
-</div>
-
-<!-- Photography-specific badges -->
-<div class="flex flex-wrap gap-1">
-  <span class="px-2 py-1 text-xs font-medium bg-amber-50 text-amber-700 rounded-md">Portrait</span>
-  <span class="px-2 py-1 text-xs font-medium bg-orange-50 text-orange-700 rounded-md">Studio</span>
-</div>
-```
-
 ###### 2. **Filter Sidebar**
+
 ```html
-<aside class="w-64 bg-white border-r border-gray-200 p-6">
-  <!-- Search -->
-  <div class="mb-6">
-    <input type="text" placeholder="Search projects..."
-           class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
-  </div>
+<aside class="space-y-6">
+  <!-- Labels: font-mono text-xs uppercase tracking-widest -->
+  <h3 class="font-mono text-xs uppercase tracking-widest text-[#0D0D0D]">Categories</h3>
 
-  <!-- Category filters -->
-  <div class="mb-6">
-    <h3 class="text-sm font-semibold text-gray-900 mb-3">Categories</h3>
-    <div class="space-y-2">
-      <label class="flex items-center">
-        <input type="checkbox" class="rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
-        <span class="ml-2 text-sm text-gray-700">Coding Projects</span>
-        <span class="ml-auto text-xs text-gray-500">12</span>
-      </label>
-      <!-- More category options -->
-    </div>
-  </div>
+  <!-- Search input: border-2 focus:shadow-[2px_2px_0_#FFE500] -->
+  <input class="border-2 border-[#0D0D0D] rounded-none focus:shadow-[2px_2px_0_#FFE500]" />
 
-  <!-- Technology filters -->
-  <div class="mb-6">
-    <h3 class="text-sm font-semibold text-gray-900 mb-3">Technologies</h3>
-    <div class="flex flex-wrap gap-2">
-      <button class="px-3 py-1 text-xs border border-gray-300 rounded-full hover:border-indigo-500 hover:text-indigo-600 transition-colors">
-        React
-      </button>
-      <!-- More tech tags -->
-    </div>
-  </div>
+  <!-- Category buttons: toggle style, active = bg-[#FFE500] -->
+  <button class="w-full border-2 border-[#0D0D0D] rounded-none
+                 active:bg-[#FFE500]">
+    Coding Projects
+  </button>
+
+  <!-- Clear all: border-2 border-[#FF3B00] text-[#FF3B00] hover:bg-[#FF3B00] hover:text-white -->
+  <button class="border-2 border-[#FF3B00] text-[#FF3B00] rounded-none
+                 hover:bg-[#FF3B00] hover:text-white">
+    Clear all
+  </button>
 </aside>
 ```
 
-###### 3. **Project Detail Modal**
-```html
-<div class="fixed inset-0 z-50 overflow-y-auto">
-  <div class="flex min-h-screen items-center justify-center p-4">
-    <div class="relative w-full max-w-6xl bg-white rounded-2xl shadow-2xl">
-      <!-- Close button -->
-      <button class="absolute top-4 right-4 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full hover:bg-white transition-colors">
-        <X class="w-5 h-5" />
-      </button>
+###### 3. **Project Detail Page**
 
-      <!-- Hero section -->
-      <div class="aspect-video relative overflow-hidden rounded-t-2xl">
-        <!-- Project hero media -->
-      </div>
+- Back link: `font-mono text-xs uppercase tracking-widest`
+- Title: `font-bricolage font-black text-5xl lg:text-7xl`
+- Hero image: `border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D]`
+- Sidebar info boxes: each wrapped in `border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white p-5`
 
-      <!-- Content sections -->
-      <div class="p-8">
-        <div class="grid lg:grid-cols-3 gap-8">
-          <!-- Main content -->
-          <div class="lg:col-span-2">
-            <h1 class="text-3xl font-bold text-gray-900 mb-4">Project Title</h1>
-            <div class="prose max-w-none">
-              <!-- Rich content -->
-            </div>
-          </div>
+#### Section-Specific Design Exceptions
 
-          <!-- Sidebar info -->
-          <div class="space-y-6">
-            <!-- Project metadata -->
-            <!-- Action buttons -->
-            <!-- Related projects -->
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-```
+##### Blog Posts — Reading Experience
+
+Blog articles use a **three-zone layout** to separate navigation from content:
+
+1. **NB Masthead** (`bg-[#F2EFE9]`, `border-b-2 border-[#0D0D0D]`) — back link, Bricolage title, byline
+2. **White reading column** (`bg-white`) — `prose-lg` typography, no thick borders inside prose. Blockquotes use `border-l-4 border-[#FFE500] bg-[#F2EFE9]`. Links use yellow underline decoration.
+3. **NB "More Posts"** (`bg-[#F2EFE9]`, `border-t-2`) — visual bookend returning to the site frame
+
+**Rationale:** Comfortable reading contrast requires white on `#F2EFE9`'s warm tone for long-form articles. The NB aesthetic frames the article without invading the reading experience.
+
+##### Photography — Gallery-First
+
+`/photography` and all sub-routes stay clean and white:
+- White backgrounds on all photo cells and viewers
+- No yellow accents, no thick black borders on images
+- No dark panel backgrounds
+- **Only structural NB elements:** page titles use Bricolage Grotesque, section labels use `font-mono uppercase tracking-widest`, back links match site-wide mono style
+- Tag pills: `rounded-none border border-gray-300` — neutral, not bold NB
+
+**Rationale:** Photos are the content. The UI should disappear.
 
 #### Interactive Behaviors
 
-##### 1. **Hover Effects**
-- **Card Lift**: `transform: translateY(-8px)` with enhanced shadow
-- **Image Zoom**: `transform: scale(1.1)` on image elements
-- **Color Transitions**: Category accent colors on hover
-- **Backdrop Blur**: Information overlays with `backdrop-filter: blur(8px)`
+##### 1. **Hover Effects (NB Press)**
+- **Card Press**: `translate(2px, 2px)` + shadow reduction from `4px 4px` → `2px 2px`
+- **No card lift** — translateY float is the old SaaS aesthetic; NB uses a physical "press" instead
+- **Image Zoom**: `scale(1.03–1.05)` kept on photography cells only
+- **Link hover**: Yellow underline decoration (`decoration-[#FFE500]`) or color shift to `#FF3B00`
 
 ##### 2. **Loading States**
-- **Skeleton Loading**: Animated placeholders matching card structure
-- **Progressive Image Loading**: Blur-to-sharp effect with fade-in
-- **Staggered Animations**: Cards appear with 50ms delays in sequence
+- Skeleton placeholders use `bg-gray-200 animate-pulse` — keep neutral
+- No rounded-full skeletons; match the rectangular NB card shapes
 
-##### 3. **Mobile Interactions**
-- **Touch-friendly targets**: Minimum 44px touch targets
-- **Swipe gestures**: Horizontal swipe for category switching
-- **Pull-to-refresh**: Reload portfolio content
-- **Haptic feedback**: Subtle vibration on interactions (iOS)
+##### 3. **Mobile**
+- Touch-friendly targets: minimum 44px
+- Header: flat `bg-[#F2EFE9]` border-b (no backdrop-blur artifacts on scroll)
+- Filter sidebar: collapsible on mobile
 
 ---
 
