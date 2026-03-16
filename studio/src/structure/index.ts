@@ -1,4 +1,4 @@
-import {CogIcon, CaseIcon, TagIcon, DocumentIcon, UserIcon} from '@sanity/icons'
+import {CogIcon, CaseIcon, TagIcon, DocumentIcon, UserIcon, ImagesIcon} from '@sanity/icons'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
 /**
@@ -7,7 +7,7 @@ import type {StructureBuilder, StructureResolver} from 'sanity/structure'
  * Learn more: https://www.sanity.io/docs/structure-builder-introduction
  */
 
-const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'portfolioProject', 'technology', 'projectCategory']
+const DISABLED_TYPES = ['settings', 'assist.instruction.context', 'portfolioProject', 'technology', 'projectCategory', 'photoPost']
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
@@ -54,6 +54,28 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
                     .defaultOrdering([
                       {field: 'order', direction: 'asc'},
                       {field: 'name', direction: 'asc'}
+                    ])
+                ),
+            ])
+        ),
+
+      // Photography Section
+      S.listItem()
+        .title('Photography')
+        .icon(ImagesIcon)
+        .child(
+          S.list()
+            .title('Photography')
+            .items([
+              S.listItem()
+                .title('Photo Posts')
+                .icon(ImagesIcon)
+                .child(
+                  S.documentTypeList('photoPost')
+                    .title('Photo Posts')
+                    .defaultOrdering([
+                      {field: 'date', direction: 'desc'},
+                      {field: '_createdAt', direction: 'desc'},
                     ])
                 ),
             ])

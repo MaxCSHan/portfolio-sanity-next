@@ -4,6 +4,7 @@ import {post} from './documents/post'
 import {portfolioProject} from './documents/portfolioProject'
 import {technology} from './documents/technology'
 import {projectCategory} from './documents/projectCategory'
+import {photoPost} from './documents/photoPost'
 import {callToAction} from './objects/callToAction'
 import {infoSection} from './objects/infoSection'
 import {settings} from './singletons/settings'
@@ -22,6 +23,7 @@ export const schemaTypes = [
   portfolioProject,
   technology,
   projectCategory,
+  photoPost,
   // Objects
   blockContent,
   infoSection,
