@@ -64,12 +64,12 @@ export default function Header() {
             >
               Resume
             </Link>
-            <Link
+            {/* <Link
               href="/contact"
               className="inline-flex items-center px-4 py-2 bg-indigo-600 text-white rounded-lg text-sm font-medium hover:bg-indigo-700 transition-colors"
             >
               Contact Me
-            </Link>
+            </Link> */}
 
             <button className="md:hidden p-2 rounded-lg hover:bg-gray-100">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

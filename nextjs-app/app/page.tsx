@@ -200,7 +200,7 @@ export default async function Page() {
         </div>
       </div>
 
-      {/* Contact CTA */}
+      {/* Contact CTA
       <div className="border-t border-gray-100 bg-indigo-50">
         <div className="container py-16">
           <div className="mx-auto max-w-3xl lg:max-w-4xl text-center">
@@ -216,7 +216,7 @@ export default async function Page() {
             </Link>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

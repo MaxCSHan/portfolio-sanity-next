@@ -49,7 +49,7 @@ export default function Footer() {
                 <h3 className="font-medium text-gray-900 mb-4">About</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/posts">Post</FooterLink>
-                  <FooterLink href="/contact">Contact</FooterLink>
+                  {/* <FooterLink href="/contact">Contact</FooterLink> */}
                 </ul>
               </div>
               
