@@ -52,7 +52,7 @@ export default async function PhotographyPage() {
       <div className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl lg:max-w-4xl">
           <h1
-            className="font-bricolage font-black text-7xl sm:text-8xl tracking-tight text-gray-900 mb-5"
+            className="font-bricolage font-black text-5xl sm:text-7xl md:text-8xl tracking-tight text-gray-900 mb-5"
             style={{ lineHeight: 1 }}
           >
             Photography
