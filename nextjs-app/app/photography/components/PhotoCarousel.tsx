@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/utils";
@@ -14,19 +14,34 @@ type CarouselImage = {
 
 type Props = {
   images: CarouselImage[];
+  onIndexChange?: (index: number) => void;
 };
 
 function buildSlides(images: CarouselImage[]): LightboxSlide[] {
   return images.map((img) => ({
     src: urlForImage(img)?.width(2400).url() ?? "",
-    title: img.caption ?? undefined,
-    description: img.alt ?? undefined,
   }));
 }
 
-export default function PhotoCarousel({ images }: Props) {
+export default function PhotoCarousel({ images, onIndexChange }: Props) {
   const [index, setIndex] = useState(0);
+
+  function goTo(i: number) {
+    setIndex(i);
+    onIndexChange?.(i);
+  }
+
   const [lightboxOpen, setLightboxOpen] = useState(false);
+
+  useEffect(() => {
+    if (lightboxOpen) return; // let YARL handle keys when lightbox is open
+    function onKey(e: KeyboardEvent) {
+      if (e.key === "ArrowLeft") goTo(Math.max(0, index - 1));
+      if (e.key === "ArrowRight") goTo(Math.min(images.length - 1, index + 1));
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [index, images.length, lightboxOpen]);
 
   if (!images || images.length === 0) return null;
 
@@ -58,19 +73,10 @@ export default function PhotoCarousel({ images }: Props) {
           </button>
         )}
 
-        {/* Per-image caption */}
-        {current.caption && (
-          <div className="absolute bottom-10 inset-x-0 flex justify-center pointer-events-none z-10">
-            <p className="text-xs text-gray-400 italic bg-white/70 px-3 py-1 rounded-full backdrop-blur-sm">
-              {current.caption}
-            </p>
-          </div>
-        )}
-
         {/* Prev arrow */}
         {hasPrev && (
           <button
-            onClick={() => setIndex((i) => i - 1)}
+            onClick={() => goTo(index - 1)}
             className="absolute left-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             aria-label="Previous photo"
           >
@@ -81,7 +87,7 @@ export default function PhotoCarousel({ images }: Props) {
         {/* Next arrow */}
         {hasNext && (
           <button
-            onClick={() => setIndex((i) => i + 1)}
+            onClick={() => goTo(index + 1)}
             className="absolute right-3 top-1/2 -translate-y-1/2 z-20 w-9 h-9 rounded-full bg-white shadow-md flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             aria-label="Next photo"
           >
@@ -102,7 +108,7 @@ export default function PhotoCarousel({ images }: Props) {
             {images.map((_, i) => (
               <button
                 key={i}
-                onClick={() => setIndex(i)}
+                onClick={() => goTo(i)}
                 aria-label={`Go to photo ${i + 1}`}
                 className={`w-1.5 h-1.5 rounded-full transition-all duration-200 ${
                   i === index ? "bg-gray-500 scale-125" : "bg-gray-300"

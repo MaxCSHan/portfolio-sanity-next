@@ -35,33 +35,24 @@ export default function Footer() {
 
             {/* Navigation Columns */}
             <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-8">
-              {/* Work & Skills */}
+              {/* Professional */}
               <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Work</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Professional</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/portfolio">Portfolio</FooterLink>
-                  <FooterLink href="/photography">Photography</FooterLink>
                   <FooterLink href="/resume">Resume</FooterLink>
                 </ul>
               </div>
 
-              {/* About & Contact */}
+              {/* Works */}
               <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">About</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Works</h3>
                 <ul className="space-y-3">
                   <FooterLink href="/posts">Post</FooterLink>
+                  <FooterLink href="/photography">Photography</FooterLink>
                 </ul>
               </div>
 
-              {/* Skills */}
-              <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Skills</h3>
-                <ul className="space-y-3">
-                  <FooterLink href="/skills/webdev">Web Development</FooterLink>
-                  <FooterLink href="/skills/dataeng">Data Engineering</FooterLink>
-                  <FooterLink href="/skills/cloud">Cloud Solutions</FooterLink>
-                </ul>
-              </div>
             </div>
           </div>
 
@@ -70,7 +61,7 @@ export default function Footer() {
             <p className="text-gray-500 text-sm mb-4 sm:mb-0">
               © {currentYear} Max Chen. All rights reserved.
             </p>
-            <div className="flex space-x-6">
+            {/* <div className="flex space-x-6">
               <Link
                 href="/privacy"
                 className="text-sm text-gray-500 hover:text-[#FFE500] transition-colors"
@@ -83,7 +74,7 @@ export default function Footer() {
               >
                 Terms of Service
               </Link>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
