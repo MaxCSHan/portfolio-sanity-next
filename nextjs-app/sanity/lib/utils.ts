@@ -8,6 +8,21 @@ const imageBuilder = createImageUrlBuilder({
   dataset: dataset || "",
 });
 
+/**
+ * Construct a CDN URL for a Sanity file asset (e.g. video).
+ * Sanity file refs follow the pattern: file-{assetId}-{extension}
+ */
+export const urlForVideo = (source: any): string | undefined => {
+  if (!source?.asset?._ref) return undefined;
+  const ref = source.asset._ref as string;
+  const withoutPrefix = ref.replace(/^file-/, "");
+  const lastDash = withoutPrefix.lastIndexOf("-");
+  if (lastDash === -1) return undefined;
+  const assetId = withoutPrefix.substring(0, lastDash);
+  const extension = withoutPrefix.substring(lastDash + 1);
+  return `https://cdn.sanity.io/files/${projectId}/${dataset}/${assetId}.${extension}`;
+};
+
 export const urlForImage = (source: any) => {
   // Ensure that source image contains a valid reference
   if (!source?.asset?._ref) {

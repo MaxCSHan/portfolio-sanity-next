@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import Image from "next/image";
 import { urlForImage } from "@/sanity/lib/utils";
 import Lightbox, { LightboxSlide } from "./Lightbox";
@@ -115,7 +115,10 @@ type CellProps = {
 };
 
 function GalleryImageCell({ image, fill, priority }: CellProps) {
-  const src = urlForImage(image)?.width(800).url();
+  const [loaded, setLoaded] = useState(false);
+  const onLoad = useCallback(() => setLoaded(true), []);
+
+  const src = urlForImage(image)?.width(800).quality(85).url();
   if (!src) {
     return (
       <div className="w-full h-full bg-gray-100 flex items-center justify-center">
@@ -126,25 +129,31 @@ function GalleryImageCell({ image, fill, priority }: CellProps) {
 
   if (fill) {
     return (
-      <Image
-        src={src}
-        alt={image.alt ?? ""}
-        fill
-        className="object-cover"
-        sizes="(min-width: 768px) 50vw, 100vw"
-        priority={priority}
-      />
+      <div className="absolute inset-0 bg-gray-200 animate-pulse">
+        <Image
+          src={src}
+          alt={image.alt ?? ""}
+          fill
+          className={`object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+          sizes="(min-width: 768px) 50vw, 100vw"
+          priority={priority}
+          onLoad={onLoad}
+        />
+      </div>
     );
   }
 
   return (
-    <Image
-      src={src}
-      alt={image.alt ?? ""}
-      width={800}
-      height={600}
-      className="w-full h-auto object-cover"
-      priority={priority}
-    />
+    <div className="bg-gray-200 animate-pulse">
+      <Image
+        src={src}
+        alt={image.alt ?? ""}
+        width={800}
+        height={600}
+        className={`w-full h-auto object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+        priority={priority}
+        onLoad={onLoad}
+      />
+    </div>
   );
 }

@@ -328,6 +328,7 @@ All queries live in `nextjs-app/sanity/lib/queries.ts`.
 - **Photography section** — Full `/photography` page with series cards + IG-style photo feed grid; `/photography/[slug]` post viewer with carousel, lightbox, tag pills, related posts, and sidebar meta; `/photography/album/[tag]` auto-album pages
 - **`photoPost` Sanity schema** — New document type for IG-style photo posts with multi-image support (1–20), captions, locations, and tag-based albums
 - **Seed script** — `npm run seed-portfolio` in `nextjs-app/` for adding demo data
+- **Media optimization** — Progressive image loading with fade-in on load + skeleton pulse (CoverImage, GalleryGrid); video autoplay (`<video autoPlay muted loop playsInline>`) for `heroMedia.type === 'video'`; `urlForVideo` helper to construct Sanity CDN URLs for file assets
 
 ### In Progress / Partially Done 🚧
 
@@ -337,7 +338,6 @@ All queries live in `nextjs-app/sanity/lib/queries.ts`.
 
 | # | Feature | Notes |
 |---|---|---|
-| 8 | Media optimization | Progressive images, video autoplay |
 | 11 | SEO — structured data & sitemap | Portfolio + photography in sitemap, JSON-LD markup |
 | 12 | Analytics tracking | GA events for project/photo views |
 | 13 | Error handling | Error boundaries, retry mechanisms |

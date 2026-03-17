@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { stegaClean } from "@sanity/client/stega";
 import { Image } from "next-sanity/image";
 
@@ -6,28 +9,34 @@ import { urlForImage } from '../../sanity/lib/utils'
 interface CoverImageProps {
   image: any;
   priority?: boolean;
+  sizes?: string;
 }
 
-export default function CoverImage(props: CoverImageProps) {
-  const { image: source, priority } = props;
-  const image = source?.asset?._ref ? (
-    <Image
-      className="shadow-md transition-shadow object-cover"
-      fill={true}
-      alt={stegaClean(source?.alt) || ""}
-      src={
-        urlForImage(source)
-          ?.height(720)
-          .width(1280)
-          .auto("format")
-          .url() as string
-      }
-      sizes="100vw"
-      priority={priority}
-    />
-  ) : (
-    <div className="bg-slate-50" style={{ paddingTop: "100%" }} />
-  );
+export default function CoverImage({ image: source, priority, sizes = "100vw" }: CoverImageProps) {
+  const [loaded, setLoaded] = useState(false);
 
-  return <div className="relative aspect-video">{image}</div>;
+  if (!source?.asset?._ref) {
+    return <div className="relative aspect-video bg-gray-200" />;
+  }
+
+  return (
+    <div className="relative aspect-video bg-gray-200 animate-pulse">
+      <Image
+        className={`shadow-md object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+        fill
+        alt={stegaClean(source?.alt) || ""}
+        src={
+          urlForImage(source)
+            ?.height(720)
+            .width(1280)
+            .auto("format")
+            .quality(85)
+            .url() as string
+        }
+        sizes={sizes}
+        priority={priority}
+        onLoad={() => setLoaded(true)}
+      />
+    </div>
+  );
 }

@@ -5,7 +5,7 @@ import { ArrowLeft, ExternalLink, Github, Calendar, User, Tag } from "lucide-rea
 
 import { sanityFetch } from "@/sanity/lib/live";
 import { portfolioProjectQuery, portfolioProjectSlugs } from "@/sanity/lib/queries";
-import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import { resolveOpenGraphImage, urlForVideo } from "@/sanity/lib/utils";
 import CoverImage from "@/app/components/CoverImage";
 import PortableText from "@/app/components/PortableText";
 import DateComponent from "@/app/components/Date";
@@ -259,16 +259,30 @@ function ProjectHeroMedia({ heroMedia, title }: { heroMedia: any; title: string 
     );
   }
 
+  if (heroMedia.type === 'video' && heroMedia.video) {
+    const videoUrl = urlForVideo(heroMedia.video);
+    if (videoUrl) {
+      return (
+        <div className="aspect-video relative overflow-hidden bg-black">
+          {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
+          <video
+            className="absolute inset-0 w-full h-full object-cover"
+            src={videoUrl}
+            autoPlay
+            muted
+            loop
+            playsInline
+          />
+        </div>
+      );
+    }
+  }
+
   if (heroMedia.type === 'gallery' && heroMedia.gallery && heroMedia.gallery.length > 0) {
     return <GalleryGrid images={heroMedia.gallery} heroLayout />;
   }
 
-  // Placeholder for video or other media types
-  return (
-    <div className="aspect-video bg-gray-100 flex items-center justify-center">
-      <span className="text-gray-500">Media content</span>
-    </div>
-  );
+  return null;
 }
 
 // Component for technical details
