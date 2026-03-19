@@ -20,7 +20,7 @@ export default function CoverImage({ image: source, priority, sizes = "100vw" }:
   }
 
   return (
-    <div className="relative aspect-video bg-gray-200 animate-pulse">
+    <div className={`relative aspect-video bg-gray-200 ${loaded ? "" : "animate-pulse"}`}>
       <Image
         className={`shadow-md object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
         fill
