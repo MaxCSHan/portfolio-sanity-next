@@ -88,11 +88,13 @@ export default async function PostPage(props: Props) {
     author: {
       "@type": "Person",
       name: "SIH-HAN (Max) CHEN",
+      alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"],
       url: SITE_URL,
     },
     publisher: {
       "@type": "Person",
       name: "SIH-HAN (Max) CHEN",
+      alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"],
       url: SITE_URL,
     },
   };

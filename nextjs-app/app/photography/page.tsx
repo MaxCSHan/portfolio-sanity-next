@@ -46,8 +46,26 @@ export default async function PhotographyPage() {
   const typedSeries = (series ?? []) as PhotoSeries[];
   const typedPosts = (posts ?? []) as PhotoPost[];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Photography — Max Chen",
+    "description": "A visual diary — moments and places captured through the lens.",
+    "url": "https://maxcsh.vercel.app/photography",
+    "author": {
+      "@type": "Person",
+      "name": "SIH-HAN (Max) CHEN",
+      "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
+      "url": "https://maxcsh.vercel.app",
+    },
+  };
+
   return (
     <div className="bg-white min-h-screen">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ── Header ── */}
       <div className="container py-20 md:py-28">
         <div className="mx-auto max-w-3xl lg:max-w-4xl">

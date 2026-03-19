@@ -99,7 +99,7 @@ export default async function PhotoPostPage(props: Props) {
     image: post.images
       ?.map((img) => urlForImage(img)?.width(1200).url())
       .filter(Boolean) ?? [],
-    author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+    author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"], url: SITE_URL },
   };
 
   return (

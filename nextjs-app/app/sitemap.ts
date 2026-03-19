@@ -2,6 +2,8 @@ import { MetadataRoute } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { sitemapData } from "@/sanity/lib/queries";
 
+export const revalidate = 3600; // revalidate sitemap every hour
+
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
 

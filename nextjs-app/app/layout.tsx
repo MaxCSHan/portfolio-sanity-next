@@ -78,7 +78,7 @@ const personJsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: "SIH-HAN (Max) CHEN",
-  alternateName: "Max Chen",
+  alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"],
   url: SITE_URL,
   jobTitle: "Software Engineer & Data Specialist",
   worksFor: { "@type": "Organization", name: "Vpon" },
@@ -109,7 +109,7 @@ const websiteJsonLd = {
   "@type": "WebSite",
   name: "Max Chen — Portfolio",
   url: SITE_URL,
-  author: { "@type": "Person", name: "SIH-HAN (Max) CHEN" },
+  author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"] },
 };
 
 export default async function RootLayout({

@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "About | SIH-HAN (Max) CHEN",
+  title: "About",
   description:
-    "Software engineer bridging data engineering and AI agent architecture. Economics grad, photographer, language enthusiast — based in Taipei.",
+    "SIH-HAN (Max) CHEN (陳司翰 / Chen Sih-Han) is a software engineer at Vpon specializing in AI agent architecture and data engineering on GCP. Google Cloud certified, based in Taipei, Taiwan.",
 };
 
 export default function AboutPage() {
@@ -30,18 +30,22 @@ export default function AboutPage() {
             <span className="px-3 py-1 text-xs font-mono font-medium bg-[#FFE500] text-[#0D0D0D] border-2 border-[#0D0D0D] uppercase tracking-widest">
               About Me
             </span>
-            <h1 className="font-bricolage font-black text-6xl lg:text-8xl text-[#0D0D0D] tracking-tight mt-6 mb-4 leading-none">
+            <h1 className="font-bricolage font-black text-6xl lg:text-8xl text-[#0D0D0D] tracking-tight mt-6 mb-2 leading-none">
               Hey, I&apos;m Max
             </h1>
+            <p className="font-mono text-sm text-gray-400 tracking-widest mb-4">
+              陳司翰 · SIH-HAN CHEN
+            </p>
             <div className="flex items-center gap-2 text-gray-500 mb-6 font-mono text-sm">
               <MapPin size={16} />
               <span>Taipei–Keelung Metropolitan Area, Taiwan</span>
             </div>
             <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
-              I bridge the gap between robust software engineering and
-              cutting-edge AI — building the data pipelines, backend services,
-              and stateful agent systems that power the next generation of
-              intelligent products.
+              SIH-HAN (Max) CHEN (陳司翰, Chen Sih-Han) is a software engineer
+              at Vpon, based in Taipei, specializing in AI agent architecture
+              and data engineering on GCP. He builds data pipelines, backend services, and stateful
+              multi-agent systems using LangGraph — reducing manual operational
+              overhead by 60% on one internal automation.
             </p>
           </div>
         </div>

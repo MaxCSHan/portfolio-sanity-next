@@ -137,8 +137,26 @@ export default async function PostsPage(props: Props) {
   const hasNextPage = page < totalPages;
   const hasPrevPage = page > 1;
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Blog Posts — Max Chen",
+    "description": "Browse all blog posts about web development, data engineering, and technology.",
+    "url": "https://maxcsh.vercel.app/posts",
+    "author": {
+      "@type": "Person",
+      "name": "SIH-HAN (Max) CHEN",
+      "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
+      "url": "https://maxcsh.vercel.app",
+    },
+  };
+
   return (
     <div className="bg-[#F2EFE9]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       <div className="container py-12 lg:py-24">
         <div className="mx-auto max-w-6xl">
           {/* Header */}

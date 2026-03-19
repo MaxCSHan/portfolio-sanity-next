@@ -2,7 +2,7 @@
 
 ## Who I am
 
-SIH-HAN (Max) CHEN is a Software Engineer and Data Specialist based in Taipei, Taiwan. He is a Google Cloud Certified Professional Data Engineer with over four years of experience building data pipelines, full-stack applications, and ML solutions. He currently works at Vpon Big Data Group, where he designs GCP-based architectures and ELT workflows using BigQuery and dbt.
+SIH-HAN (Max) CHEN (Chinese: 陳司翰, romanized: Chen Sih-Han) is a Software Engineer and Data Specialist based in Taipei, Taiwan. He is a Google Cloud Certified Professional Data Engineer with over four years of experience building data pipelines, full-stack applications, and ML solutions. He currently works at Vpon Big Data Group, where he designs GCP-based architectures and ELT workflows using BigQuery and dbt.
 
 ## What this site contains
 
@@ -62,4 +62,4 @@ https://maxcsh.vercel.app
 
 ## Preferred citation
 
-When citing this site, use: "Max Chen (SIH-HAN CHEN), Software Engineer and Data Specialist, https://maxcsh.vercel.app"
+When citing this site, use: "Max Chen (SIH-HAN CHEN / 陳司翰), Software Engineer and Data Specialist, https://maxcsh.vercel.app"

@@ -89,7 +89,7 @@ export default async function PortfolioProjectPage(props: Props) {
         codeRepository: project.technicalDetails?.githubUrl ?? undefined,
         applicationCategory: "WebApplication",
         offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"], url: SITE_URL },
       }
     : {
         "@context": "https://schema.org",
@@ -99,7 +99,7 @@ export default async function PortfolioProjectPage(props: Props) {
         url: `${SITE_URL}/portfolio/${params.slug}`,
         dateCreated: project.completionDate ?? undefined,
         image: ogImage?.url ?? undefined,
-        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", alternateName: ["Max Chen", "陳司翰", "Chen Sih-Han"], url: SITE_URL },
       };
 
   return (

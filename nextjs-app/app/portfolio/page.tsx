@@ -80,8 +80,26 @@ export default async function PortfolioPage(props: Props) {
     const totalPages = Math.ceil((totalCount || 0) / PROJECTS_PER_PAGE);
     const hasActiveFilters = !!(category || search || featured || (technologies && technologies.length > 0));
 
+    const jsonLd = {
+      "@context": "https://schema.org",
+      "@type": "CollectionPage",
+      "name": "Portfolio — Max Chen",
+      "description": "Browse my portfolio of coding projects, photography, creative content, data analysis, animations, and design work.",
+      "url": "https://maxcsh.vercel.app/portfolio",
+      "author": {
+        "@type": "Person",
+        "name": "SIH-HAN (Max) CHEN",
+        "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
+        "url": "https://maxcsh.vercel.app",
+      },
+    };
+
     return (
       <div className="bg-[#F2EFE9]">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
         <div className="container py-12 lg:py-24">
           <div className="mx-auto max-w-7xl">
             {/* Header */}
