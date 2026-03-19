@@ -1,20 +1,26 @@
-import type { ReactNode } from "react";
 import Link from "next/link";
-import { ArrowRight, Code, Database, Cloud, Camera, Globe } from "lucide-react";
+import { ArrowRight, Copy } from "lucide-react";
 import Image from "next/image";
 import { sanityFetch } from "@/sanity/lib/live";
-import { featuredPortfolioProjectsQuery, paginatedPostsQuery, photographyProjectsQuery } from "@/sanity/lib/queries";
-import { FeaturedPortfolioProjectsQueryResult, PaginatedPostsQueryResult, PhotographyProjectsQueryResult } from "@/sanity.types";
+import { featuredPortfolioProjectsQuery, paginatedPostsQuery, photoPostsQuery } from "@/sanity/lib/queries";
+import { FeaturedPortfolioProjectsQueryResult, PaginatedPostsQueryResult } from "@/sanity.types";
 import PortfolioProjectCard from "@/app/portfolio/components/ProjectCard";
 import DateComponent from "@/app/components/Date";
-import CoverImage from "@/app/components/CoverImage";
 import { urlForImage } from "@/sanity/lib/utils";
 
+type PhotoPost = {
+  _id: string;
+  slug: string | null;
+  caption: string | null;
+  coverImage: any;
+  imageCount: number | null;
+};
+
 export default async function Page() {
-  const [{ data: featuredProjects }, { data: recentPosts }, { data: photoProjects }] = await Promise.all([
+  const [{ data: featuredProjects }, { data: recentPosts }, { data: photoPosts }] = await Promise.all([
     sanityFetch({ query: featuredPortfolioProjectsQuery }),
-    sanityFetch({ query: paginatedPostsQuery, params: { offset: 0, limit: 2 } }),
-    sanityFetch({ query: photographyProjectsQuery }),
+    sanityFetch({ query: paginatedPostsQuery, params: { offset: 0, limit: 3 } }),
+    sanityFetch({ query: photoPostsQuery }),
   ]);
 
   return (
@@ -30,18 +36,10 @@ export default async function Page() {
               <h1 className="font-bricolage font-black text-7xl lg:text-9xl text-[#0D0D0D] tracking-tight mb-6 leading-none">
                 Hi there <span className="inline-block animate-wave">👋</span> I&apos;m Max
               </h1>
-              <p className="text-xl text-gray-600 max-w-2xl mb-8">
-                A software engineer with over 5 years of experience in web development,
-                data engineering, and cloud solutions. I&apos;m passionate about delivering
-                modern and advanced web features.
+              <p className="text-xl text-gray-600 max-w-2xl mb-10">
+                I build data-driven web products and write about what I learn along the way.
+                I also take photographs.
               </p>
-              <div className="flex flex-wrap gap-3 mt-2 mb-10">
-                <SkillBadge icon={<Code size={14} />} text="Web Dev" />
-                <SkillBadge icon={<Database size={14} />} text="Data Engineering" />
-                <SkillBadge icon={<Cloud size={14} />} text="Cloud Solutions" />
-                <SkillBadge icon={<Camera size={14} />} text="Photography" />
-                <SkillBadge icon={<Globe size={14} />} text="Languages" />
-              </div>
               <div className="flex flex-wrap gap-4">
                 <Link
                   href="/portfolio"
@@ -62,39 +60,19 @@ export default async function Page() {
         </div>
       </div>
 
-      {/* Background Section */}
+      {/* Now Section */}
       <div className="border-t-2 border-[#0D0D0D] bg-white">
-        <div className="container py-16 md:py-24">
+        <div className="container py-10">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D] mb-6">About Me</h2>
-            <div className="grid md:grid-cols-2 gap-12">
-              <div className="space-y-6 text-gray-600">
-                <p>
-                  As an economics graduate, I came from a data analytics background combined
-                  with visual design experiences. This unique blend allows me to approach
-                  technical challenges with both analytical rigor and aesthetic sensibility.
-                </p>
-                <p>
-                  Beyond coding, I&apos;m enthusiastic about photography and learning languages.
-                  I speak Mandarin, English, conversational Japanese, and I&apos;m currently
-                  learning French.
-                </p>
-                <div className="pt-4">
-                  <Link
-                    href="/about"
-                    className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
-                  >
-                    Learn more about me
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                <LanguageCard language="Mandarin" proficiency="Native" flag="🇹🇼" />
-                <LanguageCard language="English" proficiency="Professional" flag="🇺🇸" />
-                <LanguageCard language="Japanese" proficiency="Conversational" flag="🇯🇵" />
-                <LanguageCard language="French" proficiency="Learning" flag="🇫🇷" />
-              </div>
+            <div className="flex items-baseline gap-6">
+              <span className="font-mono text-xs uppercase tracking-widest text-gray-400 shrink-0">Now</span>
+              <p className="text-gray-600">
+                Currently working on data infrastructure and AI tooling. On the side, building out this site and exploring generative AI workflows.
+                Open to conversations about interesting projects.{" "}
+                <Link href="/about" className="text-[#0D0D0D] underline underline-offset-2 hover:text-[#FF3B00] transition-colors">
+                  More about me →
+                </Link>
+              </p>
             </div>
           </div>
         </div>
@@ -133,67 +111,86 @@ export default async function Page() {
         </div>
       </div>
 
-      {/* Blog & Photography Teaser */}
+      {/* Writing Section */}
       <div className="border-t-2 border-[#0D0D0D] bg-white">
         <div className="container py-16 md:py-24">
           <div className="mx-auto max-w-3xl lg:max-w-4xl">
-            <div className="grid md:grid-cols-2 gap-16">
-              {/* Blog Section */}
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="font-bricolage font-black text-3xl text-[#0D0D0D]">Latest Posts</h2>
-                  <Link
-                    href="/posts"
-                    className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
-                  >
-                    All posts
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
-                {recentPosts && recentPosts.length > 0 ? (
-                  <div className="space-y-6">
-                    {recentPosts.map((post: PaginatedPostsQueryResult[number]) => (
-                      <HomeBlogPostCard key={post._id} post={post} />
-                    ))}
-                  </div>
-                ) : (
-                  <p className="text-gray-500 font-mono text-sm">No posts yet. Check back soon!</p>
-                )}
-              </div>
-
-              {/* Photography Section */}
-              <div>
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="font-bricolage font-black text-3xl text-[#0D0D0D]">Photography</h2>
-                  <Link
-                    href="/photography"
-                    className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
-                  >
-                    View gallery
-                    <ArrowRight className="ml-1 h-4 w-4" />
-                  </Link>
-                </div>
-                <div className="grid grid-cols-2 gap-3">
-                  {photoProjects && photoProjects.length > 0
-                    ? (photoProjects as PhotographyProjectsQueryResult).slice(0, 4).map((p) => {
-                        const src = urlForImage(p.heroImage)?.width(400).height(400).fit("crop").url();
-                        return (
-                          <Link key={p._id} href={`/portfolio/${p.slug}`} className="group block aspect-square relative overflow-hidden bg-gray-100">
-                            {src ? (
-                              <Image src={src} alt={p.title ?? ""} fill className="object-cover transition-transform duration-300 group-hover:scale-105" sizes="200px" />
-                            ) : (
-                              <div className="w-full h-full bg-gray-200" />
-                            )}
-                          </Link>
-                        );
-                      })
-                    : Array.from({ length: 4 }).map((_, i) => (
-                        <div key={i} className="aspect-square bg-gray-100" />
-                      ))
-                  }
-                </div>
-              </div>
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D]">Writing</h2>
+              <Link
+                href="/posts"
+                className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
+              >
+                All posts
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
             </div>
+            {recentPosts && recentPosts.length > 0 ? (
+              <div className="divide-y-2 divide-[#0D0D0D] border-t-2 border-[#0D0D0D]">
+                {recentPosts.map((post: PaginatedPostsQueryResult[number]) => (
+                  <HomeBlogPostCard key={post._id} post={post} />
+                ))}
+              </div>
+            ) : (
+              <p className="text-gray-500 font-mono text-sm">No posts yet. Check back soon!</p>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Photography Section */}
+      <div className="border-t-2 border-[#0D0D0D] bg-[#F2EFE9]">
+        <div className="container py-16 md:py-24">
+          <div className="mx-auto max-w-3xl lg:max-w-4xl">
+            <div className="flex justify-between items-center mb-10">
+              <h2 className="font-bricolage font-black text-4xl text-[#0D0D0D]">Photography</h2>
+              <Link
+                href="/photography"
+                className="inline-flex items-center font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
+              >
+                View gallery
+                <ArrowRight className="ml-1 h-4 w-4" />
+              </Link>
+            </div>
+            {photoPosts && photoPosts.length > 0 ? (
+              <div className="grid grid-cols-3 gap-0.5 sm:gap-1">
+                {(photoPosts as PhotoPost[]).slice(0, 9).map((post) => {
+                  const src = urlForImage(post.coverImage)?.width(600).height(600).fit("crop").url();
+                  return (
+                    <Link
+                      key={post._id}
+                      href={`/photography/${post.slug}`}
+                      className="group relative block aspect-square overflow-hidden bg-gray-100"
+                      aria-label={post.caption ?? "View photo"}
+                    >
+                      {src ? (
+                        <Image
+                          src={src}
+                          alt={post.coverImage?.alt ?? post.caption ?? ""}
+                          fill
+                          className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                          sizes="(max-width: 768px) 33vw, 25vw"
+                        />
+                      ) : (
+                        <div className="w-full h-full bg-gray-200" />
+                      )}
+                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/25 transition-colors duration-300" />
+                      {post.imageCount != null && post.imageCount > 1 && (
+                        <div className="absolute top-2 right-2 z-10">
+                          <Copy className="h-4 w-4 text-white drop-shadow" />
+                        </div>
+                      )}
+                    </Link>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="grid grid-cols-3 gap-0.5 sm:gap-1">
+                {Array.from({ length: 9 }).map((_, i) => (
+                  <div key={i} className="aspect-square bg-gray-100" />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </div>
@@ -201,48 +198,37 @@ export default async function Page() {
   );
 }
 
-function SkillBadge({ icon, text }: { icon: ReactNode; text: string }) {
-  return (
-    <div className="inline-flex items-center px-3 py-1 border border-[#0D0D0D] rounded-none text-sm font-mono text-[#0D0D0D] bg-transparent">
-      <span className="mr-1.5">{icon}</span>
-      {text}
-    </div>
-  );
-}
-
-function LanguageCard({ language, proficiency, flag }: { language: string; proficiency: string; flag: string }) {
-  return (
-    <div className="bg-white border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] p-4 rounded-none">
-      <span className="text-2xl">{flag}</span>
-      <h3 className="font-bold text-[#0D0D0D] mt-2">{language}</h3>
-      <p className="text-sm text-gray-500 font-mono">{proficiency}</p>
-    </div>
-  );
-}
-
 function HomeBlogPostCard({ post }: { post: PaginatedPostsQueryResult[number] }) {
   const { title, slug, excerpt, date, coverImage } = post;
   return (
-    <div className="border-b-2 border-[#0D0D0D] pb-6">
-      {coverImage && (
-        <div className="aspect-video relative overflow-hidden mb-3">
-          <CoverImage image={coverImage} />
+    <div className="py-6 flex gap-6 items-start">
+      <div className="flex-1 min-w-0">
+        {date && (
+          <span className="text-xs font-mono text-gray-400 uppercase tracking-widest">
+            <DateComponent dateString={date} />
+          </span>
+        )}
+        <h3 className="text-lg font-bold text-[#0D0D0D] mt-1 mb-2">{title}</h3>
+        {excerpt && <p className="text-gray-600 line-clamp-2 text-sm">{excerpt}</p>}
+        <Link
+          href={`/posts/${slug}`}
+          className="inline-flex items-center mt-3 font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
+        >
+          Read more
+          <ArrowRight className="ml-1 h-3 w-3" />
+        </Link>
+      </div>
+      {coverImage?.asset?._ref && (
+        <div className="relative w-36 aspect-video shrink-0 overflow-hidden bg-gray-100">
+          <Image
+            src={urlForImage(coverImage)?.width(288).height(162).fit("crop").auto("format").url() as string}
+            alt={coverImage?.alt ?? title ?? ""}
+            fill
+            className="object-cover"
+            sizes="144px"
+          />
         </div>
       )}
-      {date && (
-        <span className="text-xs font-mono text-gray-500 uppercase tracking-widest">
-          <DateComponent dateString={date} />
-        </span>
-      )}
-      <h3 className="text-lg font-bold text-[#0D0D0D] mt-1 mb-2">{title}</h3>
-      {excerpt && <p className="text-gray-600 line-clamp-2">{excerpt}</p>}
-      <Link
-        href={`/posts/${slug}`}
-        className="inline-flex items-center mt-3 font-mono text-xs uppercase tracking-widest text-[#0D0D0D] hover:text-[#FF3B00] transition-colors"
-      >
-        Read more
-        <ArrowRight className="ml-1 h-3 w-3" />
-      </Link>
     </div>
   );
 }
