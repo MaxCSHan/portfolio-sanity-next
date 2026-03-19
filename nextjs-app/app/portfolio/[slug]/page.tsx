@@ -1,6 +1,8 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
 import { ArrowLeft, ExternalLink, Github, Calendar, User, Tag } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/live";
@@ -51,7 +53,13 @@ export async function generateMetadata(
     title: project?.title,
     description: project?.shortDescription,
     openGraph: {
+      type: "article",
+      url: `${SITE_URL}/portfolio/${params.slug}`,
+      siteName: "Max Chen — Portfolio",
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
+    },
+    twitter: {
+      card: "summary_large_image",
     },
   } satisfies Metadata;
 }
@@ -67,8 +75,39 @@ export default async function PortfolioProjectPage(props: Props) {
     return notFound();
   }
 
+  const ogImage = resolveOpenGraphImage(project.heroMedia?.image);
+  const isCoding = project.category === "coding";
+  const projectJsonLd = isCoding
+    ? {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        name: project.title,
+        description: project.shortDescription ?? undefined,
+        url: `${SITE_URL}/portfolio/${params.slug}`,
+        dateCreated: project.completionDate ?? undefined,
+        image: ogImage?.url ?? undefined,
+        codeRepository: project.technicalDetails?.githubUrl ?? undefined,
+        applicationCategory: "WebApplication",
+        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+      }
+    : {
+        "@context": "https://schema.org",
+        "@type": "CreativeWork",
+        name: project.title,
+        description: project.shortDescription ?? undefined,
+        url: `${SITE_URL}/portfolio/${params.slug}`,
+        dateCreated: project.completionDate ?? undefined,
+        image: ogImage?.url ?? undefined,
+        author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+      };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(projectJsonLd) }}
+      />
       <div className="bg-[#F2EFE9]">
         <div className="container py-12 lg:py-24">
           <div className="mx-auto max-w-4xl">

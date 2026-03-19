@@ -7,6 +7,8 @@ import { photoPostQuery, photographySlugs } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage, urlForImage } from "@/sanity/lib/utils";
 import PhotoDetailClient from "./PhotoDetailClient";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -64,7 +66,13 @@ export async function generateMetadata(
     title: post?.caption?.slice(0, 80) ?? "Photo",
     description: post?.caption ?? undefined,
     openGraph: {
+      type: "article",
+      url: `${SITE_URL}/photography/${params.slug}`,
+      siteName: "Max Chen — Portfolio",
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
+    },
+    twitter: {
+      card: "summary_large_image",
     },
   };
 }
@@ -78,8 +86,28 @@ export default async function PhotoPostPage(props: Props) {
 
   if (!post?._id) return notFound();
 
+  const imageGalleryJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ImageGallery",
+    name: post.caption ?? "Photo",
+    description: post.caption ?? undefined,
+    url: `${SITE_URL}/photography/${params.slug}`,
+    datePublished: post.date ?? undefined,
+    contentLocation: post.location
+      ? { "@type": "Place", name: post.location }
+      : undefined,
+    image: post.images
+      ?.map((img) => urlForImage(img)?.width(1200).url())
+      .filter(Boolean) ?? [],
+    author: { "@type": "Person", name: "SIH-HAN (Max) CHEN", url: SITE_URL },
+  };
+
   return (
     <div className="bg-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(imageGalleryJsonLd) }}
+      />
       <PhotoDetailClient post={post} />
 
       {/* ── Related posts — below the fold ── */}

@@ -35,9 +35,9 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     metadataBase = settings?.ogImage?.metadataBase
       ? new URL(settings.ogImage.metadataBase)
-      : undefined;
+      : new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app");
   } catch {
-    // ignore
+    metadataBase = new URL("https://maxcsh.vercel.app");
   }
   return {
     metadataBase,
@@ -47,7 +47,15 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: toPlainText(description),
     openGraph: {
+      type: "website",
+      siteName: "Max Chen — Portfolio",
       images: ogImage ? [ogImage] : [],
+    },
+    twitter: {
+      card: "summary_large_image",
+    },
+    verification: {
+      google: "2HA4DgJjnza0izkbhCKALRL0TUbUxPFeo_XriU3oJec",
     },
   };
 }
@@ -64,6 +72,46 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "SIH-HAN (Max) CHEN",
+  alternateName: "Max Chen",
+  url: SITE_URL,
+  jobTitle: "Software Engineer & Data Specialist",
+  worksFor: { "@type": "Organization", name: "Vpon" },
+  address: { "@type": "PostalAddress", addressLocality: "Taipei", addressCountry: "TW" },
+  sameAs: [
+    "https://github.com/MaxCSHan",
+    "https://www.linkedin.com/in/sih-han-chen-max/",
+    "https://www.instagram.com/maxchen.sh/",
+    "https://www.behance.net/maxchen31",
+  ],
+  knowsAbout: [
+    "GCP", "Data Engineering", "TypeScript", "Next.js", "Python",
+    "SQL", "BigQuery", "dbt", "React", "Node.js",
+  ],
+  hasCredential: {
+    "@type": "EducationalOccupationalCredential",
+    name: "Google Cloud Professional Data Engineer",
+    credentialCategory: "certification",
+  },
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "National Taiwan University" },
+    { "@type": "CollegeOrUniversity", name: "Meiji University" },
+  ],
+};
+
+const websiteJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Max Chen — Portfolio",
+  url: SITE_URL,
+  author: { "@type": "Person", name: "SIH-HAN (Max) CHEN" },
+};
+
 export default async function RootLayout({
   children,
 }: {
@@ -75,6 +123,8 @@ export default async function RootLayout({
     <html lang="en" className={`${inter.variable} ${bricolage.variable} bg-[#F2EFE9] text-black`}>
       <GoogleTagManager gtmId="GTM-PLN2GGPW" />
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
         <section className="min-h-screen pt-24">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />

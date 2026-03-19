@@ -5,6 +5,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+
 import Avatar from "@/app/components/Avatar";
 import CoverImage from "@/app/components/CoverImage";
 import { MorePosts } from "@/app/components/Posts";
@@ -53,7 +55,13 @@ export async function generateMetadata(
     title: post?.title,
     description: post?.excerpt,
     openGraph: {
+      type: "article",
+      url: `${SITE_URL}/posts/${params.slug}`,
+      siteName: "Max Chen — Portfolio",
       images: ogImage ? [ogImage, ...previousImages] : previousImages,
+    },
+    twitter: {
+      card: "summary_large_image",
     },
   } satisfies Metadata;
 }
@@ -68,8 +76,33 @@ export default async function PostPage(props: Props) {
     return notFound();
   }
 
+  const ogImage = resolveOpenGraphImage(post.coverImage);
+  const blogPostingJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.excerpt ?? undefined,
+    url: `${SITE_URL}/posts/${params.slug}`,
+    datePublished: post.date ?? undefined,
+    image: ogImage?.url ?? undefined,
+    author: {
+      "@type": "Person",
+      name: "SIH-HAN (Max) CHEN",
+      url: SITE_URL,
+    },
+    publisher: {
+      "@type": "Person",
+      name: "SIH-HAN (Max) CHEN",
+      url: SITE_URL,
+    },
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(blogPostingJsonLd) }}
+      />
       {/*
         ── Masthead (NB palette) ─────────────────────────────────────────
         The "page furniture" — back link, title, byline — lives on the
