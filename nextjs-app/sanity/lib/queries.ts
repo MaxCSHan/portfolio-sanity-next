@@ -54,7 +54,7 @@ export const getPageQuery = defineQuery(`
 `);
 
 export const sitemapData = defineQuery(`
-  *[_type == "page" || _type == "post" && defined(slug.current)] | order(_type asc) {
+  *[(_type == "page" || _type == "post" || _type == "portfolioProject" || _type == "photoPost") && defined(slug.current)] | order(_type asc) {
     "slug": slug.current,
     _type,
     _updatedAt,

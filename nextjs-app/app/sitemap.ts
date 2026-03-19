@@ -1,63 +1,62 @@
 import { MetadataRoute } from "next";
 import { sanityFetch } from "@/sanity/lib/live";
 import { sitemapData } from "@/sanity/lib/queries";
-import { headers } from "next/headers";
 
-/**
- * This file creates a sitemap (sitemap.xml) for the application. Learn more about sitemaps in Next.js here: https://nextjs.org/docs/app/api-reference/file-conventions/metadata/sitemap
- * Be sure to update the `changeFrequency` and `priority` values to match your application's content.
- */
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const allPostsAndPages = await sanityFetch({
-    query: sitemapData,
-  });
-  const headersList = await headers();
-  const sitemap: MetadataRoute.Sitemap = [];
-  const domain: String = headersList.get("host") as string;
-  sitemap.push({
-    url: domain as string,
-    lastModified: new Date(),
-    priority: 1,
-    changeFrequency: "monthly",
-  });
+  const allContent = await sanityFetch({ query: sitemapData });
 
-  if (allPostsAndPages != null && allPostsAndPages.data.length != 0) {
-    let priority: number;
-    let changeFrequency:
-      | "monthly"
-      | "always"
-      | "hourly"
-      | "daily"
-      | "weekly"
-      | "yearly"
-      | "never"
-      | undefined;
-    let url: string;
+  const staticRoutes: MetadataRoute.Sitemap = [
+    { url: SITE_URL, lastModified: new Date(), priority: 1.0, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/portfolio`, lastModified: new Date(), priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/photography`, lastModified: new Date(), priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/posts`, lastModified: new Date(), priority: 0.8, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/resume`, lastModified: new Date(), priority: 0.7, changeFrequency: "monthly" },
+  ];
 
-    for (const p of allPostsAndPages.data) {
-      switch (p._type) {
+  const dynamicRoutes: MetadataRoute.Sitemap = [];
+
+  if (allContent?.data?.length) {
+    for (const item of allContent.data) {
+      let url: string;
+      let priority: number;
+      let changeFrequency: MetadataRoute.Sitemap[number]["changeFrequency"];
+
+      switch (item._type) {
         case "page":
-          priority = 0.8;
+          url = `${SITE_URL}/${item.slug}`;
+          priority = 0.7;
           changeFrequency = "monthly";
-          url = `${domain}/${p.slug}`;
           break;
         case "post":
-          priority = 0.5;
+          url = `${SITE_URL}/posts/${item.slug}`;
+          priority = 0.6;
           changeFrequency = "never";
-          url = `${domain}/posts/${p.slug}`;
+          break;
+        case "portfolioProject":
+          url = `${SITE_URL}/portfolio/${item.slug}`;
+          priority = 0.8;
+          changeFrequency = "monthly";
+          break;
+        case "photoPost":
+          url = `${SITE_URL}/photography/${item.slug}`;
+          priority = 0.6;
+          changeFrequency = "never";
           break;
         default:
           continue;
       }
-      sitemap.push({
-        lastModified: p._updatedAt || new Date(),
+
+      dynamicRoutes.push({
+        url,
+        lastModified: item._updatedAt ? new Date(item._updatedAt) : new Date(),
         priority,
         changeFrequency,
-        url,
       });
     }
   }
 
-  return sitemap;
+  return [...staticRoutes, ...dynamicRoutes];
 }

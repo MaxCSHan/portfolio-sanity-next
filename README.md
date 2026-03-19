@@ -338,7 +338,6 @@ All queries live in `nextjs-app/sanity/lib/queries.ts`.
 
 | # | Feature | Notes |
 |---|---|---|
-| 11 | SEO — structured data & sitemap | Portfolio + photography in sitemap, JSON-LD markup |
 | 12 | Analytics tracking | GA events for project/photo views |
 | 13 | Error handling | Error boundaries, retry mechanisms |
 | 14 | Performance & caching | ISR strategies, code splitting |
