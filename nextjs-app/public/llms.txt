@@ -1,0 +1,65 @@
+# Max Chen — Portfolio
+
+## Who I am
+
+SIH-HAN (Max) CHEN is a Software Engineer and Data Specialist based in Taipei, Taiwan. He is a Google Cloud Certified Professional Data Engineer with over four years of experience building data pipelines, full-stack applications, and ML solutions. He currently works at Vpon Big Data Group, where he designs GCP-based architectures and ELT workflows using BigQuery and dbt.
+
+## What this site contains
+
+This is Max's personal portfolio and blog, built with Next.js 15 and Sanity CMS. It showcases his work across software engineering, data engineering, photography, and creative projects.
+
+## Sections
+
+Portfolio — https://maxcsh.vercel.app/portfolio
+  Software and data engineering projects, creative work, photography projects, and design work.
+
+Blog / Writing — https://maxcsh.vercel.app/posts
+  Technical posts on software engineering, data engineering, cloud architecture, and professional development.
+
+Photography — https://maxcsh.vercel.app/photography
+  Documentary and street photography from Taiwan, Japan, and other locations.
+
+Resume — https://maxcsh.vercel.app/resume
+  Full work history, education, and technical skills.
+
+About — https://maxcsh.vercel.app/about
+  Background and contact information.
+
+## Technical expertise
+
+Programming languages: JavaScript, TypeScript, Python, Go, Java, R, Ruby
+Web technologies: React, Next.js, Node.js, Ruby on Rails, GraphQL
+Data engineering: BigQuery, dbt, Airflow, SQL, Looker Studio, Python
+Cloud and DevOps: Google Cloud Platform (GCP), Docker, GitHub Actions
+Databases: PostgreSQL, Firestore, SQL/NoSQL
+
+## Credentials
+
+Google Cloud Certified Professional Data Engineer
+
+## Education
+
+B.A. Economics — National Taiwan University (2014–2019)
+Exchange Student (SPSE) — Meiji University, Tokyo, Japan (2018–2019)
+
+## Professional history
+
+Software Engineer — Vpon Big Data Group (Nov 2022 – Present), Taipei
+Software Engineer — Rakuten Taiwan (Nov 2021 – Oct 2022), Taipei
+Frontend Engineer — TPI Software (Aug 2020 – Oct 2021), Taipei
+Research Assistant — Academia Sinica (Aug 2017 – Aug 2018), Taipei
+
+## External profiles
+
+GitHub: https://github.com/MaxCSHan
+LinkedIn: https://www.linkedin.com/in/sih-han-chen-max/
+Instagram: https://www.instagram.com/maxchen.sh/
+Behance: https://www.behance.net/maxchen31
+
+## Canonical URL
+
+https://maxcsh.vercel.app
+
+## Preferred citation
+
+When citing this site, use: "Max Chen (SIH-HAN CHEN), Software Engineer and Data Specialist, https://maxcsh.vercel.app"
