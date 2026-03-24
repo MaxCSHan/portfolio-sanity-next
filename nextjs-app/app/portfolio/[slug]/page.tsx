@@ -13,6 +13,7 @@ import PortableText from "@/app/components/PortableText";
 import DateComponent from "@/app/components/Date";
 import GalleryGrid from "@/app/portfolio/components/GalleryGrid";
 import ShareButtons from "@/app/portfolio/components/ShareButtons";
+import GiscusComments from "@/app/components/GiscusComments";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -244,6 +245,26 @@ export default async function PortfolioProjectPage(props: Props) {
                 </div>
               </div>
             )}
+
+            {/* Comments */}
+            <div className="mt-16 pt-16 border-t-2 border-[#0D0D0D]">
+              <p className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">
+                // Discussion
+              </p>
+              <div className="flex items-center gap-4 mb-8">
+                <h2 className="font-bricolage font-black text-3xl text-[#0D0D0D]">
+                  Comments
+                </h2>
+                <div className="flex-1 h-0.5 bg-[#FFE500] border-y border-[#0D0D0D]" />
+              </div>
+              <div className="border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white">
+                <div className="h-2 bg-[#FFE500] border-b-2 border-[#0D0D0D]" />
+                <div className="p-6">
+                  <GiscusComments />
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
