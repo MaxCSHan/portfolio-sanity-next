@@ -1,0 +1,152 @@
+/*
+ * Neo-brutalist Giscus theme
+ * Mirrors the design system in nextjs-app/README.md:
+ *   nb-black  #0D0D0D  nb-bg     #F2EFE9  nb-white  #FFFFFF
+ *   nb-yellow #FFE500  nb-red    #FF3B00
+ *   nb-green  #00E87A  nb-blue   #0062FF
+ *   nb-shadow    4px 4px 0px #0D0D0D
+ *   nb-shadow-sm 2px 2px 0px #0D0D0D
+ *   nb-shadow-y  4px 4px 0px #FFE500
+ *   hover press: translate(2px, 2px) + nb-shadow-sm
+ */
+
+/* ── Canvas ─────────────────────────────────────────────────────── */
+:root {
+  --color-canvas-default:         #FFFFFF;
+  --color-canvas-subtle:          #F2EFE9;
+  --color-canvas-inset:           #F2EFE9;
+  --color-canvas-overlay:         #FFFFFF;
+
+  /* ── Text ────────────────────────────────────────────────────── */
+  --color-fg-default:             #0D0D0D;
+  --color-fg-muted:               #555555;
+  --color-fg-subtle:              #888888;
+  --color-fg-on-emphasis:         #0D0D0D;
+
+  /* ── Borders ─────────────────────────────────────────────────── */
+  --color-border-default:         #0D0D0D;
+  --color-border-muted:           #CCCCCC;
+  --color-border-subtle:          #E5E5E5;
+
+  /* ── Accent (links, focus rings) ─────────────────────────────── */
+  --color-accent-fg:              #0D0D0D;
+  --color-accent-emphasis:        #FFE500;
+  --color-accent-muted:           rgba(255, 229, 0, 0.3);
+  --color-accent-subtle:          #FFF9CC;
+
+  /* ── Primary button (Sign in / Submit) ───────────────────────── */
+  --color-btn-primary-bg:         #FFE500;
+  --color-btn-primary-text:       #0D0D0D;
+  --color-btn-primary-border:     #0D0D0D;
+  --color-btn-primary-hover-bg:   #FF3B00;
+  --color-btn-primary-hover-text: #FFFFFF;
+  --color-btn-primary-hover-border: #0D0D0D;
+  --color-btn-primary-selected-bg: #FF3B00;
+  --color-btn-primary-disabled-bg: #F2EFE9;
+  --color-btn-primary-disabled-text: #AAAAAA;
+
+  /* ── Default button ─────────────────────────────────────────── */
+  --color-btn-bg:                 #FFFFFF;
+  --color-btn-text:               #0D0D0D;
+  --color-btn-border:             #0D0D0D;
+  --color-btn-hover-bg:           #0D0D0D;
+  --color-btn-hover-text:         #FFFFFF;
+  --color-btn-hover-border:       #0D0D0D;
+  --color-btn-active-bg:          #0D0D0D;
+  --color-btn-active-text:        #FFE500;
+
+  /* ── Reactions ───────────────────────────────────────────────── */
+  --color-reactions-btn-text:               #0D0D0D;
+  --color-reactions-btn-hover-bg:           #FFE500;
+  --color-reactions-btn-hover-text:         #0D0D0D;
+  --color-reactions-btn-selected-bg:        #FFE500;
+  --color-reactions-btn-selected-text:      #0D0D0D;
+  --color-reactions-btn-selected-border:    #0D0D0D;
+
+  /* ── Inputs ─────────────────────────────────────────────────── */
+  --color-input-bg:               #FFFFFF;
+  --color-input-contrast-bg:      #F2EFE9;
+  --color-input-disabled-bg:      #F2EFE9;
+  --color-input-fg:               #0D0D0D;
+  --color-input-border:           #0D0D0D;
+  --color-input-focus-border:     #FFE500;
+  --color-input-placeholder:      #AAAAAA;
+
+  /* ── Neutrals ────────────────────────────────────────────────── */
+  --color-neutral-emphasis:       #0D0D0D;
+  --color-neutral-emphasis-plus:  #0D0D0D;
+  --color-neutral-muted:          rgba(13, 13, 13, 0.1);
+  --color-neutral-subtle:         #F2EFE9;
+
+  /* ── Category accents (nb-green, nb-blue) ────────────────────── */
+  --color-success-fg:             #00E87A;
+  --color-success-emphasis:       #00E87A;
+  --color-success-muted:          rgba(0, 232, 122, 0.2);
+  --color-success-subtle:         rgba(0, 232, 122, 0.1);
+  --color-accent-blue:            #0062FF;
+
+  /* ── Timeline ────────────────────────────────────────────────── */
+  --color-timeline-badge-bg:      #FFE500;
+
+  /* ── Social reactions ────────────────────────────────────────── */
+  --color-social-reaction-bg-reacted-hover: #FFE500;
+  --color-social-reaction-bg-hover:         #F2EFE9;
+}
+
+/* ── Zero border-radius everywhere (Neo-brutalism) ───────────────── */
+.gsc-comment,
+.gsc-reply,
+.gsc-comment-box,
+.gsc-comment-box-textarea,
+.gsc-reactions-button,
+.gsc-social-reaction-summary-item,
+.btn,
+.btn-primary,
+.btn-sm,
+.avatar,
+input,
+textarea {
+  border-radius: 0 !important;
+}
+
+/* ── Hover press effect on buttons: translate + shrink shadow ─────── */
+/* Mirrors: translate(2px, 2px) + nb-shadow-sm (2px 2px 0px #0D0D0D) */
+.btn,
+.btn-primary,
+.btn-sm,
+.gsc-reactions-button,
+.gsc-social-reaction-summary-item {
+  transition: transform 80ms ease, box-shadow 80ms ease !important;
+}
+.btn:hover,
+.btn-primary:hover,
+.btn-sm:hover,
+.gsc-reactions-button:hover,
+.gsc-social-reaction-summary-item:hover {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0 #0D0D0D !important;
+}
+
+/* ── Textarea focus: nb-shadow-y ─────────────────────────────────── */
+.gsc-comment-box-textarea:focus,
+textarea:focus {
+  border-color: #FFE500 !important;
+  box-shadow: 4px 4px 0 #FFE500 !important;
+  outline: none !important;
+}
+
+/* ── Selected reaction: nb-yellow fill ───────────────────────────── */
+.gsc-reactions-button[aria-pressed="true"],
+.gsc-social-reaction-summary-item.active {
+  background-color: #FFE500 !important;
+  border-color: #0D0D0D !important;
+}
+
+/* ── Links ───────────────────────────────────────────────────────── */
+a {
+  text-decoration-color: #FFE500;
+}
+a:hover {
+  color: #FF3B00 !important;
+  text-decoration-color: #FF3B00;
+}

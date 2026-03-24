@@ -14,6 +14,7 @@ import PortableText from "@/app/components/PortableText";
 import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
+import GiscusComments from "@/app/components/GiscusComments";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -177,6 +178,43 @@ export default async function PostPage(props: Props) {
               </div>
             )}
           </article>
+        </div>
+      </div>
+
+      {/*
+        ── Comments (NB palette) ──────────────────────────────────────────
+        Warm off-white background matches the masthead — visual bookend
+        before "More Posts". The widget itself sits inside a hard-shadow
+        NB frame with a yellow accent bar on top.
+      */}
+      <div className="bg-[#F2EFE9] border-t-2 border-[#0D0D0D]">
+        <div className="container py-12 lg:py-16">
+          <div className="mx-auto max-w-3xl">
+
+            {/* Section label */}
+            <p className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">
+              // Discussion
+            </p>
+
+            {/* Heading row */}
+            <div className="flex items-center gap-4 mb-8">
+              <h2 className="font-bricolage font-black text-3xl text-[#0D0D0D]">
+                Comments
+              </h2>
+              {/* Yellow accent dash */}
+              <div className="flex-1 h-0.5 bg-[#FFE500] border-y border-[#0D0D0D]" />
+            </div>
+
+            {/* Giscus widget — NB card frame */}
+            <div className="border-2 border-[#0D0D0D] shadow-[4px_4px_0px_#0D0D0D] bg-white">
+              {/* Yellow top accent bar */}
+              <div className="h-2 bg-[#FFE500] border-b-2 border-[#0D0D0D]" />
+              <div className="p-6">
+                <GiscusComments />
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
