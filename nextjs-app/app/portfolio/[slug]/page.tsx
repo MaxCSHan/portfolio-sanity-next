@@ -14,6 +14,7 @@ import DateComponent from "@/app/components/Date";
 import GalleryGrid from "@/app/portfolio/components/GalleryGrid";
 import ShareButtons from "@/app/portfolio/components/ShareButtons";
 import GiscusComments from "@/app/components/GiscusComments";
+import ClapButton from "@/app/components/ClapButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -246,10 +247,18 @@ export default async function PortfolioProjectPage(props: Props) {
               </div>
             )}
 
+            {/* Clap button */}
+            <div className="mt-16 flex flex-col items-center gap-2 py-10 border-t-2 border-dashed border-gray-200">
+              <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">
+                {`// Like this project?`}
+              </p>
+              <ClapButton type="portfolio" slug={params.slug} />
+            </div>
+
             {/* Comments */}
             <div className="mt-16 pt-16 border-t-2 border-[#0D0D0D]">
               <p className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">
-                // Discussion
+                {`// Discussion`}
               </p>
               <div className="flex items-center gap-4 mb-8">
                 <h2 className="font-bricolage font-black text-3xl text-[#0D0D0D]">

@@ -15,6 +15,7 @@ import { sanityFetch } from "@/sanity/lib/live";
 import { postPagesSlugs, postQuery } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage } from "@/sanity/lib/utils";
 import GiscusComments from "@/app/components/GiscusComments";
+import ClapButton from "@/app/components/ClapButton";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -178,6 +179,15 @@ export default async function PostPage(props: Props) {
               </div>
             )}
           </article>
+
+          {/* Clap button — bottom of reading column, before section break */}
+          <div className="flex flex-col items-center gap-2 py-10 border-t-2 border-dashed border-gray-200">
+            <p className="font-mono text-xs uppercase tracking-widest text-gray-400 mb-2">
+              {`// Found this useful?`}
+            </p>
+            <ClapButton type="post" slug={params.slug} />
+          </div>
+
         </div>
       </div>
 
@@ -193,7 +203,7 @@ export default async function PostPage(props: Props) {
 
             {/* Section label */}
             <p className="font-mono text-xs uppercase tracking-widest text-gray-500 mb-3">
-              // Discussion
+              {`// Discussion`}
             </p>
 
             {/* Heading row */}

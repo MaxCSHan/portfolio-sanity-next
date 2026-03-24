@@ -14,6 +14,41 @@ export default {
         "nb-shadow-sm": "2px 2px 0px #0D0D0D",
         "nb-shadow-y": "4px 4px 0px #FFE500",
       },
+      keyframes: {
+        // Per-clap bounce: quick scale punch then settle
+        "clap-bounce": {
+          "0%":   { transform: "scale(1)" },
+          "30%":  { transform: "scale(1.35)" },
+          "60%":  { transform: "scale(0.92)" },
+          "100%": { transform: "scale(1)" },
+        },
+        // Cap hit: horizontal shake
+        "clap-shake": {
+          "0%, 100%": { transform: "translateX(0)" },
+          "15%":  { transform: "translateX(-5px)" },
+          "30%":  { transform: "translateX(5px)" },
+          "45%":  { transform: "translateX(-4px)" },
+          "60%":  { transform: "translateX(4px)" },
+          "75%":  { transform: "translateX(-2px)" },
+          "90%":  { transform: "translateX(2px)" },
+        },
+        // "+N" label floats upward and fades out
+        "float-up": {
+          "0%":   { transform: "translateY(0)",    opacity: "1" },
+          "100%": { transform: "translateY(-32px)", opacity: "0" },
+        },
+        // Subtle pulse on count after flush confirmation
+        "count-pulse": {
+          "0%, 100%": { transform: "scale(1)" },
+          "50%":      { transform: "scale(1.15)" },
+        },
+      },
+      animation: {
+        "clap-bounce": "clap-bounce 300ms ease-out",
+        "clap-shake":  "clap-shake 500ms ease-in-out",
+        "float-up":    "float-up 700ms ease-out forwards",
+        "count-pulse": "count-pulse 300ms ease-in-out",
+      },
       colors: {
         black: "#0d0e12",
         white: "#fff",
