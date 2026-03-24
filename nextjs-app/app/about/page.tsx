@@ -43,9 +43,8 @@ export default function AboutPage() {
             <p className="text-xl text-gray-600 max-w-2xl leading-relaxed">
               SIH-HAN (Max) CHEN (陳司翰, Chen Sih-Han) is a software engineer
               at Vpon, based in Taipei, specializing in AI agent architecture
-              and data engineering on GCP. He builds data pipelines, backend services, and stateful
-              multi-agent systems using LangGraph — reducing manual operational
-              overhead by 60% on one internal automation.
+              and data engineering on GCP. He builds data pipelines, API services, and
+              multi-agent systems.
             </p>
           </div>
         </div>
