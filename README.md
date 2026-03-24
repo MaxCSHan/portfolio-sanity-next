@@ -533,7 +533,7 @@ The project is already linked to a Vercel project. To redeploy:
 
 ```bash
 # From repo root or nextjs-app/
-vercel --prod --yes
+cd nextjs-app && vercel --prod --yes
 ```
 
 The `vercel.json` overrides the build command to `next build` (skipping `typegen`, which needs the studio files and can't run on Vercel's build machines). Types are committed to the repo via `sanity.types.ts`.

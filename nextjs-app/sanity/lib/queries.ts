@@ -165,7 +165,7 @@ export const portfolioProjectQuery = defineQuery(`
       }
     },
     gallery[] {
-      asset,
+      "asset": asset.asset,
       caption,
       alt
     },
