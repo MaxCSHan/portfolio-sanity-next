@@ -11,7 +11,7 @@ const jsonLd = {
   "@type": "Person",
   "name": "SIH-HAN (Max) CHEN",
   "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
-  "url": "https://maxcsh.vercel.app",
+  "url": "https://maxcsh.com",
   "jobTitle": "Software Engineer",
   "worksFor": {
     "@type": "Organization",

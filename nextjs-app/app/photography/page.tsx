@@ -51,12 +51,12 @@ export default async function PhotographyPage() {
     "@type": "CollectionPage",
     "name": "Photography — Max Chen",
     "description": "A visual diary — moments and places captured through the lens.",
-    "url": "https://maxcsh.vercel.app/photography",
+    "url": "https://maxcsh.com/photography",
     "author": {
       "@type": "Person",
       "name": "SIH-HAN (Max) CHEN",
       "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
-      "url": "https://maxcsh.vercel.app",
+      "url": "https://maxcsh.com",
     },
   };
 

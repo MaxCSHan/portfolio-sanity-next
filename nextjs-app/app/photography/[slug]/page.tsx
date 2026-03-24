@@ -7,7 +7,7 @@ import { photoPostQuery, photographySlugs } from "@/sanity/lib/queries";
 import { resolveOpenGraphImage, urlForImage } from "@/sanity/lib/utils";
 import PhotoDetailClient from "./PhotoDetailClient";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com";
 
 type Props = {
   params: Promise<{ slug: string }>;

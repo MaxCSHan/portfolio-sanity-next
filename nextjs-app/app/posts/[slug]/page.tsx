@@ -5,7 +5,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com";
 
 import Avatar from "@/app/components/Avatar";
 import CoverImage from "@/app/components/CoverImage";

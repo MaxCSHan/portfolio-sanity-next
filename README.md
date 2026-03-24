@@ -371,7 +371,7 @@ npm install
 ### 2. Set up environment variables
 
 ```bash
-cp nextjs-app/.env.example nextjs-app/.env.local
+cp -n nextjs-app/.env.example nextjs-app/.env.local
 ```
 
 Edit `nextjs-app/.env.local`:
@@ -564,14 +564,14 @@ This deploys the Studio to `https://your-project-name.sanity.studio`. After depl
 ### After Deployment — Update CORS
 
 In [Sanity Manage](https://www.sanity.io/manage) → your project → API → CORS origins:
-- Add your production Next.js URL (e.g. `https://maxcsh.vercel.app`)
+- Add your production Next.js URL (e.g. `https://maxcsh.com`)
 - Add your deployed Studio URL
 
 ### Current Deployment
 
 | | URL |
 |---|---|
-| **Production** | https://maxcsh.vercel.app |
+| **Production** | https://maxcsh.com |
 | **Vercel Project** | `maxcsh` (`prj_Y1v4UNzK4XBVHO5dfbmLyALC23RX`) |
 | **Vercel Team** | `maxcshans-projects` |
 

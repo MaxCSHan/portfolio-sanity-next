@@ -142,12 +142,12 @@ export default async function PostsPage(props: Props) {
     "@type": "CollectionPage",
     "name": "Blog Posts — Max Chen",
     "description": "Browse all blog posts about web development, data engineering, and technology.",
-    "url": "https://maxcsh.vercel.app/posts",
+    "url": "https://maxcsh.com/posts",
     "author": {
       "@type": "Person",
       "name": "SIH-HAN (Max) CHEN",
       "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
-      "url": "https://maxcsh.vercel.app",
+      "url": "https://maxcsh.com",
     },
   };
 

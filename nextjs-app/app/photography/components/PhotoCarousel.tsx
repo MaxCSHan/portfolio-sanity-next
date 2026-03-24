@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { urlForImage } from "@/sanity/lib/utils";
@@ -26,10 +26,11 @@ function buildSlides(images: CarouselImage[]): LightboxSlide[] {
 export default function PhotoCarousel({ images, onIndexChange }: Props) {
   const [index, setIndex] = useState(0);
 
-  function goTo(i: number) {
-    setIndex(i);
-    onIndexChange?.(i);
-  }
+  
+ const goTo = useCallback((i: number) => {
+  setIndex(i);
+  onIndexChange?.(i);
+}, [onIndexChange]); // Add dependencies here
 
   const [lightboxOpen, setLightboxOpen] = useState(false);
 
@@ -41,7 +42,7 @@ export default function PhotoCarousel({ images, onIndexChange }: Props) {
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [index, images.length, lightboxOpen]);
+  }, [index, images.length, lightboxOpen, goTo]);
 
   if (!images || images.length === 0) return null;
 

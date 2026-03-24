@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { Github, Linkedin, Instagram, Globe } from "lucide-react";
+import Image from "next/image";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,20 +17,43 @@ export default function Footer() {
               <div className="flex items-center gap-2 mb-4">
                 <div className="flex items-center justify-center h-12 w-12 bg-[#FFE500] border-[#FFE500]">
                   {/* <span className="font-bold text-lg text-[#0D0D0D]">M</span> */}
-                  <img src="/profile.jpg" alt="Logo" className="h-12 w-12 object-cover" />
+                  <Image
+                    src="/profile.jpg"
+                    alt="Logo"
+                    width={48} // 12 * 4 (Tailwind units to pixels)
+                    height={48} // 12 * 4
+                    className="object-cover"
+                  />
                 </div>
                 <span className="text-lg font-bold tracking-tight text-white">
                   Max, Chen Sih Han
                 </span>
               </div>
               <p className="text-gray-400 mb-6">
-                Software engineer with a passion for data engineering and creative solutions.
+                Software engineer with a passion for data engineering and
+                creative solutions.
               </p>
               <div className="flex space-x-3">
-                <SocialLink href="https://github.com/MaxCSHan" icon={<Github size={20} />} label="GitHub" />
-                <SocialLink href="https://www.linkedin.com/in/sih-han-chen-max/" icon={<Linkedin size={20} />} label="LinkedIn" />
-                <SocialLink href="https://www.instagram.com/maxchen.sh/" icon={<Instagram size={20} />} label="Instagram" />
-                <SocialLink href="https://www.behance.net/maxchen31" icon={<Globe size={20} />} label="Behance" />
+                <SocialLink
+                  href="https://github.com/MaxCSHan"
+                  icon={<Github size={20} />}
+                  label="GitHub"
+                />
+                <SocialLink
+                  href="https://www.linkedin.com/in/sih-han-chen-max/"
+                  icon={<Linkedin size={20} />}
+                  label="LinkedIn"
+                />
+                <SocialLink
+                  href="https://www.instagram.com/maxchen.sh/"
+                  icon={<Instagram size={20} />}
+                  label="Instagram"
+                />
+                <SocialLink
+                  href="https://www.behance.net/maxchen31"
+                  icon={<Globe size={20} />}
+                  label="Behance"
+                />
               </div>
             </div>
 
@@ -37,7 +61,9 @@ export default function Footer() {
             <div className="md:col-span-3 grid grid-cols-2 sm:grid-cols-3 gap-8">
               {/* Professional */}
               <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Professional</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">
+                  Professional
+                </h3>
                 <ul className="space-y-3">
                   <FooterLink href="/portfolio">Portfolio</FooterLink>
                   <FooterLink href="/resume">Resume</FooterLink>
@@ -46,13 +72,14 @@ export default function Footer() {
 
               {/* Works */}
               <div>
-                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">Works</h3>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">
+                  Works
+                </h3>
                 <ul className="space-y-3">
                   <FooterLink href="/posts">Post</FooterLink>
                   <FooterLink href="/photography">Photography</FooterLink>
                 </ul>
               </div>
-
             </div>
           </div>
 
@@ -83,7 +110,13 @@ export default function Footer() {
 }
 
 // Helper component for footer navigation links
-function FooterLink({ href, children }: { href: string; children: React.ReactNode }) {
+function FooterLink({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
   return (
     <li>
       <Link
@@ -97,7 +130,15 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
 }
 
 // Helper component for social media links
-function SocialLink({ href, icon, label }: { href: string; icon: React.ReactNode; label: string }) {
+function SocialLink({
+  href,
+  icon,
+  label,
+}: {
+  href: string;
+  icon: React.ReactNode;
+  label: string;
+}) {
   return (
     <a
       href={href}

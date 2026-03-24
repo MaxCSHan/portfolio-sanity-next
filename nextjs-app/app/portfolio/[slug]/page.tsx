@@ -2,7 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com";
 import { ArrowLeft, ExternalLink, Github, Calendar, User, Tag } from "lucide-react";
 
 import { sanityFetch } from "@/sanity/lib/live";

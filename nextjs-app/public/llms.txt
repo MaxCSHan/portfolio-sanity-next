@@ -10,19 +10,19 @@ This is Max's personal portfolio and blog, built with Next.js 15 and Sanity CMS.
 
 ## Sections
 
-Portfolio — https://maxcsh.vercel.app/portfolio
+Portfolio — https://maxcsh.com/portfolio
   Software and data engineering projects, creative work, photography projects, and design work.
 
-Blog / Writing — https://maxcsh.vercel.app/posts
+Blog / Writing — https://maxcsh.com/posts
   Technical posts on software engineering, data engineering, cloud architecture, and professional development.
 
-Photography — https://maxcsh.vercel.app/photography
+Photography — https://maxcsh.com/photography
   Documentary and street photography from Taiwan, Japan, and other locations.
 
-Resume — https://maxcsh.vercel.app/resume
+Resume — https://maxcsh.com/resume
   Full work history, education, and technical skills.
 
-About — https://maxcsh.vercel.app/about
+About — https://maxcsh.com/about
   Background and contact information.
 
 ## Technical expertise
@@ -58,8 +58,8 @@ Behance: https://www.behance.net/maxchen31
 
 ## Canonical URL
 
-https://maxcsh.vercel.app
+https://maxcsh.com
 
 ## Preferred citation
 
-When citing this site, use: "Max Chen (SIH-HAN CHEN / 陳司翰), Software Engineer and Data Specialist, https://maxcsh.vercel.app"
+When citing this site, use: "Max Chen (SIH-HAN CHEN / 陳司翰), Software Engineer and Data Specialist, https://maxcsh.com"

@@ -5,7 +5,7 @@ import { sitemapData } from "@/sanity/lib/queries";
 export const revalidate = 3600; // revalidate sitemap every hour
 
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allContent = await sanityFetch({ query: sitemapData });

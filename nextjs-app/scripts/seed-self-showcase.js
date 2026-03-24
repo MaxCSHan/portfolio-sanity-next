@@ -246,7 +246,7 @@ const portfolioSiteProject = {
             { _type: 'reference', _ref: TECH_IDS.vercel,     _key: k() },
         ],
         githubUrl: 'https://github.com/maxcsh/portfolio-sanity-next',
-        liveUrl: 'https://maxcsh.vercel.app',
+        liveUrl: 'https://maxcsh.com',
         codeSnippet: `// All data fetching goes through sanityFetch() — never the raw client.
 // This automatically opts into Sanity's Live Content API and draft mode.
 

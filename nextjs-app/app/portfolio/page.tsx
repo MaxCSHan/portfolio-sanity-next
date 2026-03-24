@@ -85,12 +85,12 @@ export default async function PortfolioPage(props: Props) {
       "@type": "CollectionPage",
       "name": "Portfolio — Max Chen",
       "description": "Browse my portfolio of coding projects, photography, creative content, data analysis, animations, and design work.",
-      "url": "https://maxcsh.vercel.app/portfolio",
+      "url": "https://maxcsh.com/portfolio",
       "author": {
         "@type": "Person",
         "name": "SIH-HAN (Max) CHEN",
         "alternateName": ["Max Chen", "陳司翰", "Chen Sih-Han"],
-        "url": "https://maxcsh.vercel.app",
+        "url": "https://maxcsh.com",
       },
     };
 

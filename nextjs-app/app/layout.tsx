@@ -35,9 +35,9 @@ export async function generateMetadata(): Promise<Metadata> {
   try {
     metadataBase = settings?.ogImage?.metadataBase
       ? new URL(settings.ogImage.metadataBase)
-      : new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app");
+      : new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com");
   } catch {
-    metadataBase = new URL("https://maxcsh.vercel.app");
+    metadataBase = new URL("https://maxcsh.com");
   }
   return {
     metadataBase,
@@ -72,7 +72,7 @@ const bricolage = Bricolage_Grotesque({
   display: "swap",
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.vercel.app";
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://maxcsh.com";
 
 const personJsonLd = {
   "@context": "https://schema.org",
