@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { redis } from "@/lib/redis";
+import { getRedis } from "@/lib/redis";
 
 const VALID_TYPES = ["post", "portfolio"] as const;
 type ValidType = (typeof VALID_TYPES)[number];
@@ -21,7 +21,7 @@ export async function GET(
   }
 
   try {
-    const count = (await redis.get<number>(`claps:total:${type}:${slug}`)) ?? 0;
+    const count = (await getRedis().get<number>(`claps:total:${type}:${slug}`)) ?? 0;
     return NextResponse.json({ count });
   } catch {
     return NextResponse.json({ error: "Internal error" }, { status: 500 });
@@ -42,7 +42,7 @@ export async function POST(
 
   // Layer 1 — Origin check (production only)
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
-  if (siteUrl) {
+  if (siteUrl && process.env.NODE_ENV === "production") {
     const origin = req.headers.get("origin");
     if (origin !== siteUrl) {
       return NextResponse.json({ error: "Forbidden" }, { status: 403 });
@@ -70,17 +70,18 @@ export async function POST(
   const dailyKey = `claps:daily_req:${type}:${slug}:${today}`;
 
   try {
-    const dailyRequests = await redis.incr(dailyKey);
+    const db = getRedis();
+    const dailyRequests = await db.incr(dailyKey);
     if (dailyRequests === 1) {
       // Set TTL on first request of the day (25h to survive timezone edge cases)
-      await redis.expire(dailyKey, 25 * 60 * 60);
+      await db.expire(dailyKey, 25 * 60 * 60);
     }
     if (dailyRequests > DAILY_REQUEST_CAP) {
       return NextResponse.json({ error: "Daily limit reached" }, { status: 429 });
     }
 
     // Increment lifetime total
-    const newTotal = await redis.incrby(`claps:total:${type}:${slug}`, count);
+    const newTotal = await db.incrby(`claps:total:${type}:${slug}`, count);
     return NextResponse.json({ count: newTotal });
   } catch {
     return NextResponse.json({ error: "Internal error" }, { status: 500 });

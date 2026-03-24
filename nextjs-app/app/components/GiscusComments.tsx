@@ -2,11 +2,12 @@
 
 import Giscus from "@giscus/react";
 
-// In production the custom NB theme CSS is publicly hosted; fall back to
-// GitHub's built-in "light" theme during local development so the iframe
-// can still load (giscus.app can't reach localhost to fetch the CSS).
+// Custom NB theme CSS is fetched by giscus.app from our domain — it must be
+// publicly reachable. Fall back to "light" in development (giscus.app can't
+// reach localhost) and when the site URL isn't set.
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
-const theme = SITE_URL ? `${SITE_URL}/giscus-nb-theme.css` : "light";
+const IS_DEV = process.env.NODE_ENV === "development";
+const theme = !IS_DEV && SITE_URL ? `${SITE_URL}/giscus-nb-theme.css` : "light";
 
 export default function GiscusComments() {
   return (
