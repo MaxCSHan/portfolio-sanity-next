@@ -65,6 +65,9 @@ export async function generateMetadata(
   return {
     title: post?.caption?.slice(0, 80) ?? "Photo",
     description: post?.caption ?? undefined,
+    alternates: {
+      canonical: `/photography/${params.slug}`,
+    },
     openGraph: {
       type: "article",
       url: `${SITE_URL}/photography/${params.slug}`,

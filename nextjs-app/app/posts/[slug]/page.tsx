@@ -56,6 +56,9 @@ export async function generateMetadata(
         : [],
     title: post?.title,
     description: post?.excerpt,
+    alternates: {
+      canonical: `/posts/${params.slug}`,
+    },
     openGraph: {
       type: "article",
       url: `${SITE_URL}/posts/${params.slug}`,

@@ -10,12 +10,17 @@ const SITE_URL =
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const allContent = await sanityFetch({ query: sitemapData });
 
+  // Use a stable date for static routes so the sitemap doesn't falsely
+  // signal freshness on every crawl — Google penalises untrustworthy sitemaps.
+  const staticLastModified = "2026-04-14";
+
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: SITE_URL, lastModified: new Date(), priority: 1.0, changeFrequency: "monthly" },
-    { url: `${SITE_URL}/portfolio`, lastModified: new Date(), priority: 0.9, changeFrequency: "weekly" },
-    { url: `${SITE_URL}/photography`, lastModified: new Date(), priority: 0.9, changeFrequency: "weekly" },
-    { url: `${SITE_URL}/posts`, lastModified: new Date(), priority: 0.8, changeFrequency: "weekly" },
-    { url: `${SITE_URL}/resume`, lastModified: new Date(), priority: 0.7, changeFrequency: "monthly" },
+    { url: SITE_URL, lastModified: staticLastModified, priority: 1.0, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/portfolio`, lastModified: staticLastModified, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/photography`, lastModified: staticLastModified, priority: 0.9, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/posts`, lastModified: staticLastModified, priority: 0.8, changeFrequency: "weekly" },
+    { url: `${SITE_URL}/about`, lastModified: staticLastModified, priority: 0.7, changeFrequency: "monthly" },
+    { url: `${SITE_URL}/resume`, lastModified: staticLastModified, priority: 0.7, changeFrequency: "monthly" },
   ];
 
   const dynamicRoutes: MetadataRoute.Sitemap = [];

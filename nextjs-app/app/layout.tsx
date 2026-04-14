@@ -46,6 +46,9 @@ export async function generateMetadata(): Promise<Metadata> {
       default: title,
     },
     description: toPlainText(description),
+    alternates: {
+      canonical: "/",
+    },
     openGraph: {
       type: "website",
       siteName: "Max Chen — Portfolio",
@@ -125,7 +128,7 @@ export default async function RootLayout({
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }} />
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }} />
-        <section className="min-h-screen pt-24">
+        <section className="min-h-screen pt-24 print:pt-0">
           {/* The <Toaster> component is responsible for rendering toast notifications used in /app/client-utils.ts and /app/components/DraftModeToast.tsx */}
           <Toaster />
           {isDraftMode && (

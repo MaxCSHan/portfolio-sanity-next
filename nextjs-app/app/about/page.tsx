@@ -18,6 +18,9 @@ export const metadata: Metadata = {
   title: "About",
   description:
     "SIH-HAN (Max) CHEN (陳司翰 / Chen Sih-Han) is a software engineer at Vpon specializing in AI agent architecture and data engineering on GCP. Google Cloud certified, based in Taipei, Taiwan.",
+  alternates: {
+    canonical: "/about",
+  },
 };
 
 export default function AboutPage() {

@@ -4,6 +4,9 @@ export const metadata: Metadata = {
   title: "Resume",
   description:
     "Resume of SIH-HAN (Max) CHEN (陳司翰 / Chen Sih-Han) — GCP Certified Data Engineer and Software Engineer with 4+ years building data pipelines, full-stack apps, and ML solutions at Vpon and Rakuten.",
+  alternates: {
+    canonical: "/resume",
+  },
 };
 
 const jsonLd = {

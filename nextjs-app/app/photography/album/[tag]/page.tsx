@@ -29,8 +29,10 @@ export async function generateStaticParams() {
     perspective: "published",
     stega: false,
   });
-  const tags = (data ?? []) as string[];
-  return tags.map((tag) => ({ tag: encodeURIComponent(tag) }));
+  const tags = (data ?? []) as (string | null)[];
+  return tags
+    .filter((tag): tag is string => tag != null && tag !== "")
+    .map((tag) => ({ tag: encodeURIComponent(tag) }));
 }
 
 // ─── Metadata ─────────────────────────────────────────────────────────────────
@@ -41,6 +43,9 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   return {
     title: tag,
     description: `Photos tagged "${tag}"`,
+    alternates: {
+      canonical: `/photography/album/${encodedTag}`,
+    },
   };
 }
 

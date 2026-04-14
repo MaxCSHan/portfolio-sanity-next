@@ -9,6 +9,9 @@ import { urlForImage } from "@/sanity/lib/utils";
 export const metadata: Metadata = {
   title: "Photography",
   description: "A visual diary — moments and places captured through the lens.",
+  alternates: {
+    canonical: "/photography",
+  },
 };
 
 // ─── Types ───────────────────────────────────────────────────────────────────

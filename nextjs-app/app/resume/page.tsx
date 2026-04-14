@@ -167,6 +167,10 @@ export default function ResumePage() {
       databases: ["PostgreSQL", "Firestore", "SQL/NoSQL concepts"],
       methodologies: ["Agile/Scrum", "Jira", "Confluence", "Figma"],
     },
+    certifications: [
+      { name: "Google Cloud Professional Data Engineer", issuer: "Google Cloud", year: "2024" },
+      { name: "Google Cloud Generative AI Leader", issuer: "Google Cloud", year: "2024" },
+    ],
     about: `Google Cloud Certified Data Engineer with ${new Date().getFullYear() - 2021}+ years of experience delivering data pipelines, full-stack apps, and ML solutions. Proven track record at Vpon designing GCP-based architectures and ELT workflows with BigQuery/dbt, and at Rakuten building high-impact features for a major e-commerce platform using Ruby on Rails and React. Skilled in Python, JavaScript/TypeScript, and SQL. Looking to drive data-driven strategies and develop scalable platforms.`,
   };
 
@@ -182,6 +186,13 @@ export default function ResumePage() {
     >
       {text}
     </span>
+  );
+
+  const SkillRow = ({ label, skills, color }: { label: string; skills: string[]; color: string }) => (
+    <div className="print-skill-section">
+      <span className={`print-text-xs font-bold ${color}`}>{label}: </span>
+      <span className="print-text-xs text-gray-600">{skills.join(", ")}</span>
+    </div>
   );
 
   // Customize PDF export for resume only
@@ -202,145 +213,124 @@ export default function ResumePage() {
     <>
       {/* Print-specific styles - injected directly for better isolation */}
       <style jsx global>{`
-        /* Only apply these styles when printing */
+        @page {
+          size: A4;
+          margin: 0;
+        }
+
         @media print {
-          /* Hide global elements when printing a resume */
+          /* Hide browser chrome and non-resume elements */
           body header,
           body footer,
           body nav,
-          body .print-hide {
+          body .print-hide,
+          .standard-view {
             display: none !important;
           }
 
-          /* Basic page setup */
-          @page {
-            size: A4;
-            margin: 15mm;
-          }
-
-          body.printing-resume {
+          body {
             margin: 0;
             padding: 0;
+            background: white !important;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+            color-adjust: exact !important;
+          }
+
+          * {
             -webkit-print-color-adjust: exact !important;
             print-color-adjust: exact !important;
           }
 
-          /* Ensure text is selectable and accessible */
-          body.printing-resume * {
-            color-adjust: exact;
-            print-color-adjust: exact;
-            -webkit-print-color-adjust: exact;
-            font-family: sans-serif !important; /* More universal font for PDF parsing */
-          }
-
-          /* Resume specific containers */
-          body.printing-resume .print-container {
+          /* Show print container — padding provides all breathing room */
+          .print-container {
             display: block !important;
-            padding: 0 2rem !important;
-            width: 100%;
-            height: auto;
-            page-break-after: avoid;
-            break-inside: avoid;
+            width: 100% !important;
+            box-sizing: border-box !important;
+            padding: 10mm 14mm 12mm !important;
+            border-top: 4px solid #4f46e5 !important;
           }
 
-          /* Resume layout for print */
-          body.printing-resume .print-cols {
-            display: flex;
-            flex-direction: row;
-            gap: 10mm;
+          /* Header */
+          .print-header {
+            margin-bottom: 4mm !important;
+            padding-bottom: 4mm !important;
+            border-bottom: 1px solid #d1d5db !important;
           }
 
-          body.printing-resume .print-col-1 {
-            width: 35%;
+          /* Two-column layout */
+          .print-cols {
+            display: flex !important;
+            flex-direction: row !important;
+            gap: 6mm !important;
+            align-items: flex-start !important;
           }
 
-          body.printing-resume .print-col-2 {
-            width: 65%;
+          .print-col-1 {
+            width: 33% !important;
+            flex-shrink: 0 !important;
           }
 
-          /* Adjust font sizes and spacing for print */
-          body.printing-resume .print-text-sm {
-            font-size: 9pt !important;
+          .print-col-2 {
+            flex: 1 !important;
           }
 
-          body.printing-resume .print-text-base {
-            font-size: 10pt !important;
-          }
-
-          body.printing-resume .print-text-lg {
-            font-size: 11pt !important;
-          }
-
-          body.printing-resume .print-text-xl {
-            font-size: 12pt !important;
-          }
-
-          body.printing-resume .print-text-2xl {
-            font-size: 14pt !important;
-          }
-
-          /* Section spacing */
-          body.printing-resume .print-header {
-            margin-bottom: 10mm !important;
-            padding-bottom: 5mm !important;
-            border-bottom: 1px solid #e5e7eb !important;
-          }
-
-          body.printing-resume .print-reset {
-            background: white !important;
+          /* Card/section reset */
+          .print-reset {
+            background: transparent !important;
             box-shadow: none !important;
             border: none !important;
             border-radius: 0 !important;
-            margin-bottom: 8mm !important;
-          }
-
-          /* Ensure clean breaks */
-          body.printing-resume .print-break-after {
-            page-break-after: always;
-            break-after: page;
-          }
-
-          /* Clean timeline */
-          body.printing-resume .print-timeline-item {
-            padding-bottom: 6mm !important;
-          }
-
-          body.printing-resume .print-timeline-connector {
-            display: none !important;
-          }
-
-          /* Hide standard view */
-          body.printing-resume .standard-view {
-            display: none !important;
-          }
-
-          /* Show print view */
-          body.printing-resume .print-view {
-            display: block !important;
-          }
-
-          /* Ensure all text is visible and accessible */
-          body.printing-resume span,
-          body.printing-resume p,
-          body.printing-resume h1,
-          body.printing-resume h2,
-          body.printing-resume h3,
-          body.printing-resume li {
-            color: black !important;
-          }
-
-          body.printing-resume .print-skills .print-skill-section {
+            padding: 0 !important;
             margin-bottom: 4mm !important;
           }
-        }
 
-        /* Hide print view by default */
-        .print-view {
-          display: none !important;
+          /* Section headings */
+          .print-section-heading {
+            display: flex !important;
+            align-items: center !important;
+            margin-bottom: 2.5mm !important;
+            padding-bottom: 1mm !important;
+            border-bottom: 1.5px solid #4f46e5 !important;
+          }
+
+          /* Timeline */
+          .print-timeline-item {
+            padding-bottom: 3.5mm !important;
+          }
+
+          .print-timeline-connector {
+            display: none !important;
+          }
+
+          /* Skills */
+          .print-skill-section {
+            margin-bottom: 2mm !important;
+          }
+
+          /* Page break hints */
+          .print-no-break {
+            break-inside: avoid !important;
+            page-break-inside: avoid !important;
+          }
+
+          /* Font sizes */
+          .print-text-xs   { font-size: 7pt  !important; line-height: 1.35 !important; }
+          .print-text-sm   { font-size: 8pt  !important; line-height: 1.4  !important; }
+          .print-text-base { font-size: 9pt  !important; line-height: 1.4  !important; }
+          .print-text-lg   { font-size: 10pt !important; line-height: 1.4  !important; }
+          .print-text-xl   { font-size: 11pt !important; }
+          .print-text-2xl  { font-size: 16pt !important; }
+
+          /* Preserve badge colors */
+          span, p, h1, h2, h3, li {
+            color-adjust: exact !important;
+          }
+
         }
       `}</style>
 
-      <div className="min-h-screen bg-[#F2EFE9]">
+      <div className="min-h-screen bg-[#F2EFE9] print:hidden">
         {/* Standard web view */}
         <div className="standard-view print-hide">
           {/* Hero section */}
@@ -686,279 +676,137 @@ export default function ResumePage() {
             </div>
           </div>
         </div>
+      </div>
 
-        {/* Printable A4 version */}
-        <div className="hidden print:block print-container">
-          {/* Printable Header */}
-          <div className="print-header mb-6">
-            <h1 className="text-3xl font-bold print-text-2xl mb-2">
+      {/* Printable A4 version */}
+      <div className="hidden print:block print-container">
+          {/* Header */}
+          <div className="print-header">
+            <h1 className="print-text-2xl font-black text-[#0D0D0D] tracking-tight leading-tight mb-1">
               {resumeData.name}
             </h1>
-            <h2 className="text-lg print-text-lg mb-3">{resumeData.title}</h2>
-            <div className="flex flex-wrap gap-4 print-text-sm print-contact">
-              <div className="flex items-center">
-                <MapPin size={14} className="mr-1" />
-                <span>{resumeData.location}</span>
-              </div>
-              <div className="flex items-center">
-                <Mail size={14} className="mr-1" />
-                <span>{resumeData.contact.email}</span>
-              </div>
-              <div className="flex items-center">
-                <Github size={14} className="mr-1" />
-                <span>{resumeData.contact.github}</span>
-              </div>
-              <div className="flex items-center">
-                <Linkedin size={14} className="mr-1" />
-                <span>{resumeData.contact.linkedin}</span>
-              </div>
+            <h2 className="print-text-lg text-indigo-600 font-semibold mb-2">{resumeData.title}</h2>
+            <div className="flex flex-wrap gap-x-5 gap-y-0.5 print-text-xs text-gray-500">
+              <span className="flex items-center gap-1"><MapPin size={9} />{resumeData.location}</span>
+              <span className="flex items-center gap-1"><Mail size={9} />{resumeData.contact.email}</span>
+              <span className="flex items-center gap-1"><Github size={9} />{resumeData.contact.github}</span>
+              <span className="flex items-center gap-1"><Linkedin size={9} />{resumeData.contact.linkedin}</span>
+              <span className="flex items-center gap-1"><Globe size={9} />{resumeData.contact.website}</span>
             </div>
           </div>
 
           <div className="print-cols">
-            {/* Left column */}
+            {/* Left column — About, Skills, Certifications */}
             <div className="print-col-1">
-              {/* About Section */}
-              <div className="print-reset mb-6">
-                <div className="flex items-center mb-3">
-                  <User size={16} className="text-indigo-600 mr-2" />
-                  <h2 className="text-lg font-bold text-gray-900 print-text-xl">
-                    About Me
-                  </h2>
+
+              {/* About */}
+              <div className="print-reset">
+                <div className="print-section-heading">
+                  <User size={10} className="text-indigo-600 mr-1.5 flex-shrink-0" />
+                  <h2 className="print-text-base font-bold text-gray-900 uppercase tracking-wide">About</h2>
                 </div>
-                <p className="text-gray-600 print-text-sm leading-relaxed">
-                  {resumeData.about}
-                </p>
+                <p className="print-text-xs text-gray-600 leading-relaxed">{resumeData.about}</p>
               </div>
 
-              {/* Technical Proficiency */}
-              <div className="print-reset print-skills">
-                <div className="flex items-center mb-3">
-                  <Code size={16} className="text-indigo-600 mr-2" />
-                  <h2 className="text-lg font-bold text-gray-900 print-text-xl">
-                    Technical Proficiency
-                  </h2>
+              {/* Skills */}
+              <div className="print-reset">
+                <div className="print-section-heading">
+                  <Code size={10} className="text-indigo-600 mr-1.5 flex-shrink-0" />
+                  <h2 className="print-text-base font-bold text-gray-900 uppercase tracking-wide">Skills</h2>
                 </div>
+                <SkillRow label="Languages" skills={resumeData.skills.languages} color="text-indigo-700" />
+                <SkillRow label="Web" skills={resumeData.skills.webTech} color="text-amber-700" />
+                <SkillRow label="Data" skills={resumeData.skills.dataEng} color="text-indigo-600" />
+                <SkillRow label="Cloud" skills={resumeData.skills.cloudDevOps} color="text-amber-600" />
+                <SkillRow label="Databases" skills={resumeData.skills.databases} color="text-indigo-500" />
+                <SkillRow label="Tools" skills={resumeData.skills.methodologies} color="text-gray-600" />
+              </div>
 
-                <div className="space-y-4">
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-indigo-500 pl-2">
-                      Languages
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.languages.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-indigo-100 text-indigo-800 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-amber-500 pl-2">
-                      Web Technologies
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.webTech.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-amber-50 text-amber-700 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-indigo-300 pl-2">
-                      Data Engineering
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.dataEng.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-indigo-50 text-indigo-700 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-amber-400 pl-2">
-                      Cloud/DevOps
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.cloudDevOps.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-amber-100 text-amber-800 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-indigo-400 pl-2">
-                      Databases
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.databases.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-indigo-100 text-indigo-600 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="print-skill-section">
-                    <h3 className="font-semibold text-gray-800 mb-2 print-text-base border-l-4 border-indigo-600 pl-2">
-                      Methodologies/Tools
-                    </h3>
-                    <div className="flex flex-wrap gap-1">
-                      {resumeData.skills.methodologies.map((skill) => (
-                        <SkillBadge
-                          key={skill}
-                          text={skill}
-                          colorClass="bg-gray-200 text-gray-800 print-text-sm"
-                        />
-                      ))}
-                    </div>
-                  </div>
+              {/* Certifications */}
+              <div className="print-reset">
+                <div className="print-section-heading">
+                  <Server size={10} className="text-indigo-600 mr-1.5 flex-shrink-0" />
+                  <h2 className="print-text-base font-bold text-gray-900 uppercase tracking-wide">Certifications</h2>
                 </div>
+                {resumeData.certifications.map((cert, i) => (
+                  <div key={i} className="print-no-break mb-2">
+                    <p className="print-text-xs font-semibold text-gray-900">{cert.name}</p>
+                    <p className="print-text-xs text-gray-500">{cert.issuer} · {cert.year}</p>
+                  </div>
+                ))}
               </div>
             </div>
 
-            {/* Right column - Experience and Education */}
+            {/* Right column — Experience + Education */}
             <div className="print-col-2">
-              {/* Experience Section */}
-              <div className="print-reset mb-6">
-                <div className="flex items-center mb-4">
-                  <Briefcase size={16} className="text-indigo-600 mr-2" />
-                  <h2 className="text-lg font-bold text-gray-900 print-text-xl">
-                    Experience
-                  </h2>
-                </div>
 
-                <div className="space-y-6">
-                  {resumeData.experience.map((job, index) => (
-                    <div
-                      key={index}
-                      className={`print-timeline-item ${index !== resumeData.experience.length - 1 ? "relative pb-4" : ""}`}
-                    >
-                      {/* Timeline line */}
-                      {index !== resumeData.experience.length - 1 && (
-                        <span
-                          className="absolute left-4 top-5 -ml-px h-full w-0.5 bg-indigo-200 print-timeline-connector"
-                          aria-hidden="true"
-                        ></span>
-                      )}
-
-                      <div className="relative flex items-start">
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-indigo-600 flex items-center justify-center">
-                          <Database size={12} className="text-white" />
-                        </div>
-
-                        <div className="ml-3 flex-1">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                            <div>
-                              <h3 className="text-md font-bold text-gray-900 print-text-base">
-                                {job.title}
-                              </h3>
-                              <p className="text-indigo-600 font-medium print-text-sm">
-                                {job.company}
-                              </p>
-                            </div>
-                            <div className="text-xs text-gray-500 print-text-sm mt-1 sm:mt-0">
-                              <p>{job.period}</p>
-                              <div className="flex items-center">
-                                <MapPin size={10} className="mr-1" />
-                                <span>{job.location}</span>
-                              </div>
-                            </div>
-                          </div>
-
-                          <ul className="mt-2 space-y-1 text-gray-600 print-text-sm">
-                            {job.responsibilities.map((item, i) => (
-                              <li key={i} className="flex items-baseline">
-                                <span className="block h-1 w-1 rounded-full bg-indigo-500 mr-2"></span>
-                                {item}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Education Section */}
+              {/* Experience */}
               <div className="print-reset">
-                <div className="flex items-center mb-4">
-                  <GraduationCap size={16} className="text-indigo-600 mr-2" />
-                  <h2 className="text-lg font-bold text-gray-900 print-text-xl">
-                    Education
-                  </h2>
+                <div className="print-section-heading">
+                  <Briefcase size={10} className="text-indigo-600 mr-1.5 flex-shrink-0" />
+                  <h2 className="print-text-base font-bold text-gray-900 uppercase tracking-wide">Experience</h2>
                 </div>
 
-                <div className="space-y-6">
-                  {resumeData.education.map((edu, index) => (
-                    <div
-                      key={index}
-                      className={`print-timeline-item ${index !== resumeData.education.length - 1 ? "relative pb-4" : ""}`}
-                    >
-                      {/* Timeline line */}
-                      {index !== resumeData.education.length - 1 && (
-                        <span
-                          className="absolute left-4 top-5 -ml-px h-full w-0.5 bg-indigo-200 print-timeline-connector"
-                          aria-hidden="true"
-                        ></span>
-                      )}
-
-                      <div className="relative flex items-start">
-                        <div className="flex-shrink-0 h-6 w-6 rounded-full bg-amber-600 flex items-center justify-center">
-                          <GraduationCap size={12} className="text-white" />
+                <div>
+                  {resumeData.experience.map((job, index) => (
+                    <div key={index} className="print-timeline-item print-no-break">
+                      <div className="flex justify-between items-baseline mb-0.5">
+                        <div>
+                          <span className="print-text-sm font-bold text-gray-900">{job.title}</span>
+                          <span className="text-indigo-600 print-text-sm font-medium"> · {job.company}</span>
                         </div>
-
-                        <div className="ml-3 flex-1">
-                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-1">
-                            <div>
-                              <h3 className="text-md font-bold text-gray-900 print-text-base">
-                                {edu.school}
-                              </h3>
-                              <p className="text-amber-600 font-medium print-text-sm">
-                                {edu.degree}
-                              </p>
-                            </div>
-                            <p className="text-xs text-gray-500 print-text-sm mt-1 sm:mt-0">
-                              {edu.period}
-                            </p>
-                          </div>
-
-                          <ul className="mt-2 space-y-1 text-gray-600 print-text-sm">
-                            {edu.details.map((detail, i) => (
-                              <li key={i} className="flex items-baseline">
-                                <span className="block h-1 w-1 rounded-full bg-amber-500 mr-2"></span>
-                                {detail}
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
+                        <span className="print-text-xs text-gray-400 flex-shrink-0 ml-2">{job.period.split("·")[0].trim()}</span>
                       </div>
+                      <p className="print-text-xs text-gray-400 mb-1">{job.location}</p>
+                      <ul>
+                        {job.responsibilities.map((item, i) => (
+                          <li key={i} className="flex items-baseline print-text-xs text-gray-600 mb-0.5">
+                            <span className="text-indigo-400 mr-1.5 flex-shrink-0 font-bold">·</span>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                      {job.skills && (
+                        <p className="print-text-xs text-indigo-600 mt-1 font-medium">{job.skills.join(" · ")}</p>
+                      )}
                     </div>
                   ))}
                 </div>
               </div>
+
+              {/* Education */}
+              <div className="print-reset">
+                <div className="print-section-heading">
+                  <GraduationCap size={10} className="text-indigo-600 mr-1.5 flex-shrink-0" />
+                  <h2 className="print-text-base font-bold text-gray-900 uppercase tracking-wide">Education</h2>
+                </div>
+
+                <div>
+                  {resumeData.education.map((edu, index) => (
+                    <div key={index} className="print-timeline-item print-no-break">
+                      <div className="flex justify-between items-baseline mb-0.5">
+                        <div>
+                          <span className="print-text-sm font-bold text-gray-900">{edu.school}</span>
+                        </div>
+                        <span className="print-text-xs text-gray-400 flex-shrink-0 ml-2">{edu.period}</span>
+                      </div>
+                      <p className="text-amber-600 print-text-xs font-medium mb-1">{edu.degree}</p>
+                      <ul>
+                        {edu.details.map((detail, i) => (
+                          <li key={i} className="flex items-baseline print-text-xs text-gray-600 mb-0.5">
+                            <span className="text-amber-400 mr-1.5 flex-shrink-0 font-bold">·</span>
+                            {detail}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }

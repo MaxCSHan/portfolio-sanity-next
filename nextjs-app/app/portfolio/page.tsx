@@ -29,6 +29,9 @@ type Props = {
 export const metadata: Metadata = {
   title: "Portfolio",
   description: "Browse my portfolio of coding projects, photography, creative content, data analysis, animations, and design work.",
+  alternates: {
+    canonical: "/portfolio",
+  },
 };
 
 export default async function PortfolioPage(props: Props) {

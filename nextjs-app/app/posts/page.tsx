@@ -19,6 +19,9 @@ type Props = {
 export const metadata: Metadata = {
   title: "Blog Posts",
   description: "Browse all blog posts about web development, data engineering, and technology.",
+  alternates: {
+    canonical: "/posts",
+  },
 };
 
 const PostCard = ({ post }: { post: PostType }) => {
