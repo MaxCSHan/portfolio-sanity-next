@@ -80,6 +80,17 @@ export default function Footer() {
                   <FooterLink href="/photography">Photography</FooterLink>
                 </ul>
               </div>
+
+              {/* Connect */}
+              <div>
+                <h3 className="font-mono text-xs uppercase tracking-widest text-[#FFE500] mb-4">
+                  Connect
+                </h3>
+                <ul className="space-y-3">
+                  <FooterLink href="/about">About</FooterLink>
+                  <FooterLink href="/contact">Contact</FooterLink>
+                </ul>
+              </div>
             </div>
           </div>
 
