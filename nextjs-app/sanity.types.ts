@@ -13,14 +13,6 @@
  */
 
 // Source: schema.json
-export type CallToAction = {
-  _type: "callToAction";
-  heading: string;
-  text?: string;
-  buttonText?: string;
-  link?: Link;
-};
-
 export type Link = {
   _type: "link";
   linkType?: "href" | "page" | "post";
@@ -40,42 +32,19 @@ export type Link = {
   openInNewTab?: boolean;
 };
 
+export type CallToAction = {
+  _type: "callToAction";
+  heading?: string;
+  text?: string;
+  buttonText?: string;
+  link?: Link;
+};
+
 export type InfoSection = {
   _type: "infoSection";
   heading?: string;
   subheading?: string;
-  content?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h1" | "h2" | "h3" | "h4" | "h5" | "h6" | "blockquote";
-    listItem?: "bullet" | "number";
-    markDefs?: Array<{
-      linkType?: "href" | "page" | "post";
-      href?: string;
-      page?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "page";
-      };
-      post?: {
-        _ref: string;
-        _type: "reference";
-        _weak?: boolean;
-        [internalGroqTypeReferenceTo]?: "post";
-      };
-      openInNewTab?: boolean;
-      _type: "link";
-      _key: string;
-    }>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  }>;
+  content?: BlockContent;
 };
 
 export type BlockContent = Array<{
@@ -109,7 +78,79 @@ export type BlockContent = Array<{
   level?: number;
   _type: "block";
   _key: string;
+} | {
+  _key: string;
+} & Code | {
+  asset?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+  };
+  media?: unknown;
+  hotspot?: SanityImageHotspot;
+  crop?: SanityImageCrop;
+  alt?: string;
+  caption?: string;
+  _type: "image";
+  _key: string;
 }>;
+
+export type PhotoPost = {
+  _id: string;
+  _type: "photoPost";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  images?: Array<{
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  }>;
+  slug?: Slug;
+  caption?: string;
+  date?: string;
+  location?: string;
+  tags?: Array<string>;
+  relatedWork?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "portfolioProject";
+  };
+};
+
+export type Slug = {
+  _type: "slug";
+  current?: string;
+  source?: string;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
+};
 
 export type ProjectCategory = {
   _id: string;
@@ -117,12 +158,12 @@ export type ProjectCategory = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
+  name?: string;
+  slug?: Slug;
   description?: string;
   color?: string;
-  icon: string;
-  order: number;
+  icon?: string;
+  order?: number;
   featured?: boolean;
   active?: boolean;
 };
@@ -133,9 +174,9 @@ export type Technology = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
-  category: "frontend" | "backend" | "database" | "devops" | "design" | "mobile" | "analytics" | "language" | "creative" | "other";
+  name?: string;
+  slug?: Slug;
+  category?: "frontend" | "backend" | "database" | "devops" | "design" | "mobile" | "analytics" | "language" | "creative" | "other";
   description?: string;
   color?: string;
   icon?: {
@@ -148,7 +189,7 @@ export type Technology = {
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
-    alt: string;
+    alt?: string;
     _type: "image";
   };
   website?: string;
@@ -161,12 +202,12 @@ export type PortfolioProject = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
-  category: "coding" | "photography" | "creative" | "data" | "animation" | "design";
-  shortDescription: string;
+  title?: string;
+  slug?: Slug;
+  category?: "coding" | "photography" | "creative" | "data" | "animation" | "design";
+  shortDescription?: string;
   description?: BlockContent;
-  heroMedia: {
+  heroMedia?: {
     type?: "image" | "video" | "gallery";
     image?: {
       asset?: {
@@ -220,7 +261,7 @@ export type PortfolioProject = {
       _type: "image";
     };
     caption?: string;
-    alt: string;
+    alt?: string;
     _key: string;
   }>;
   technicalDetails?: {
@@ -263,9 +304,9 @@ export type Page = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  name: string;
-  slug: Slug;
-  heading: string;
+  name?: string;
+  slug?: Slug;
+  heading?: string;
   subheading?: string;
   pageBuilder?: Array<{
     _key: string;
@@ -280,11 +321,11 @@ export type Post = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
-  slug: Slug;
+  title?: string;
+  slug?: Slug;
   content?: BlockContent;
   excerpt?: string;
-  coverImage: {
+  coverImage?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -312,9 +353,9 @@ export type Person = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  firstName: string;
-  lastName: string;
-  picture: {
+  firstName?: string;
+  lastName?: string;
+  picture?: {
     asset?: {
       _ref: string;
       _type: "reference";
@@ -335,7 +376,7 @@ export type Settings = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
+  title?: string;
   description?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -346,7 +387,7 @@ export type Settings = {
     style?: "normal";
     listItem?: never;
     markDefs?: Array<{
-      href: string;
+      href?: string;
       _type: "link";
       _key: string;
     }>;
@@ -370,6 +411,135 @@ export type Settings = {
   };
 };
 
+export type SanityAssistInstructionTask = {
+  _type: "sanity.assist.instructionTask";
+  path?: string;
+  instructionKey?: string;
+  started?: string;
+  updated?: string;
+  info?: string;
+};
+
+export type SanityAssistTaskStatus = {
+  _type: "sanity.assist.task.status";
+  tasks?: Array<{
+    _key: string;
+  } & SanityAssistInstructionTask>;
+};
+
+export type SanityAssistSchemaTypeAnnotations = {
+  _type: "sanity.assist.schemaType.annotations";
+  title?: string;
+  fields?: Array<{
+    _key: string;
+  } & SanityAssistSchemaTypeField>;
+};
+
+export type SanityAssistOutputType = {
+  _type: "sanity.assist.output.type";
+  type?: string;
+};
+
+export type SanityAssistOutputField = {
+  _type: "sanity.assist.output.field";
+  path?: string;
+};
+
+export type SanityAssistInstructionContext = {
+  _type: "sanity.assist.instruction.context";
+  reference?: {
+    _ref: string;
+    _type: "reference";
+    _weak?: boolean;
+    [internalGroqTypeReferenceTo]?: "assist.instruction.context";
+  };
+};
+
+export type AssistInstructionContext = {
+  _id: string;
+  _type: "assist.instruction.context";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  context?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal";
+    listItem?: never;
+    markDefs?: null;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }>;
+};
+
+export type SanityAssistInstructionUserInput = {
+  _type: "sanity.assist.instruction.userInput";
+  message?: string;
+  description?: string;
+};
+
+export type SanityAssistInstructionPrompt = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  } | {
+    _key: string;
+  } & SanityAssistInstructionFieldRef | {
+    _key: string;
+  } & SanityAssistInstructionContext | {
+    _key: string;
+  } & SanityAssistInstructionUserInput>;
+  style?: "normal";
+  listItem?: never;
+  markDefs?: null;
+  level?: number;
+  _type: "block";
+  _key: string;
+}>;
+
+export type SanityAssistInstructionFieldRef = {
+  _type: "sanity.assist.instruction.fieldRef";
+  path?: string;
+};
+
+export type SanityAssistInstruction = {
+  _type: "sanity.assist.instruction";
+  prompt?: SanityAssistInstructionPrompt;
+  icon?: string;
+  title?: string;
+  userId?: string;
+  createdById?: string;
+  output?: Array<{
+    _key: string;
+  } & SanityAssistOutputField | {
+    _key: string;
+  } & SanityAssistOutputType>;
+};
+
+export type SanityAssistSchemaTypeField = {
+  _type: "sanity.assist.schemaType.field";
+  path?: string;
+  instructions?: Array<{
+    _key: string;
+  } & SanityAssistInstruction>;
+};
+
+export type Code = {
+  _type: "code";
+  language?: string;
+  filename?: string;
+  code?: string;
+  highlightedLines?: Array<number>;
+};
+
 export type SanityImagePaletteSwatch = {
   _type: "sanity.imagePaletteSwatch";
   background?: string;
@@ -391,25 +561,20 @@ export type SanityImagePalette = {
 
 export type SanityImageDimensions = {
   _type: "sanity.imageDimensions";
-  height: number;
-  width: number;
-  aspectRatio: number;
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x: number;
-  y: number;
-  height: number;
-  width: number;
-};
-
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top: number;
-  bottom: number;
-  left: number;
-  right: number;
+export type SanityImageMetadata = {
+  _type: "sanity.imageMetadata";
+  location?: Geopoint;
+  dimensions?: SanityImageDimensions;
+  palette?: SanityImagePalette;
+  lqip?: string;
+  blurHash?: string;
+  hasAlpha?: boolean;
+  isOpaque?: boolean;
 };
 
 export type SanityFileAsset = {
@@ -432,6 +597,13 @@ export type SanityFileAsset = {
   path?: string;
   url?: string;
   source?: SanityAssetSourceData;
+};
+
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
 };
 
 export type SanityImageAsset = {
@@ -457,17 +629,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
-  location?: Geopoint;
-  dimensions?: SanityImageDimensions;
-  palette?: SanityImagePalette;
-  lqip?: string;
-  blurHash?: string;
-  hasAlpha?: boolean;
-  isOpaque?: boolean;
-};
-
 export type Geopoint = {
   _type: "geopoint";
   lat?: number;
@@ -475,20 +636,7 @@ export type Geopoint = {
   alt?: number;
 };
 
-export type Slug = {
-  _type: "slug";
-  current: string;
-  source?: string;
-};
-
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
-export type AllSanitySchemaTypes = CallToAction | Link | InfoSection | BlockContent | ProjectCategory | Technology | PortfolioProject | Page | Post | Person | Settings | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Link | CallToAction | InfoSection | BlockContent | PhotoPost | Slug | SanityImageCrop | SanityImageHotspot | ProjectCategory | Technology | PortfolioProject | Page | Post | Person | Settings | SanityAssistInstructionTask | SanityAssistTaskStatus | SanityAssistSchemaTypeAnnotations | SanityAssistOutputType | SanityAssistOutputField | SanityAssistInstructionContext | AssistInstructionContext | SanityAssistInstructionUserInput | SanityAssistInstructionPrompt | SanityAssistInstructionFieldRef | SanityAssistInstruction | SanityAssistSchemaTypeField | Code | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageMetadata | SanityFileAsset | SanityAssetSourceData | SanityImageAsset | Geopoint;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/lib/queries.ts
 // Variable: settingsQuery
@@ -499,7 +647,7 @@ export type SettingsQueryResult = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title: string;
+  title?: string;
   description?: Array<{
     children?: Array<{
       marks?: Array<string>;
@@ -510,7 +658,7 @@ export type SettingsQueryResult = {
     style?: "normal";
     listItem?: never;
     markDefs?: Array<{
-      href: string;
+      href?: string;
       _type: "link";
       _key: string;
     }>;
@@ -538,14 +686,14 @@ export type SettingsQueryResult = {
 export type GetPageQueryResult = {
   _id: string;
   _type: "page";
-  name: string;
-  slug: Slug;
-  heading: string;
+  name: string | null;
+  slug: Slug | null;
+  heading: string | null;
   subheading: string | null;
   pageBuilder: Array<{
     _key: string;
     _type: "callToAction";
-    heading: string;
+    heading?: string;
     text?: string;
     buttonText?: string;
     link: {
@@ -582,21 +730,48 @@ export type GetPageQueryResult = {
       level?: number;
       _type: "block";
       _key: string;
+    } | {
+      _key: string;
+      _type: "code";
+      language?: string;
+      filename?: string;
+      code?: string;
+      highlightedLines?: Array<number>;
+      markDefs: null;
+    } | {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+      markDefs: null;
     }> | null;
   }> | null;
 } | null;
 // Variable: sitemapData
 // Query: *[(_type == "page" || _type == "post" || _type == "portfolioProject" || _type == "photoPost") && defined(slug.current)] | order(_type asc) {    "slug": slug.current,    _type,    _updatedAt,  }
 export type SitemapDataResult = Array<{
-  slug: string;
+  slug: string | null;
   _type: "page";
   _updatedAt: string;
 } | {
-  slug: string;
+  slug: string | null;
+  _type: "photoPost";
+  _updatedAt: string;
+} | {
+  slug: string | null;
   _type: "portfolioProject";
   _updatedAt: string;
 } | {
-  slug: string;
+  slug: string | null;
   _type: "post";
   _updatedAt: string;
 }>;
@@ -605,8 +780,8 @@ export type SitemapDataResult = Array<{
 export type AllPostsQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
-  title: string;
-  slug: string;
+  title: string | "Untitled";
+  slug: string | null;
   excerpt: string | null;
   coverImage: {
     asset?: {
@@ -620,11 +795,11 @@ export type AllPostsQueryResult = Array<{
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  };
+  } | null;
   date: string;
   author: {
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     picture: {
       asset?: {
         _ref: string;
@@ -637,7 +812,7 @@ export type AllPostsQueryResult = Array<{
       crop?: SanityImageCrop;
       alt?: string;
       _type: "image";
-    };
+    } | null;
   } | null;
 }>;
 // Variable: morePostsQuery
@@ -645,8 +820,8 @@ export type AllPostsQueryResult = Array<{
 export type MorePostsQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
-  title: string;
-  slug: string;
+  title: string | "Untitled";
+  slug: string | null;
   excerpt: string | null;
   coverImage: {
     asset?: {
@@ -660,11 +835,11 @@ export type MorePostsQueryResult = Array<{
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  };
+  } | null;
   date: string;
   author: {
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     picture: {
       asset?: {
         _ref: string;
@@ -677,7 +852,7 @@ export type MorePostsQueryResult = Array<{
       crop?: SanityImageCrop;
       alt?: string;
       _type: "image";
-    };
+    } | null;
   } | null;
 }>;
 // Variable: postQuery
@@ -704,11 +879,34 @@ export type PostQueryResult = {
     level?: number;
     _type: "block";
     _key: string;
+  } | {
+    _key: string;
+    _type: "code";
+    language?: string;
+    filename?: string;
+    code?: string;
+    highlightedLines?: Array<number>;
+    markDefs: null;
+  } | {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+    markDefs: null;
   }> | null;
   _id: string;
   status: "draft" | "published";
-  title: string;
-  slug: string;
+  title: string | "Untitled";
+  slug: string | null;
   excerpt: string | null;
   coverImage: {
     asset?: {
@@ -722,11 +920,11 @@ export type PostQueryResult = {
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  };
+  } | null;
   date: string;
   author: {
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     picture: {
       asset?: {
         _ref: string;
@@ -739,26 +937,26 @@ export type PostQueryResult = {
       crop?: SanityImageCrop;
       alt?: string;
       _type: "image";
-    };
+    } | null;
   } | null;
 } | null;
 // Variable: postPagesSlugs
 // Query: *[_type == "post" && defined(slug.current)]  {"slug": slug.current}
 export type PostPagesSlugsResult = Array<{
-  slug: string;
+  slug: string | null;
 }>;
 // Variable: pagesSlugs
 // Query: *[_type == "page" && defined(slug.current)]  {"slug": slug.current}
 export type PagesSlugsResult = Array<{
-  slug: string;
+  slug: string | null;
 }>;
 // Variable: paginatedPostsQuery
 // Query: *[_type == "post" && defined(slug.current)] | order(date desc, _updatedAt desc) [$offset...$limit] {      _id,  "status": select(_originalId in path("drafts.**") => "draft", "published"),  "title": coalesce(title, "Untitled"),  "slug": slug.current,  excerpt,  coverImage,  "date": coalesce(date, _updatedAt),  "author": author->{firstName, lastName, picture},  }
 export type PaginatedPostsQueryResult = Array<{
   _id: string;
   status: "draft" | "published";
-  title: string;
-  slug: string;
+  title: string | "Untitled";
+  slug: string | null;
   excerpt: string | null;
   coverImage: {
     asset?: {
@@ -772,11 +970,11 @@ export type PaginatedPostsQueryResult = Array<{
     crop?: SanityImageCrop;
     alt?: string;
     _type: "image";
-  };
+  } | null;
   date: string;
   author: {
-    firstName: string;
-    lastName: string;
+    firstName: string | null;
+    lastName: string | null;
     picture: {
       asset?: {
         _ref: string;
@@ -789,7 +987,7 @@ export type PaginatedPostsQueryResult = Array<{
       crop?: SanityImageCrop;
       alt?: string;
       _type: "image";
-    };
+    } | null;
   } | null;
 }>;
 // Variable: totalPostsCountQuery
@@ -799,10 +997,10 @@ export type TotalPostsCountQueryResult = number;
 // Query: *[_type == "portfolioProject"     && ($category == null || category == $category)    && ($featured == null || featured == $featured)    && ($technologies == null || count(technicalDetails.technologies[references(*[_type == "technology" && name in $technologies]._id)]) > 0)    && ($search == null || title match $search + "*" || shortDescription match $search + "*" || tags[] match $search + "*")  ] | order(featured desc, completionDate desc, _createdAt desc) [$offset...$limit] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt  }
 export type PortfolioProjectsQueryResult = Array<{
   _id: string;
-  title: string;
-  slug: string;
-  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
-  shortDescription: string;
+  title: string | null;
+  slug: string | null;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography" | null;
+  shortDescription: string | null;
   heroImage: {
     asset?: {
       _ref: string;
@@ -872,7 +1070,7 @@ export type PortfolioProjectsQueryResult = Array<{
     duration?: string;
   } | null;
   technologies: Array<{
-    name: string;
+    name: string | null;
     color: string | null;
     icon: {
       asset?: {
@@ -884,7 +1082,7 @@ export type PortfolioProjectsQueryResult = Array<{
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt: string;
+      alt?: string;
       _type: "image";
     } | null;
   }> | null;
@@ -895,10 +1093,10 @@ export type PortfolioProjectsQueryResult = Array<{
 // Query: *[_type == "portfolioProject" && featured == true]   | order(completionDate desc, _createdAt desc) [0...6] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt  }
 export type FeaturedPortfolioProjectsQueryResult = Array<{
   _id: string;
-  title: string;
-  slug: string;
-  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
-  shortDescription: string;
+  title: string | null;
+  slug: string | null;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography" | null;
+  shortDescription: string | null;
   heroImage: {
     asset?: {
       _ref: string;
@@ -968,7 +1166,7 @@ export type FeaturedPortfolioProjectsQueryResult = Array<{
     duration?: string;
   } | null;
   technologies: Array<{
-    name: string;
+    name: string | null;
     color: string | null;
     icon: {
       asset?: {
@@ -980,7 +1178,7 @@ export type FeaturedPortfolioProjectsQueryResult = Array<{
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt: string;
+      alt?: string;
       _type: "image";
     } | null;
   }> | null;
@@ -991,10 +1189,10 @@ export type FeaturedPortfolioProjectsQueryResult = Array<{
 // Query: *[_type == "portfolioProject" && slug.current == $slug][0] {      _id,  title,  "slug": slug.current,  category,  shortDescription,  "heroImage": heroMedia.image,  "heroVideo": heroMedia.video,  "heroGallery": heroMedia.gallery,  "mediaType": heroMedia.type,  featured,  tags,  completionDate,  client,  status,  technicalDetails,  "technologies": technicalDetails.technologies[]->{ name, color, icon },  _createdAt,  _updatedAt,    description,    "heroMedia": heroMedia {      type,      image,      video,      gallery[] {        asset,        alt,        caption      }    },    gallery[] {      "asset": asset.asset,      caption,      alt    },    "relatedProjects": *[_type == "portfolioProject"      && category == ^.category      && _id != ^._id      && featured == true]    | order(completionDate desc) [0...3] {      _id,      title,      "slug": slug.current,      "heroImage": heroMedia.image,      shortDescription,      category    }  }
 export type PortfolioProjectQueryResult = {
   _id: string;
-  title: string;
-  slug: string;
-  category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
-  shortDescription: string;
+  title: string | null;
+  slug: string | null;
+  category: "animation" | "coding" | "creative" | "data" | "design" | "photography" | null;
+  shortDescription: string | null;
   heroImage: {
     asset?: {
       _ref: string;
@@ -1064,7 +1262,7 @@ export type PortfolioProjectQueryResult = {
     duration?: string;
   } | null;
   technologies: Array<{
-    name: string;
+    name: string | null;
     color: string | null;
     icon: {
       asset?: {
@@ -1076,7 +1274,7 @@ export type PortfolioProjectQueryResult = {
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
-      alt: string;
+      alt?: string;
       _type: "image";
     } | null;
   }> | null;
@@ -1118,7 +1316,7 @@ export type PortfolioProjectQueryResult = {
       alt: string | null;
       caption: null;
     }> | null;
-  };
+  } | null;
   gallery: Array<{
     asset: {
       _ref: string;
@@ -1127,12 +1325,12 @@ export type PortfolioProjectQueryResult = {
       [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     } | null;
     caption: string | null;
-    alt: string;
+    alt: string | null;
   }> | null;
   relatedProjects: Array<{
     _id: string;
-    title: string;
-    slug: string;
+    title: string | null;
+    slug: string | null;
     heroImage: {
       asset?: {
         _ref: string;
@@ -1146,8 +1344,8 @@ export type PortfolioProjectQueryResult = {
       alt?: string;
       _type: "image";
     } | null;
-    shortDescription: string;
-    category: "animation" | "coding" | "creative" | "data" | "design" | "photography";
+    shortDescription: string | null;
+    category: "animation" | "coding" | "creative" | "data" | "design" | "photography" | null;
   }>;
 } | null;
 // Variable: portfolioCategoryCountsQuery
@@ -1165,8 +1363,8 @@ export type PortfolioCategoryCountsQueryResult = {
 // Query: *[_type == "technology"] | order(name asc) {    _id,    name,    category,    color,    "projectCount": count(*[_type == "portfolioProject" && references(^._id)])  }
 export type PortfolioTechnologiesQueryResult = Array<{
   _id: string;
-  name: string;
-  category: "analytics" | "backend" | "creative" | "database" | "design" | "devops" | "frontend" | "language" | "mobile" | "other";
+  name: string | null;
+  category: "analytics" | "backend" | "creative" | "database" | "design" | "devops" | "frontend" | "language" | "mobile" | "other" | null;
   color: string | null;
   projectCount: number;
 }>;
@@ -1176,15 +1374,15 @@ export type TotalPortfolioProjectsCountQueryResult = number;
 // Variable: portfolioProjectSlugs
 // Query: *[_type == "portfolioProject" && defined(slug.current)]  {"slug": slug.current}
 export type PortfolioProjectSlugsResult = Array<{
-  slug: string;
+  slug: string | null;
 }>;
 // Variable: photographyProjectsQuery
 // Query: *[_type == "portfolioProject" && category == "photography"]  | order(completionDate desc, _createdAt desc) {    _id,    title,    "slug": slug.current,    shortDescription,    "heroImage": heroMedia.image,    "mediaType": heroMedia.type,    featured,    completionDate,    tags,    "location": technicalDetails.cameraInfo.location,    "shootDate": technicalDetails.cameraInfo.shootDate,    "photoCategory": technicalDetails.photoCategory,  }
 export type PhotographyProjectsQueryResult = Array<{
   _id: string;
-  title: string;
-  slug: string;
-  shortDescription: string;
+  title: string | null;
+  slug: string | null;
+  shortDescription: string | null;
   heroImage: {
     asset?: {
       _ref: string;
@@ -1208,19 +1406,131 @@ export type PhotographyProjectsQueryResult = Array<{
 }>;
 // Variable: photoPostsQuery
 // Query: *[_type == "photoPost"] | order(date desc, _createdAt desc) {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "coverImage": images[0]  }
-export type PhotoPostsQueryResult = Array<never>;
+export type PhotoPostsQueryResult = Array<{
+  _id: string;
+  slug: string | null;
+  caption: string | null;
+  date: string | null;
+  location: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    asset: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    alt: string | null;
+    caption: string | null;
+  }> | null;
+  imageCount: number | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  } | null;
+}>;
 // Variable: photoPostQuery
 // Query: *[_type == "photoPost" && slug.current == $slug][0] {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "relatedWork": relatedWork->{ title, "slug": slug.current, shortDescription },    "relatedPosts": *[_type == "photoPost" && ^.tags[0] in tags && slug.current != $slug]      | order(date desc) [0...6] {        _id,        "slug": slug.current,        "coverImage": images[0],        caption,        "imageCount": count(images)      }  }
-export type PhotoPostQueryResult = null;
+export type PhotoPostQueryResult = {
+  _id: string;
+  slug: string | null;
+  caption: string | null;
+  date: string | null;
+  location: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    asset: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    alt: string | null;
+    caption: string | null;
+  }> | null;
+  imageCount: number | null;
+  relatedWork: {
+    title: string | null;
+    slug: string | null;
+    shortDescription: string | null;
+  } | null;
+  relatedPosts: Array<{
+    _id: string;
+    slug: string | null;
+    coverImage: {
+      asset?: {
+        _ref: string;
+        _type: "reference";
+        _weak?: boolean;
+        [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      };
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      caption?: string;
+      _type: "image";
+      _key: string;
+    } | null;
+    caption: string | null;
+    imageCount: number | null;
+  }>;
+} | null;
 // Variable: photoAlbumPostsQuery
 // Query: *[_type == "photoPost" && $tag in tags] | order(date desc, _createdAt desc) {    _id,    "slug": slug.current,    caption,    date,    location,    tags,    images[] { asset, alt, caption },    "imageCount": count(images),    "coverImage": images[0]  }
-export type PhotoAlbumPostsQueryResult = Array<never>;
+export type PhotoAlbumPostsQueryResult = Array<{
+  _id: string;
+  slug: string | null;
+  caption: string | null;
+  date: string | null;
+  location: string | null;
+  tags: Array<string> | null;
+  images: Array<{
+    asset: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    } | null;
+    alt: string | null;
+    caption: string | null;
+  }> | null;
+  imageCount: number | null;
+  coverImage: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    caption?: string;
+    _type: "image";
+    _key: string;
+  } | null;
+}>;
 // Variable: photoAlbumTagsQuery
 // Query: array::unique(*[_type == "photoPost"][].tags[])
-export type PhotoAlbumTagsQueryResult = Array<never>;
+export type PhotoAlbumTagsQueryResult = Array<string | null>;
 // Variable: photographySlugs
 // Query: *[_type == "photoPost" && defined(slug.current)] {"slug": slug.current}
-export type PhotographySlugsResult = Array<never>;
+export type PhotographySlugsResult = Array<{
+  slug: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";

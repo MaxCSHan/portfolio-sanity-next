@@ -180,7 +180,7 @@ export default function ProjectCard({ project, layoutMode = 'masonry' }: Project
 }
 
 // Helper function to get category styles (nb flat colors)
-function getCategoryStyles(category: string) {
+function getCategoryStyles(category: string | null) {
   const styles: Record<string, string> = {
     coding: 'bg-[#00E87A] text-[#0D0D0D]',
     photography: 'bg-[#FFE500] text-[#0D0D0D]',
@@ -189,11 +189,11 @@ function getCategoryStyles(category: string) {
     animation: 'bg-[#0D0D0D] text-white',
     design: 'bg-[#F2EFE9] text-[#0D0D0D]',
   };
-  return styles[category] || 'bg-[#F2EFE9] text-[#0D0D0D]';
+  return (category && styles[category]) || 'bg-[#F2EFE9] text-[#0D0D0D]';
 }
 
 // Helper function to get category label
-function getCategoryLabel(category: string) {
+function getCategoryLabel(category: string | null) {
   const labels: Record<string, string> = {
     coding: 'Coding',
     photography: 'Photography',
@@ -202,7 +202,7 @@ function getCategoryLabel(category: string) {
     animation: 'Animation',
     design: 'Design',
   };
-  return labels[category] || category;
+  return (category && labels[category]) || category || 'Other';
 }
 
 // Helper function to get status styles

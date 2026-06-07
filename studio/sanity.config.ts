@@ -9,6 +9,7 @@ import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './src/schemaTypes'
 import {structure} from './src/structure'
 import {unsplashImageAsset} from 'sanity-plugin-asset-source-unsplash'
+import {codeInput} from '@sanity/code-input'
 import {
   presentationTool,
   defineDocuments,
@@ -119,6 +120,10 @@ export default defineConfig({
       structure, // Custom studio structure configuration, imported from ./src/structure.ts
     }),
     // Additional plugins for enhanced functionality
+    // Cast needed: npm hoisted @sanity/code-input next to a stale root-level
+    // sanity@3.x copy, so its PluginOptions type mismatches studio's sanity@4.
+    // Runtime is unaffected (the studio bundler resolves a single sanity copy).
+    codeInput() as any,
     unsplashImageAsset(),
     assist(),
     visionTool(),

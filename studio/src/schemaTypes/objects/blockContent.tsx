@@ -92,5 +92,45 @@ export const blockContent = defineType({
         ],
       },
     }),
+    // Code blocks (rendered with syntax highlighting on the site)
+    defineArrayMember({
+      type: 'code',
+      options: {
+        language: 'text',
+        languageAlternatives: [
+          {title: 'Plain text', value: 'text'},
+          {title: 'Python', value: 'python'},
+          {title: 'TypeScript', value: 'typescript'},
+          {title: 'JavaScript', value: 'javascript'},
+          {title: 'JSX/TSX', value: 'tsx'},
+          {title: 'SQL', value: 'sql'},
+          {title: 'Bash', value: 'bash'},
+          {title: 'JSON', value: 'json'},
+          {title: 'YAML', value: 'yaml'},
+          {title: 'HTML', value: 'html'},
+          {title: 'CSS', value: 'css'},
+          {title: 'GROQ', value: 'groq'},
+        ],
+        withFilename: true,
+      },
+    }),
+    // Inline images within post content
+    defineArrayMember({
+      type: 'image',
+      options: {hotspot: true},
+      fields: [
+        defineField({
+          name: 'alt',
+          type: 'string',
+          title: 'Alternative text',
+          description: 'Important for SEO and accessibility',
+        }),
+        defineField({
+          name: 'caption',
+          type: 'string',
+          title: 'Caption',
+        }),
+      ],
+    }),
   ],
 })
